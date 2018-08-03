@@ -1,4 +1,4 @@
 module.exports = {
-	mongoURI: process.keys.MONGO_URI,
+	mongoURI: process.keys.MONGOLAB_BROWN_URI,
 	secretOrKey: process.env.SECRECT_OR_KEY
 };
