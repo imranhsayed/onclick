@@ -16,7 +16,7 @@ class Footer extends Component {
 						</div>
 						<div className="col-md-2 latest-ad-colm">
 							<h1>Latest Ad</h1>
-							<img src="img/footer/ad.jpg"/>
+							<img src="img/footer/ad.jpg" alt="footer-img"/>
 						</div>
 						<div className="col-md-3 help-colm">
 							<h1>Help and Support</h1>

@@ -30,7 +30,7 @@ class DashboardSidebar extends Component {
 			<nav className="sidebar sidebar-offcanvas" id="sidebar">
 				<ul className="nav">
 					<li className="nav-item oc-nav-item nav-profile">
-						<a href="#" className="nav-link">
+						<a href="" className="nav-link">
 							<div className="nav-profile-image">
 								<img src="images/faces/face1.jpg" alt="profile"/>
 									<span className="login-status online"></span>

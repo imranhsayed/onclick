@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from "../../../actions/authActions";
 
@@ -17,12 +16,11 @@ class DashboardNav extends Component {
 		const { isAuthenticated, user } = this.props.auth;
 		const authLinks = (
 			<li className="nav-item nav-logout d-none d-lg-block">
-				<a className="nav-link" href="#" onClick={this.onLogoutClick.bind( this )}>
+				<a className="nav-link" href="" onClick={this.onLogoutClick.bind( this )}>
 					<i className="mdi mdi-power"></i>
 				</a>
 			</li>
 		);
-		const guestLinks = (<div>guestlink</div>);
 		return (
 			<nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
 				<div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
@@ -37,9 +35,9 @@ class DashboardNav extends Component {
 					</div>
 					<ul className="navbar-nav navbar-nav-right">
 						<li className="nav-item nav-profile dropdown">
-							<a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+							<a className="nav-link dropdown-toggle" id="profileDropdown" href="" data-toggle="dropdown" aria-expanded="false">
 								<div className="nav-profile-img">
-									<img src="images/faces/face1.jpg" alt="image"/>
+									<img src="images/faces/face1.jpg" alt="my-face"/>
 										<span className="availability-status online"></span>
 								</div>
 								<div className="nav-profile-text">
@@ -47,7 +45,7 @@ class DashboardNav extends Component {
 								</div>
 							</a>
 							<div className="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-								<a className="dropdown-item" href="#">
+								<a className="dropdown-item" href="">
 									<i className="mdi mdi-cached mr-2 text-success"></i>
 									Activity Log
 								</a>
@@ -64,7 +62,7 @@ class DashboardNav extends Component {
 							</a>
 						</li>
 						<li className="nav-item dropdown">
-							<a className="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+							<a className="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="" data-toggle="dropdown" aria-expanded="false">
 								<i className="mdi mdi-email-outline"></i>
 								<span className="count-symbol bg-warning"></span>
 							</a>
@@ -73,7 +71,7 @@ class DashboardNav extends Component {
 								<div className="dropdown-divider"></div>
 								<a className="dropdown-item preview-item">
 									<div className="preview-thumbnail">
-										<img src="images/faces/face4.jpg" alt="image" className="profile-pic"/>
+										<img src="images/faces/face4.jpg" alt="test" className="profile-pic"/>
 									</div>
 									<div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
 										<h6 className="preview-subject ellipsis mb-1 font-weight-normal">Mark send you a message</h6>
@@ -85,7 +83,7 @@ class DashboardNav extends Component {
 								<div className="dropdown-divider"></div>
 								<a className="dropdown-item preview-item">
 									<div className="preview-thumbnail">
-										<img src="images/faces/face2.jpg" alt="image" className="profile-pic"/>
+										<img src="images/faces/face2.jpg" alt="test" className="profile-pic"/>
 									</div>
 									<div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
 										<h6 className="preview-subject ellipsis mb-1 font-weight-normal">Cregh send you a message</h6>
@@ -97,7 +95,7 @@ class DashboardNav extends Component {
 								<div className="dropdown-divider"></div>
 								<a className="dropdown-item preview-item">
 									<div className="preview-thumbnail">
-										<img src="images/faces/face3.jpg" alt="image" className="profile-pic"/>
+										<img src="images/faces/face3.jpg" alt="test" className="profile-pic"/>
 									</div>
 									<div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
 										<h6 className="preview-subject ellipsis mb-1 font-weight-normal">Profile picture updated</h6>
@@ -111,7 +109,7 @@ class DashboardNav extends Component {
 							</div>
 						</li>
 						<li className="nav-item dropdown">
-							<a className="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+							<a className="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="" data-toggle="dropdown">
 								<i className="mdi mdi-bell-outline"></i>
 								<span className="count-symbol bg-danger"></span>
 							</a>
@@ -166,7 +164,7 @@ class DashboardNav extends Component {
 						{/*Logout link*/}
 						{ isAuthenticated ? authLinks : '' }
 						<li className="nav-item nav-settings d-none d-lg-block">
-							<a className="nav-link" href="#">
+							<a className="nav-link" href="">
 								<i className="mdi mdi-format-line-spacing"></i>
 							</a>
 						</li>

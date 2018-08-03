@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import PostJobBanner from './layouts/post-job/PostJobBanner';
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";

@@ -7,7 +7,7 @@ import DashboardSidebar from './../DashboardSidebar';
 class DashboardProfiles extends Component {
 	render() {
 
-		const { isAuthenticated, user } = this.props.auth;
+		const { user } = this.props.auth;
 
 		return(
 			<div className="container-scroller">

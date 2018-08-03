@@ -26,7 +26,7 @@ class DashboardHome extends Component {
 						<div className="col-md-4 stretch-card grid-margin">
 							<div className="card bg-gradient-danger card-img-holder text-white">
 								<div className="card-body">
-									<img src="images/dashboard/circle.svg" className="card-img-absolute" alt="circle-image"/>
+									<img src="images/dashboard/circle.svg" className="card-img-absolute" alt="circle"/>
 									<h4 className="font-weight-normal mb-3">Posted Jobs
 										<i className="mdi mdi-chart-line mdi-24px float-right"></i>
 									</h4>
@@ -38,7 +38,7 @@ class DashboardHome extends Component {
 						<div className="col-md-4 stretch-card grid-margin">
 							<div className="card bg-gradient-info card-img-holder text-white">
 								<div className="card-body">
-									<img src="images/dashboard/circle.svg" className="card-img-absolute" alt="circle-image"/>
+									<img src="images/dashboard/circle.svg" className="card-img-absolute" alt="circle"/>
 									<h4 className="font-weight-normal mb-3">Completed Jobs
 										<i className="mdi mdi-bookmark-outline mdi-24px float-right"></i>
 									</h4>
@@ -50,7 +50,7 @@ class DashboardHome extends Component {
 						<div className="col-md-4 stretch-card grid-margin">
 							<div className="card bg-gradient-success card-img-holder text-white">
 								<div className="card-body">
-									<img src="images/dashboard/circle.svg" className="card-img-absolute" alt="circle-image"/>
+									<img src="images/dashboard/circle.svg" className="card-img-absolute" alt="circle"/>
 									<h4 className="font-weight-normal mb-3">Vendors on Site
 										<i className="mdi mdi-diamond mdi-24px float-right"></i>
 									</h4>

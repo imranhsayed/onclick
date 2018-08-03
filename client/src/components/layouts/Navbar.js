@@ -50,7 +50,7 @@ class Navbar extends Component {
 
 					<div id="onclick-logo col-md-1 text-center">
 						<Link to="/" className="navbar-brand">
-							<img src="img/header/onclickbiz-logo.png" className="img-fluid home-header-logo"/>
+							<img src="img/header/onclickbiz-logo.png" className="img-fluid home-header-logo" alt="test"/>
 						</Link>
 					</div>
 
@@ -67,7 +67,7 @@ class Navbar extends Component {
 								<Link className="nav-link" to="/categories">CATEGORIES</Link>
 							</li>
 							<li className="nav-item dropdown">
-								<a className="nav-link dropdown-toggle onclick-dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<a className="nav-link dropdown-toggle onclick-dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									PAGES
 								</a>
 								<div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -82,10 +82,10 @@ class Navbar extends Component {
 								</div>
 							</li>
 							<li className="nav-item">
-								<a className="nav-link" href="#">BLOG</a>
+								<a className="nav-link" href="">BLOG</a>
 							</li>
 							<li className="nav-item">
-								<a className="nav-link" href="#">CONTACTs</a>
+								<a className="nav-link" href="">CONTACTs</a>
 							</li>
 
 							<Link to="/post-job" className="btn btn-primary btn-post-job btn-post-job-header ml-5 mr-2">Post Job</Link>

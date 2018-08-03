@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import Navbar from "./layouts/Navbar";
 import HomeBanner from './layouts/home/HomeBanner';
 import Footer from "./layouts/Footer";

@@ -119,7 +119,7 @@ class Login extends Component {
 													<label className="checkbox-login" htmlFor="exampleCheck1">Keep me logged in</label>
 											</div>
 											<div className="col-12 col-md-6 forgot-password pl-5 pb-2 text-center">
-												<a href="#">Forgot Password?</a>
+												<a href="">Forgot Password?</a>
 											</div>
 										</div>
 										<div className="col-12 send-otp-colm text-center pb-1">
