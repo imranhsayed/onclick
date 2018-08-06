@@ -157,6 +157,14 @@ router.post( '/login', ( req, res ) => {
 });
 
 /**
+ * /api/users/profiles
+ */
+router.post( '/profiles', ( req, res ) => {
+	return 'test';
+});
+
+
+/**
  * @route GET api/users/current
  * @desc Return current User /
  * @access Private

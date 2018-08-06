@@ -30,8 +30,8 @@ app.use( bodyParser.json() );
 // app.get( '/', ( req, res ) => res.send( 'hellos' ) );
 
 app.use( '/api/users', users );
-app.use( '/api/profile', users );
-app.use( '/api/posts', users );
+app.use( '/api/profile', profile );
+app.use( '/api/posts', posts );
 
 // Passport middleware
 app.use( passport.initialize() );
