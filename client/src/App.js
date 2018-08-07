@@ -13,6 +13,7 @@ import Register from "./components/Register";
 import PostJob from "./components/PostJob";
 import Dashboard from "./components/Dashboard";
 import DashboardProfiles from './components/layouts/dashboard/pages/DashboardProfiles';
+import DashboardUserProfiles from "./components/layouts/dashboard/pages/DashboardUserProfiles";
 
 /**
  * To ensure the authenticate state stays true even on page reload, we do the following:
@@ -67,6 +68,7 @@ class App extends Component {
 					<Route exact path="/dashboard" component={Dashboard} />
 					{/*Dashboard Routes*/}
 					<Route exact path="/dash-profile" component={DashboardProfiles}/>
+					<Route exact path="/dash-profiles" component={DashboardUserProfiles}/>
 				</div>
 			</Router>
 	    </Provider>

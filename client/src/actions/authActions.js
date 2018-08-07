@@ -76,7 +76,7 @@ export const logoutUser = () => dispatch => {
 	localStorage.removeItem( 'jwtToken' );
 
 	// When we pass the token value as false, setAuthToken() removes the Authorization token from the header of http request because user is logged out,
-	setAuthToken( false )
+	setAuthToken( false );
 
 	// Set the current user to an empty object, which will set the isAuthenticated state of redux store to false.
 	dispatch( setCurrentUser( {} ) );

@@ -78,12 +78,24 @@ class DashboardSidebar extends Component {
 							<i className="mdi mdi-crosshairs-gps menu-icon"></i>
 						</Link>
 					</li>
+					{/* Show Profile if its user*/}
+					{('user' === user.type) &&
 					<li className="nav-item oc-nav-item">
 						<Link className="nav-link" to="/dash-profile">
 							<span className="menu-title">Profile</span>
 							<i className="mdi mdi-account-card-details menu-icon"></i>
 						</Link>
 					</li>
+					}
+					{/* Show All User Profiles if its admin*/}
+					{ ( 'admin' === user.type ) &&
+					<li className="nav-item oc-nav-item">
+						<Link className="nav-link" to="/dash-profiles">
+							<span className="menu-title">User Profiles</span>
+							<i className="mdi mdi-account-card-details menu-icon"></i>
+						</Link>
+					</li>
+					}
 					{/*Logoout Link*/}
 					{ isAuthenticated && authLink }
 				</ul>

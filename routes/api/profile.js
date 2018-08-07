@@ -62,6 +62,81 @@ router.get( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res 
 } );
 
 /**
+ * @route GET api/profile/handle/:handle
+ * @desc Profile by handle
+ * @access public
+ */
+router.get( '/handle/:handle', ( req, res ) => {
+	const errors = {};
+	Profile.findOne( { handle: req.params.handle } )
+		.populate( 'user', [ 'name', 'avatar' ] )
+		.then( ( profile ) => {
+
+			// If profile not found
+			if ( ! profile ) {
+				errors.noprofile = 'Profile not found';
+				return res.status( 400 ).json( errors.noprofile );
+			}
+
+			// If profile found
+			res.status( 200 ).json( profile );
+		} )
+		.catch( ( err ) => {
+			res.status( 404 ).json( err );
+		} )
+} );
+
+/**
+ * @route GET api/profile/user/:user_id
+ * @desc Profile by user id
+ * @access public
+ */
+router.get( '/user/:user_id', ( req, res ) => {
+	const errors = {};
+	Profile.findOne( { user: req.params.user_id } )
+		.populate( 'user', [ 'name', 'email' ] )
+		.then( ( profile ) => {
+
+			// If profile not found
+			if ( ! profile ) {
+				errors.noprofile = 'Profile not found';
+				return res.status( 400 ).json( errors.noprofile );
+			}
+
+			// If profile found
+			res.status( 200 ).json( profile );
+		} )
+		.catch( ( err ) => {
+			res.status( 404 ).json( { profileError: 'There is no profile for this user' } );
+		} )
+} );
+
+/**
+ * @route GET api/profile/all
+ * @desc Get all Profiles
+ * @access public
+ */
+router.get( '/all', ( req, res ) => {
+	const errors = {};
+	Profile.find()
+		.populate( 'user', [ 'name', 'email' ] )
+		.then( ( profiles ) => {
+
+			// If profiles not found
+			if ( ! profiles ) {
+				errors.noprofile = 'Profiles not found';
+				return res.status( 400 ).json( errors.noprofile );
+			}
+
+			// If profile found
+			res.status( 200 ).json( profiles );
+		} )
+		.catch( ( err ) => {
+			res.status( 404 ).json( { profileError: 'There is no profile available' } );
+		} )
+} );
+
+/**
  * CREATE OR UPDATE CURRENT LOGGED IN USER's PROFILE
  * @route POST api/profile/
  * @desc Get current users profile

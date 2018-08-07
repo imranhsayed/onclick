@@ -30,6 +30,9 @@ module.exports = function validateProfileInput( data ) {
 	if ( Validator.isEmpty( data.gender ) ) {
 		errors.gender = 'Gender field is required';
 	}
+	if ( Validator.isEmpty( data.city ) ) {
+		errors.city = 'City field is required';
+	}
 	if ( Validator.isEmpty( data.address ) ) {
 		errors.address = 'Address field is required';
 	}

@@ -65,7 +65,8 @@ router.post( '/register', ( req, res ) => {
 			const newUser = new User({
 				name: req.body.name,
 				email: req.body.email,
-				password: req.body.password
+				password: req.body.password,
+				type: 'user'
 			});
 
 			/**
@@ -134,7 +135,7 @@ router.post( '/login', ( req, res ) => {
 						 * Create a jwt payload( actual data ) first containing user info to send to using jwt.sign()
 						 * Since we have the user object available from then() promise callback, we can access all of its properties.
 						 */
-						const payload = { id: user.id, name: user.name, phone: user.phone };
+						const payload = { id: user.id, name: user.name, email: user.email, type: user.type };
 
 						/**
 						 * jwt.sign() takes the data passed in payload and signs it, creates a hash and returns a token value.
