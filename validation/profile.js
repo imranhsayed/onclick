@@ -12,9 +12,13 @@ module.exports = function validateProfileInput( data ) {
 	 * Similarly we do it for password.
 	 */
 	data.handle = ( ! isEmpty( data.handle ) ) ? data.handle : '';
+	data.business = ( ! isEmpty( data.business ) ) ? data.business : '';
 	data.category = ( ! isEmpty( data.category ) ) ? data.category : '';
+	data.description = ( ! isEmpty( data.description ) ) ? data.description : '';
+	data.phone = ( ! isEmpty( data.phone ) ) ? data.phone : '';
 	data.gender = ( ! isEmpty( data.gender ) ) ? data.gender : '';
 	data.city = ( ! isEmpty( data.city ) ) ? data.city : '';
+	data.state = ( ! isEmpty( data.state ) ) ? data.state : '';
 	data.address = ( ! isEmpty( data.address ) ) ? data.address : '';
 
 	// // If the length of the handle is not between 6 to 30 char then set errors.handle
@@ -24,14 +28,26 @@ module.exports = function validateProfileInput( data ) {
 	if ( Validator.isEmpty( data.handle ) ) {
 		errors.handle = 'Handle field is required';
 	}
+	if ( Validator.isEmpty( data.business ) ) {
+		errors.business = 'Business field is required';
+	}
 	if ( Validator.isEmpty( data.category ) ) {
 		errors.category = 'Category field is required';
+	}
+	if ( Validator.isEmpty( data.phone ) ) {
+		errors.phone = 'Phone field is required';
 	}
 	if ( Validator.isEmpty( data.gender ) ) {
 		errors.gender = 'Gender field is required';
 	}
+	if ( Validator.isEmpty( data.description ) ) {
+		errors.description = 'Description field is required';
+	}
 	if ( Validator.isEmpty( data.city ) ) {
 		errors.city = 'City field is required';
+	}
+	if ( Validator.isEmpty( data.state ) ) {
+		errors.state = 'State field is required';
 	}
 	if ( Validator.isEmpty( data.address ) ) {
 		errors.address = 'Address field is required';

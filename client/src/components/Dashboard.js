@@ -17,12 +17,15 @@ class Dashboard extends Component {
 	}
 
 	render(){
+		console.log( this.props.auth );
 		return(
 			<div className="container-scroller">
 				<DashboardNav/>
 				<div className="container-fluid page-body-wrapper">
 					<DashboardSidebar/>
+					{('admin' === this.props.auth.user.type) &&
 					<DashboardHome/>
+					}
 				</div>
 			</div>
 		);

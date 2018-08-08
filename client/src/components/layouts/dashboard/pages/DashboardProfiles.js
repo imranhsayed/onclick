@@ -55,7 +55,8 @@ class DashboardProfiles extends Component {
 	};
 	// https://www.youtube.com/watch?v=XeiOnkEI7XI
 	fileUploadHandler = ( event ) => {
-		let name = '', email = '', category = '', subCategory = '', subCatLevel2 = '', gender = '', city = '', address = '';
+		let name = '', email = '', business = '', category = '', subCategory = '', subCatLevel2 = '',
+			description = '', state = '', gender = '', phone = '', city = '', address = '';
 		event.preventDefault();
 		const formData = new FormData();
 		// console.log( this.state.selectedFile );
@@ -65,9 +66,13 @@ class DashboardProfiles extends Component {
 		// If we have previous profile get the previous profile data
 		if ( ( null !== this.state.currentUserProfile ) ) {
 			name = this.state.currentUserProfile.user.name;
+			business = this.state.currentUserProfile.business;
+			description = this.state.currentUserProfile.description;
+			phone = this.state.currentUserProfile.phone;
 			gender = this.state.currentUserProfile.gender;
 			city = this.state.currentUserProfile.city;
 			address = this.state.currentUserProfile.address;
+			state = this.state.currentUserProfile.state;
 			category = this.state.currentUserProfile.category;
 			subCategory = this.state.currentUserProfile.subCategory;
 			subCatLevel2 = this.state.currentUserProfile.subCatLevel2;
@@ -76,12 +81,16 @@ class DashboardProfiles extends Component {
 		// Create an object profile whose property values will be equal to the new one if user has entered or the existing one if he hasn't.
 		const profile = {
 			handle: this.props.auth.user.id,
+			business: ( this.state.business ) ? this.state.business : business,
+			phone: ( this.state.phone ) ? this.state.phone : phone,
 			gender: ( this.state.gender ) ? this.state.gender : gender,
 			city: ( this.state.city ) ? this.state.city : city,
+			state: ( this.state.state ) ? this.state.state : state,
 			address: ( this.state.address ) ? this.state.address : address,
 			category: ( this.state.category ) ? this.state.category : category,
 			subCategory: ( this.state.subCategory ) ? this.state.subCategory : subCategory,
 			subCatLevel2: ( this.state.subCatLevel2 ) ? this.state.subCatLevel2 : subCatLevel2,
+			description: ( this.state.description ) ? this.state.description : description,
 		};
 		console.log( profile );
 		
@@ -124,21 +133,24 @@ class DashboardProfiles extends Component {
 		}, 3000 );
 	};
 
-
-
-
 	render() {
-		let name = '', email = '', category = '', subCategory = '', subCatLevel2 = '', gender = '', city = '', address = '';
+		let name = '', email = '', business = '', category = '', subCategory = '', subCatLevel2 = '',
+			description = '', gender = '', city = '', phone = '', state = '', address = '';
 		const { user } = this.props.auth;
 		const errors = this.state.errors;
 		name = user.name;
 		email = user.email;
 		if ( ( null !== this.state.currentUserProfile ) ) {
+			business = this.state.currentUserProfile.business;
+			phone = this.state.currentUserProfile.phone;
 			gender = this.state.currentUserProfile.gender;
 			city = this.state.currentUserProfile.city;
+			state = this.state.currentUserProfile.state;
 			address = this.state.currentUserProfile.address;
+			category = this.state.currentUserProfile.category;
 			subCategory = this.state.currentUserProfile.subCategory;
 			subCatLevel2 = this.state.currentUserProfile.subCatLevel2;
+			description = this.state.currentUserProfile.description;
 		}
 		return(
 			<div className="container-scroller">
@@ -162,6 +174,17 @@ class DashboardProfiles extends Component {
 										<label htmlFor="exampleInputName1">Email</label>
 										<input type="email" className="form-control" id="exampleInputName1" placeholder="Name" defaultValue={ email } readOnly/>
 									</div>
+
+									<div className="form-group">
+										<label htmlFor="exampleInputCity1">Business Name</label>
+										<input type="text"
+										       className={ classnames( 'form-control', {
+											       'is-invalid': errors.business
+										       } ) }
+										       onChange={ this.onChange } name="business" defaultValue={business} id="exampleInputCity1" placeholder="Business Name"/>
+										{ errors.business && ( <div className="invalid-feedback">{ errors.business }</div> ) }
+									</div>
+
 									<div className="form-group">
 										<label htmlFor="exampleSelectGender">Category</label>
 										<select
@@ -198,6 +221,24 @@ class DashboardProfiles extends Component {
 										</select>
 									</div>
 									<div className="form-group">
+										<label htmlFor="exampleInputCity1">Business Description</label>
+										<input type="text"
+										       className={ classnames( 'form-control', {
+											       'is-invalid': errors.description
+										       } ) }
+										       onChange={ this.onChange } name="description" defaultValue={description} id="exampleInputCity1" placeholder="Business Description"/>
+										{ errors.description && ( <div className="invalid-feedback">{ errors.description }</div> ) }
+									</div>
+									<div className="form-group">
+										<label htmlFor="exampleInputCity1">Phone/Mobile</label>
+										<input type="text"
+										       className={ classnames( 'form-control', {
+											       'is-invalid': errors.phone
+										       } ) }
+										       onChange={ this.onChange } name="phone" defaultValue={phone} id="exampleInputCity1" placeholder="Phone/Mobile No"/>
+										{ errors.phone && ( <div className="invalid-feedback">{ errors.phone }</div> ) }
+									</div>
+									<div className="form-group">
 										<label htmlFor="exampleSelectGender">Gender</label>
 										<select
 											className={ classnames( 'form-control', {
@@ -222,6 +263,15 @@ class DashboardProfiles extends Component {
 										    } ) }
 										    onChange={ this.onChange } name="city" defaultValue={city} id="exampleInputCity1" placeholder="Location"/>
 										{ errors.city && ( <div className="invalid-feedback">{ errors.city }</div> ) }
+									</div>
+									<div className="form-group">
+										<label htmlFor="exampleInputCity1">State</label>
+										<input type="text"
+										       className={ classnames( 'form-control', {
+											       'is-invalid': errors.state
+										       } ) }
+										       onChange={ this.onChange } name="state" defaultValue={state} id="exampleInputCity1" placeholder="State"/>
+										{ errors.state && ( <div className="invalid-feedback">{ errors.state }</div> ) }
 									</div>
 									<div className="form-group">
 										<label htmlFor="exampleInputCity1">Address</label>

@@ -12,6 +12,10 @@ const ProfileSchema = new Schema({
 		required: true,
 		max: 40
 	},
+	business: {
+		type: String,
+		required: true
+	},
 	category: {
 		type: String,
 		required: true
@@ -22,11 +26,23 @@ const ProfileSchema = new Schema({
 	subCatLevel2: {
 		type: String
 	},
+	description: {
+		type: String,
+		required: true
+	},
+	phone: {
+		type: String,
+		required: true
+	},
 	gender: {
 		type: String,
 		required: true
 	},
 	city: {
+		type: String,
+		required: true
+	},
+	state: {
 		type: String,
 		required: true
 	},

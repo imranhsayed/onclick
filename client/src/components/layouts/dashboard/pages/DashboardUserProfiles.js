@@ -19,6 +19,7 @@ class DashboardUserProfiles extends Component {
 		 */
 		axios.get( '/api/profile/all', this.props.auth )
 			.then( res => {
+				console.log( 'camein', res.data );
 				// Once we get the response containing the currentUserProfile data, we set the state value of currentUserProfile to the received data.
 				this.setState({
 					profiles: res.data
@@ -32,7 +33,7 @@ class DashboardUserProfiles extends Component {
 		const { user } = this.props.auth;
 		const errors = this.state.errors;
 		name = user.name;
-		console.log( this.state.profiles );
+		console.log( 'profiles', this.state.profiles );
 		return(
 			<div className="container-scroller">
 				<DashboardNav/>
@@ -42,33 +43,44 @@ class DashboardUserProfiles extends Component {
 						<div className="col-12 grid-margin">
 							<div className="card">
 								<div className="card-body">
-									<h4 className="card-title">Recent Tickets</h4>
+									<h4 className="card-title">Users Profiles</h4>
 									<div className="table-responsive">
 										<table className="table">
 											<thead>
 											<tr>
 												<th>Name</th>
+												<th>Business Name</th>
 												<th>Email</th>
 												<th>Category</th>
 												<th>Sub Category</th>
 												<th>Sub Category Lvl2</th>
-												<th>Gender</th>
+												<th>Phone</th>
 												<th>City</th>
+												<th>State</th>
 												<th>Address</th>
+												<th>Gender</th>
 											</tr>
 											</thead>
 											<tbody>
-											{ this.state.profiles && (
-												<tr>
-													{
-														this.profiles.map( ( item ) => {
-															return (
-																<td key={item}> { item }</td>
-															);
-														} )
-													}
-												</tr>
-											) }
+												{ this.state.profiles && (
+													this.state.profiles.map( ( item ) => {
+														return (
+															<tr key={item.user._id} >
+																<td> { item.user.name }</td>
+																<td> { item.business }</td>
+																<td> { item.user.email }</td>
+																<td> { item.category }</td>
+																<td> { item.subCategory }</td>
+																<td> { item.subCatLevel2 }</td>
+																<td> { item.phone }</td>
+																<td> { item.city }</td>
+																<td> { item.state }</td>
+																<td> { item.address }</td>
+																<td> { item.gender }</td>
+															</tr>
+														);
+													} )
+												) }
 											</tbody>
 										</table>
 									</div>

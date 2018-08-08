@@ -155,11 +155,15 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 	const profileFields = {};
 	profileFields.user = req.user.id;
 	profileFields.handle = ( req.body.handle ) ? req.body.handle : '';
+	profileFields.business = ( req.body.business ) ? req.body.business : '';
 	profileFields.category = ( req.body.category ) ? req.body.category : '';
 	profileFields.subCategory = ( req.body.subCategory ) ? req.body.subCategory : '';
 	profileFields.subCatLevel2 = ( req.body.subCatLevel2 ) ? req.body.subCatLevel2 : '';
+	profileFields.description = ( req.body.description ) ? req.body.description : '';
+	profileFields.phone = ( req.body.phone ) ? req.body.phone : '';
 	profileFields.gender = ( req.body.gender ) ? req.body.gender : '';
 	profileFields.city = ( req.body.city ) ? req.body.city : '';
+	profileFields.state = ( req.body.state ) ? req.body.state : '';
 	profileFields.address = ( req.body.address ) ? req.body.address : '';
 
 
