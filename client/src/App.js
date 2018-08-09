@@ -79,7 +79,7 @@ class App extends Component {
 					<Route path="/subCategory/:slug" component={ProfileListings} />
 					<Route exact path="/profile" component={SingleProfile} />
 					{/* Dashboard Routes */}
-					<Route exact path="/dash-profile" component={DashboardProfiles}/>
+					<Switch><PrivateRoute exact path="/create-profile" component={DashboardProfiles} /></Switch>
 					<Route exact path="/dash-profiles" component={DashboardUserProfiles}/>
 				</div>
 			</Router>

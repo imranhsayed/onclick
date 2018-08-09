@@ -29,6 +29,12 @@ class DashboardProfiles extends Component {
 
 	}
 
+	componentWillReceiveProps( nextProps ) {
+		if ( nextProps ) {
+		    this.setState( { errors: nextProps.errors } );
+		}
+	}
+
 	onChange( event ) {
 		/**
 		 * Change the state of name property.

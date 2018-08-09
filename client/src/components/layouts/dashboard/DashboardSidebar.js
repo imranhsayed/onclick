@@ -83,7 +83,7 @@ class DashboardSidebar extends Component {
 					{/* Show Profile if its user*/}
 					{('user' === user.type) &&
 					<li className="nav-item oc-nav-item">
-						<Link className="nav-link" to="/dash-profile">
+						<Link className="nav-link" to="/create-profile">
 							<span className="menu-title">Profile</span>
 							<i className="mdi mdi-account-card-details menu-icon"></i>
 						</Link>
