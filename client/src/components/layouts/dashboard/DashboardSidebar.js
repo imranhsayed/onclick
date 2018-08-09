@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from "../../../actions/authActions";
+import { getCurrentProfile } from "../../../actions/profileActions";
 
 class DashboardSidebar extends Component {
 
@@ -17,6 +18,7 @@ class DashboardSidebar extends Component {
 	render(){
 
 		const { isAuthenticated, user } = this.props.auth;
+		console.log( 'prof', this.props.profileData.profile );
 		const authLink = (
 			<li className="nav-item oc-nav-item">
 				<a className="nav-link" href="" onClick={ this.onLogoutClick.bind( this ) }>
@@ -37,7 +39,7 @@ class DashboardSidebar extends Component {
 							</div>
 							<div className="nav-profile-text d-flex flex-column">
 								<span className="font-weight-bold mb-2">{ user.name }</span>
-								<span className="text-secondary text-small">Estate Agent</span>
+								<span className="text-secondary text-small">{ this.props.profileData.profile && this.props.profileData.profile.business }</span>
 							</div>
 							<i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
 						</a>
@@ -106,11 +108,14 @@ class DashboardSidebar extends Component {
 
 DashboardSidebar.propTypes = {
 	logoutUser: PropTypes.func.isRequired,
-	auth: PropTypes.object.isRequired
+	getCurrentProfile: PropTypes.func.isRequired,
+	auth: PropTypes.object.isRequired,
+	profileData: PropTypes.object.isRequired
 };
 
 const mapStateToProps = ( state ) => ({
-	auth: state.auth
+	auth: state.auth,
+	profileData: state.profile
 });
 
-export default connect( mapStateToProps, { logoutUser } )( DashboardSidebar );
+export default connect( mapStateToProps, { logoutUser, getCurrentProfile } )( DashboardSidebar );

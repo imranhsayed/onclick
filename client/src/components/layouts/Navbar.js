@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from "../../actions/authActions";
+import { clearCurrentProfile } from "../../actions/profileActions";
 
 class Navbar extends Component {
 
 	onLogoutClick( event ) {
 		event.preventDefault();
 		this.props.logoutUser();
+		this.props.clearCurrentProfile();
 
 		// Redirects the user to login page after the user logs out.
 		window.location.href = '/login';
@@ -50,7 +52,7 @@ class Navbar extends Component {
 
 					<div id="onclick-logo col-md-1 text-center">
 						<Link to="/" className="navbar-brand">
-							<img src="img/header/onclickbiz-logo.png" className="img-fluid home-header-logo" alt="test"/>
+							<img src="../img/header/onclickbiz-logo.png" className="img-fluid home-header-logo" alt="test"/>
 						</Link>
 					</div>
 
@@ -104,6 +106,7 @@ class Navbar extends Component {
 
 Navbar.propTypes = {
 	logoutUser: PropTypes.func.isRequired,
+	clearCurrentProfile: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired
 };
 
@@ -112,4 +115,4 @@ const mapStateToProps = ( state ) => ({
 });
 
 
-export default connect( mapStateToProps, { logoutUser } )( Navbar );
+export default connect( mapStateToProps, { logoutUser, clearCurrentProfile } )( Navbar );

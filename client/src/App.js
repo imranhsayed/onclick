@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser } from './actions/authActions';
@@ -9,11 +9,17 @@ import { Provider } from 'react-redux';
 import { logoutUser } from "./actions/authActions";
 import store from './store';
 
+import PrivateRoute from './components/common/PrivateRoute';
+
 import Register from "./components/Register";
 import PostJob from "./components/PostJob";
 import Dashboard from "./components/Dashboard";
 import DashboardProfiles from './components/layouts/dashboard/pages/DashboardProfiles';
 import DashboardUserProfiles from "./components/layouts/dashboard/pages/DashboardUserProfiles";
+import Categories from "./components/Categories";
+import ProfileListings from "./components/ProfileListings";
+import SingleProfile from "./components/SingleProfile";
+import {clearCurrentProfile} from "./actions/profileActions";
 
 /**
  * To ensure the authenticate state stays true even on page reload, we do the following:
@@ -45,6 +51,7 @@ if ( localStorage.jwtToken ) {
 	const currentTime = Date.now() / 1000;
 	if ( decoded.exp < currentTime ) {
 		store.dispatch( logoutUser() );
+		store.dispatch( clearCurrentProfile() );
 
 		// Todo: Clear Current profile and redirect to login
 		// store.dispatch( clearCurrentProfile() );
@@ -58,15 +65,20 @@ if ( localStorage.jwtToken ) {
 class App extends Component {
   render() {
     return (
+    	// Provide provides the store to its child components inside of it.
     	<Provider store={ store }>
 			<Router>
 				<div className="App">
 					<Route exact path="/" component={Home}/>
 					<Route exact path="/login" component={Login} />
 					<Route exact path="/register" component={Register} />
+					<Route exact path="/categories" component={Categories} />
 					<Route exact path="/post-job" component={PostJob} />
-					<Route exact path="/dashboard" component={Dashboard} />
-					{/*Dashboard Routes*/}
+					<Switch><PrivateRoute exact path="/dashboard" component={Dashboard} /></Switch>
+					<Route path="/category/:slug" component={ProfileListings} />
+					<Route path="/subCategory/:slug" component={ProfileListings} />
+					<Route exact path="/profile" component={SingleProfile} />
+					{/* Dashboard Routes */}
 					<Route exact path="/dash-profile" component={DashboardProfiles}/>
 					<Route exact path="/dash-profiles" component={DashboardUserProfiles}/>
 				</div>

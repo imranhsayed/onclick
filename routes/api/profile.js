@@ -69,7 +69,7 @@ router.get( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res 
 router.get( '/handle/:handle', ( req, res ) => {
 	const errors = {};
 	Profile.findOne( { handle: req.params.handle } )
-		.populate( 'user', [ 'name', 'avatar' ] )
+		.populate( 'user', [ 'name', 'email' ] )
 		.then( ( profile ) => {
 
 			// If profile not found
@@ -85,6 +85,57 @@ router.get( '/handle/:handle', ( req, res ) => {
 			res.status( 404 ).json( err );
 		} )
 } );
+
+/**
+ * @route GET api/profile/category/:category
+ * @desc Profile by category
+ * @access public
+ */
+router.get( '/category/:category', ( req, res ) => {
+	const errors = {};
+	Profile.find( { category: req.params.category } )
+		.populate( 'user', [ 'name', 'email' ] )
+		.then( ( profile ) => {
+
+			// If profile not found
+			if ( ! profile ) {
+				errors.noprofile = 'Profile not found';
+				return res.status( 400 ).json( errors.noprofile );
+			}
+
+			// If profile found
+			res.status( 200 ).json( profile );
+		} )
+		.catch( ( err ) => {
+			res.status( 404 ).json( err );
+		} )
+} );
+
+/**
+ * @route GET api/profile/subCategory/:subCategory
+ * @desc Profile by handle
+ * @access public
+ */
+router.get( '/subCategory/:subCategory', ( req, res ) => {
+	const errors = {};
+	Profile.find( { subCategory: req.params.subCategory } )
+		.populate( 'user', [ 'name', 'email' ] )
+		.then( ( profile ) => {
+
+			// If profile not found
+			if ( ! profile ) {
+				errors.noprofile = 'Profile not found';
+				return res.status( 400 ).json( errors.noprofile );
+			}
+
+			// If profile found
+			res.status( 200 ).json( profile );
+		} )
+		.catch( ( err ) => {
+			res.status( 404 ).json( err );
+		} )
+} );
+
 
 /**
  * @route GET api/profile/user/:user_id

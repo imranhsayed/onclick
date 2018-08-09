@@ -1,0 +1,12 @@
+.oc-categories-card {
+	padding: 2.5rem 1.5rem !important;
+}
+
+.oc-card-subcategory {
+	font-size: 14px !important;
+	color: #555555 !important;
+}
+
+.oc-card-subcategory:hover {
+	color: #0056b3 !important;
+}
