@@ -109,7 +109,8 @@ class DashboardProfiles extends Component {
 					this.ocShowAlert( 'Profile Updated', '#3089cf' );
 					this.setState({
 						errors: {}
-					})
+					});
+					this.props.history.push( '/dashboard' );
 				}
 			} )
 			.catch( ( error ) => {

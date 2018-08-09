@@ -1,92 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loginUser } from "./../actions/authActions";
 import { Link } from 'react-router-dom';
 import CategoriesBanner from './layouts/categories/CategoriesBanner';
-import classnames from "classnames";
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";
+import { getProfiles } from './../actions/profileActions'
+import ProfileItems from "./layouts/profile/ProfileItems";
 
 class ProfileListings extends Component {
 
-	constructor() {
-		super();
-		this.state = {
-			email: '',
-			password: '',
-			errors: {}
-		};
-
-		this.onChange = this.onChange.bind( this );
-		this.onSubmit = this.onSubmit.bind( this );
-	}
-
-	// Redirect the user to dashboard if he is logged in
 	componentDidMount() {
-		// If the user is logged in
-		if ( this.props.auth.isAuthenticated ) {
-			// redirect the user to the dashboard
-			this.props.history.push( '/dashboard' );
-		}
-	}
-
-	componentWillReceiveProps( nextProps ) {
-		if ( nextProps.auth.isAuthenticated ) {
-			// After he is authenticated and he logs in , redirect him to dashboard
-			this.props.history.push( '/dashboard' );
-		}
-		if ( nextProps.errors ) {
-			this.setState( { errors: nextProps.errors } )
-		}
-	}
-
-	/**
-	 * Whenever user types something in the input element, we will grab that value and set the
-	 * state variables to that value, using this function.
-	 * this.setState() changes the state of a component
-	 * Note that name here is the 'name' attribute and 'value' here is the value attribute of the form.
-	 * meaning event.target.name is equal to the value of the 'name' attribute of that element, and
-	 * event.target.value is equal to the value of the 'value' attribute of that element
-	 *
-	 * @param event
-	 */
-	onChange( event ) {
-		/**
-		 * Change the state of name property.
-		 * event.target.name will give you the name of the input element, and
-		 * event.target.value will give you the value of the input element.
-		 */
-		this.setState( { [ event.target.name ]: event.target.value } );
-	}
-
-	onSubmit( event ) {
-		event.preventDefault();
-		const user = {
-			email: this.state.email,
-			password: this.state.password
-		};
-
-		// axios.post( '/api/users/login', user )
-		// 	.then( ( res ) => console.log( res.data ) )
-		// 	.catch( ( error ) => this.setState( { errors: error.response.data } ) );
-
-		console.log( user );
-
-		// Call the loginUser() action from actions/authActions.js
-		this.props.loginUser( user );
+		this.props.getProfiles();
 	}
 
 	render(){
 
-		const { errors } = this.state;
+		const { profiles, loading } = this.props.profile;
+		console.log( 'myprof', profiles );
+		let profileItems = '';
+		if ( null === profiles || loading ) {
+			profileItems = <img src="./../img/spinner.gif" style={{ width: '200px', margin: 'auto', display: 'block' }}/>;
+		} else {
+			if ( profiles.length ) {
+				profileItems = profiles.map( ( profile ) => (
+					<ProfileItems key={ profile._id } profile={profile }/>
+				) );
+			} else {
+				profileItems = <h4>No Profiles found</h4>;
+			}
+		}
+
 		return(
 			<div>
 				<Navbar/>
 				<CategoriesBanner/>
 				<div className="container forms-section">
 					<div className="row forms-section-row" >
-					Profile Listings
+						<h1 className="display-4 text-center">Developers Profile</h1>
+						{profileItems}
 					</div>
 				</div>
 				<Footer/>
@@ -96,14 +48,14 @@ class ProfileListings extends Component {
 }
 
 ProfileListings.propTypes = {
-	loginUser: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
-	errors: PropTypes.isRequired
+	getProfiles: PropTypes.func.isRequired,
+	profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = ( state ) => ({
 	auth: state.auth,
-	errors: state.errors
+	profile: state.profile,
 });
 
-export default connect( mapStateToProps, { loginUser } )( ProfileListings );
+export default connect( mapStateToProps, { getProfiles } )( ProfileListings );

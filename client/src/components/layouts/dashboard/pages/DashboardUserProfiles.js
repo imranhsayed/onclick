@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import DashboardNav from './../DashboardNav';
 import DashboardSidebar from './../DashboardSidebar';
+import Moment from 'react-moment';
 
 class DashboardUserProfiles extends Component {
 
@@ -58,6 +59,7 @@ class DashboardUserProfiles extends Component {
 												<th>City</th>
 												<th>State</th>
 												<th>Address</th>
+												<th>Date</th>
 												<th>Gender</th>
 											</tr>
 											</thead>
@@ -76,6 +78,7 @@ class DashboardUserProfiles extends Component {
 																<td> { item.city }</td>
 																<td> { item.state }</td>
 																<td> { item.address }</td>
+																<td> <Moment format="YYYY/MM/DD">{item.date}</Moment> </td>
 																<td> { item.gender }</td>
 															</tr>
 														);

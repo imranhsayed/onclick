@@ -75,9 +75,8 @@ class App extends Component {
 					<Route exact path="/categories" component={Categories} />
 					<Route exact path="/post-job" component={PostJob} />
 					<Switch><PrivateRoute exact path="/dashboard" component={Dashboard} /></Switch>
-					<Route path="/category/:slug" component={ProfileListings} />
-					<Route path="/subCategory/:slug" component={ProfileListings} />
-					<Route exact path="/profile" component={SingleProfile} />
+					<Route exact path="/profile:handle" component={SingleProfile} />
+					<Route exact path="/profile-listings" component={ProfileListings} />
 					{/* Dashboard Routes */}
 					<Switch><PrivateRoute exact path="/create-profile" component={DashboardProfiles} /></Switch>
 					<Route exact path="/dash-profiles" component={DashboardUserProfiles}/>

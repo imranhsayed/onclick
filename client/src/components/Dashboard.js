@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 import DashboardNav from "./layouts/dashboard/DashboardNav";
 import DashboardSidebar from "./layouts/dashboard/DashboardSidebar";
 import DashboardHome from "./layouts/dashboard/DashboardHome";
+import ProfileActions from './layouts/dashboard/ProfileActions';
 import { logoutUser } from "./../actions/authActions";
 import { getCurrentProfile } from "../actions/profileActions";
+import { deleteAccount } from "../actions/profileActions";
 
 class Dashboard extends Component {
 
@@ -19,6 +21,10 @@ class Dashboard extends Component {
 			// redirect the user to the homepage
 			this.props.history.push( '/login' );
 		}
+	}
+
+	onDeleteClick() {
+		this.props.deleteAccount()
 	}
 
 	render(){
@@ -35,7 +41,22 @@ class Dashboard extends Component {
 			if ( Object.keys( profile ) .length ) {
 
 			    // Profile is present
-				dashboardContent = <h4>Present</h4>;
+				dashboardContent = (
+					<div className="container">
+						<p className="lead text-muted">Welcome <Link to="{`/profile/$profile.handle`}">{ user.name }!</Link></p>
+						<div className="row">
+							<ProfileActions/>
+							<div className="col-md-4">
+								<div className="card bg-light mb-3" style={{ maxWidth: '20rem' }}>
+									<div className="card-header text-center">Delete Profile</div>
+									<div className="card-body text-center">
+										<button onClick={ this.onDeleteClick.bind( this ) } className="btn btn-gradient-danger btn-fw">Delete Profile</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				);
 			} else {
 
 				// Profile is not created
@@ -74,6 +95,7 @@ Dashboard.propTypes = {
 	logoutUser: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	getCurrentProfile: PropTypes.func.isRequired,
+	deleteAccount: PropTypes.func.isRequired,
 	profile: PropTypes.object.isRequired
 };
 
@@ -82,4 +104,4 @@ const mapStateToProps = ( state ) => ({
 	profile: state.profile
 });
 
-export default connect( mapStateToProps, { logoutUser, getCurrentProfile }  )( Dashboard );
+export default connect( mapStateToProps, { logoutUser, getCurrentProfile, deleteAccount }  )( Dashboard );

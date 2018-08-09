@@ -255,6 +255,21 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 		.catch( ( errors ) => res.json( errors ) )
 } );
 
+// @route   DELETE api/profile
+// @desc    Delete user and profile
+// @access  Private
+router.delete(
+	'/',
+	passport.authenticate('jwt', { session: false }),
+	(req, res) => {
+		Profile.findOneAndRemove({ user: req.user.id }).then(() => {
+			User.findOneAndRemove({ _id: req.user.id }).then(() =>
+				res.json({ success: true })
+			);
+		});
+	}
+);
+
 
 // We export the router so that the server.js file can pick it up
 module.exports = router;

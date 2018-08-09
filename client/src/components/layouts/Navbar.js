@@ -77,7 +77,7 @@ class Navbar extends Component {
 									<Link className="dropdown-item" to="/login">Login</Link>
 									<Link className="dropdown-item" to="/post-job">Post Free Job</Link>
 									<Link className="dropdown-item" to="/search-job">Search Job</Link>
-									<Link className="dropdown-item" to="/profile">Profile</Link>
+									<Link className="dropdown-item" to="/profile-listings">Product Listings</Link>
 									<Link className="dropdown-item" to="/product">Product</Link>
 									<Link className="dropdown-item" to="/detail-product">Detail Product</Link>
 									<Link className="dropdown-item" to="/categories">Categories</Link>
