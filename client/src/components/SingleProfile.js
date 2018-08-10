@@ -20,20 +20,24 @@ class SingleProfile extends Component {
 			this.props.getProfileByHandle( handle );
 		}
 	}
-	//
-	// componentWillReceiveProps( nextProps ) {
-	// 	if ( nextProps.auth.isAuthenticated ) {
-	// 		// After he is authenticated and he logs in , redirect him to dashboard
-	// 		this.props.history.push( '/dashboard' );
-	// 	}
-	// 	if ( nextProps.errors ) {
-	// 		this.setState( { errors: nextProps.errors } )
-	// 	}
-	// }
-
-
 
 	render(){
+		const { profile, loading } = this.props.profile;
+		let profileContent;
+
+		if ( null === profile || loading ) {
+			profileContent = <img src="./../img/spinner.gif" style={{ width: '200px', margin: 'auto', display: 'block' }}/>;
+		} else {
+			profileContent = (
+				<div className="container-fluid pd-section-one-container">
+					<div className="row pd-section-one-row">
+						<ProfileSlider profile={ profile }/>
+						<ProfileDetails profile={ profile }/>
+					</div>
+					<ProfileDescription profile={ profile }/>
+				</div>
+			);
+		}
 
 		return(
 			<div>
@@ -41,13 +45,7 @@ class SingleProfile extends Component {
 				<SingleProfileBanner/>
 				<div className="container forms-section">
 					<div className="row forms-section-row" >
-						<div className="container-fluid pd-section-one-container">
-							<div className="row pd-section-one-row">
-								<ProfileSlider/>
-								<ProfileDetails/>
-							</div>
-							<ProfileDescription/>
-						</div>
+						{ profileContent }
 					</div>
 				</div>
 				<Footer/>
@@ -58,11 +56,11 @@ class SingleProfile extends Component {
 
 SingleProfile.propTypes = {
 	getProfileByHandle: PropTypes.func.isRequired,
-	profile: PropTypes.object.isRequired,
+	profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = ( state ) => ({
-	profile: state.profile,
+	profile: state.profile
 });
 
 export default connect( mapStateToProps, { getProfileByHandle }  )( SingleProfile );

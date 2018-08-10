@@ -10,3 +10,16 @@
 .oc-card-subcategory:hover {
 	color: #0056b3 !important;
 }
+
+.onclick-navbar {
+	margin-bottom: -117px !important;
+}
+
+.search-btn-listing-page {
+	left: 188px;
+	top: 0;
+}
+
+.btn-post-job:hover, .btn-post-job:focus, .btn-post-job:active {
+	border: none;
+}

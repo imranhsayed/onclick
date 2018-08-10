@@ -1,49 +1,60 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import isEmpty from '../../../validation/is-empty';
 
-export default () => {
-	return (
-		<div className="col-md-6 pd-sec-one-details-text">
-			<div className="card">
-				<div className="card-body">
-					<div className="row">
-						<div className="col-12">
-							<h5 className="card-title">Apple Salon</h5>
-							<div className="row card-text-row">
-								<div className="col-12 mb-1 desc">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-										tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-										quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-										consequat.</p>
-								</div>
-								<div className="col-12 links pb-2">
-									<a href="#"><i className="fas fa-map-marker-alt"></i> Shanti Nagar, Pune</a>
-								</div>
-								<div className="col-12 col-md-6 links pb-2">
-									<a href="#"><i className="fa fa-user"></i> Satish Sharma</a>
-								</div>
-								<div className="col-12 col-md-6 links pb-2">
-									<a href="#"><i className="fas fa-folder-open"></i> Verified</a>
-								</div>
-								<div className="col-12 categories pt-2">
-									<p>Categories: Salon</p>
-								</div>
-								<div className="col-12 pt-1 fa-star-icons pb-2">
-									<a href="#">
-										<p><i className="fas fa-star"></i> <i className="fas fa-star"></i> <i className="fas fa-star"></i> <i className="fas fa-star"></i> <i className="fas fa-star-half-alt"></i>
-											&nbsp; 1 Review</p></a>
-								</div>
-								<div className="col-12 social-icons">
-									<p className="mb-0">Share</p>
-									<a href="#"><i className="fab fa-facebook facebook"></i></a>
-									<a href="#"><i className="fab fa-twitter-square twitter"></i></a>
-									<a href="#"><i className="fab fa-linkedin linkedin"></i></a>
-									<a href="#"><i className="fab fa-google-plus-square google-plus-square"></i></a>
+class ProfileDetails extends Component {
+	render() {
+		const { profile } = this.props;
+		console.log( profile );
+
+		return (
+			<div className="col-md-6 pd-sec-one-details-text">
+				<div className="card">
+					<div className="card-body">
+						<div className="row">
+							<div className="col-12">
+								<h5 className="card-title">{ profile.business }</h5>
+								<div className="row card-text-row">
+									<div className="col-12 mb-1 desc">
+										<p>{ profile.description }</p>
+									</div>
+									<div className="col-12 links pb-2">
+										<Link to="/"><i className="fas fa-map-marker-alt"></i> { profile.city }, { profile.state }</Link>
+									</div>
+									<div className="col-12 col-md-6 links pb-2">
+										<Link to="/"><i className="fa fa-user"></i>{ profile.user.name }</Link>
+									</div>
+									<div className="col-12 col-md-6 links pb-2">
+										<Link to="/"><i className="fas fa-folder-open"></i> Verified</Link>
+									</div>
+									<div className="col-12 categories pt-2">
+										<p>Categories: { profile.category }</p>
+									</div>
+									<div className="col-12 pt-1 fa-star-icons pb-2">
+										<Link to="/">
+											<p><i className="fas fa-star"></i> <i className="fas fa-star"></i> <i className="fas fa-star"></i> <i className="fas fa-star"></i> <i className="fas fa-star-half-alt"></i>
+												&nbsp; 1 Review</p></Link>
+									</div>
+									<div className="col-12 social-icons">
+										<p className="mb-0">Share</p>
+										<Link to="/"><i className="fab fa-facebook facebook"></i></Link>
+										<Link to="/"><i className="fab fa-twitter-square twitter"></i></Link>
+										<Link to="/"><i className="fab fa-linkedin linkedin"></i></Link>
+										<Link to="/"><i className="fab fa-google-plus-square google-plus-square"></i></Link>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	);
+		);
+	}
 }
+
+ProfileDetails.propTypes = {
+	profile: PropTypes.object.isRequired
+};
+
+export default ProfileDetails;
