@@ -10,7 +10,6 @@ class ProfileItems extends Component {
 
 		return (
 			<div>
-				{/*hotel*/}
 				<div className="jumbotron listing-services-jumbotron p-0 wow pulse">
 					<div className="row">
 						<img src="../img/listing-hotel.jpg" className="col-12 col-sm-6"/>

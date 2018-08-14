@@ -57,13 +57,13 @@ class DashboardSidebar extends Component {
 						</Link>
 					</li>
 					<li className="nav-item oc-nav-item">
-						<Link className="nav-link" to="/dashboard">
+						<Link className="nav-link" to="/post-job">
 							<span className="menu-title">Post Job</span>
 							<i className="mdi mdi-file menu-icon"></i>
 						</Link>
 					</li>
 					<li className="nav-item oc-nav-item">
-						<Link className="nav-link" to="/dashboard">
+						<Link className="nav-link" to="/post-job-listings">
 							<span className="menu-title">Posted Jobs</span>
 							<i className="mdi mdi-window-restore menu-icon"></i>
 						</Link>
@@ -78,6 +78,12 @@ class DashboardSidebar extends Component {
 						<Link className="nav-link" to="/dashboard">
 							<span className="menu-title">Bids</span>
 							<i className="mdi mdi-crosshairs-gps menu-icon"></i>
+						</Link>
+					</li>
+					<li className="nav-item oc-nav-item">
+						<Link className="nav-link" to="/uploads">
+							<span className="menu-title">Uploads</span>
+							<i className="mdi mdi-file-image menu-icon"></i>
 						</Link>
 					</li>
 					{/* Show Profile if its user*/}

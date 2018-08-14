@@ -26,7 +26,8 @@ class PostJob extends Component {
 										<div className="form-group col-12 col-sm-8 mb-4">
 											<label for="budget" className="job-mobile-num-label mt-2 pl-3">What is your budget</label>
 											<div className="row budget-row">
-												<i className="fa fa-rupee-sign fa-job-rupee"></i>
+												<i className="fa fa-rupee-sign fa-job-rupee"
+												></i>
 												<input type="number" className="form-control col-5 mr-1" id="post-free-job-mobile-number" placeholder="Min"/>
 
 													<i className="fa fa-rupee-sign fa-job-rupee"></i>

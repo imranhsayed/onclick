@@ -2,26 +2,24 @@ const mongoose = require( 'mongoose' );
 const Schema = mongoose.Schema;
 
 // Create Schema
-const ProfileSchema = new Schema({
+const PostSchema = new Schema({
 	user: {
 		type: Schema.Types.ObjectId,
 		ref: 'users'
 	},
-	handle: {
+	title: {
 		type: String,
-		required: true,
-		max: 40
+		required: true
 	},
-	profileImage: {
-		type: String
+	name: {
+		type: String,
+		required: true
 	},
-	businessImage: {
-		type: String
+	email: {
+		type: String,
+		required: true
 	},
-	galleryImage: {
-		type: String
-	},
-	business: {
+	userId: {
 		type: String,
 		required: true
 	},
@@ -33,17 +31,23 @@ const ProfileSchema = new Schema({
 		type: String,
 	},
 	subCatLevel2: {
-		type: String
+		type: String,
 	},
 	description: {
 		type: String,
 		required: true
 	},
+	budgetMin: {
+		type: String,
+	},
+	budgetMax: {
+		type: String,
+	},
 	phone: {
 		type: String,
 		required: true
 	},
-	gender: {
+	area: {
 		type: String,
 		required: true
 	},
@@ -65,4 +69,4 @@ const ProfileSchema = new Schema({
 	}
 });
 
-module.exports = Profile = mongoose.model( 'profile', ProfileSchema );
+module.exports = Post = mongoose.model( 'post', PostSchema );

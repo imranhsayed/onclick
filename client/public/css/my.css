@@ -23,3 +23,43 @@
 .btn-post-job:hover, .btn-post-job:focus, .btn-post-job:active {
 	border: none;
 }
+
+/*home*/
+.footer1 .subscribe-colm .subscribe-colm-row .email-sub-section-five .btn-home-search{
+	line-height: 0;
+}
+
+.btn {
+	padding: 0.875rem 1.5rem;
+}
+
+.btn-post-job-header {
+	width: 103px;
+	line-height: 0.6 !important;
+}
+
+.user-name-home {
+	color: #fff;
+	padding-left: 18px;
+}
+
+.btn-primary {
+	background-color: #34A8DD;
+	border-color: #34A8DD;
+}
+
+/*product*/
+.forms-section-row .card-body i {
+	top: 0;
+	padding-right: 20px;
+}
+
+.pd-section-one-container .pd-sec-one-details-text .card-text-row .fa-star-icons a i {
+	padding-right: 5px;
+}
+
+/*login form*/
+.fa-forms-user,
+.fa-forms-lock {
+	top: 27px !important;
+}

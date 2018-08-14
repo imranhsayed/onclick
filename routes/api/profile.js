@@ -1,6 +1,7 @@
 const express = require( 'express' );
 const mongoose = require( 'mongoose' );
 const passport = require( 'passport' );
+const multer = require( 'multer' );
 
 // Load Profile model
 const Profile = require( '../../models/Profile' );
@@ -8,6 +9,41 @@ const Profile = require( '../../models/Profile' );
 const User = require( '../../models/User' );
 
 const validateProfileInput = require( '../../validation/profile' );
+
+/**
+ * Set storage Engine
+ * destination is where uploaded file will be stored.
+ * cb is callback , 1st param is error, second is file name
+ * For file name we are concatenating input name with current timestamp plus ext ( using path.extname )
+ */
+const storage = multer.diskStorage({
+	destination: function ( req, file, cb ) {
+		cb( null, './client/public/uploads/' )
+	},
+	filename: function( req, file, cb ) {
+		cb( null, new Date().toISOString() + file.originalname )
+	}
+});
+
+// Set filters for the type of files to be accepted
+const fileFilter = ( req, file, cb ) => {
+	// Rejects a file
+
+	// If the file is of the below mime type then accept the file.
+	if ( file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' ) {
+		// Accepts the file
+		cb( null, true );
+	} else {
+		cb( null, false );
+	}
+};
+
+// 1024 * 1024 * 5 = 5mb
+const upload = multer({
+	storage: storage,
+	limits: { fileSize: 1024 * 1024 * 5 },
+	fileFilter: fileFilter
+});
 
 /**
  * express.Router() creates modular, mountable route handlers
@@ -201,7 +237,7 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 	if ( ! isValid ) {
 		return res.status( 400 ).json( errors );
 	}
-	
+
 	// Get fields
 	const profileFields = {};
 	profileFields.user = req.user.id;
@@ -269,6 +305,11 @@ router.delete(
 		});
 	}
 );
+
+// @route   DELETE api/uploads
+router.post( '/uploads', upload.single( 'profileImg' ), ( req, res ) => {
+	console.log('req_file', req.file);
+});
 
 
 // We export the router so that the server.js file can pick it up

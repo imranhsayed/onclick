@@ -31,7 +31,7 @@ class DashboardProfiles extends Component {
 
 	componentWillReceiveProps( nextProps ) {
 		if ( nextProps ) {
-		    this.setState( { errors: nextProps.errors } );
+			this.setState( { errors: nextProps.errors } );
 		}
 	}
 
@@ -99,7 +99,7 @@ class DashboardProfiles extends Component {
 			description: ( this.state.description ) ? this.state.description : description,
 		};
 		console.log( profile );
-		
+
 		// Save or update the data.
 		axios.post( '/api/profile', profile )
 			.then( res => {
@@ -198,7 +198,7 @@ class DashboardProfiles extends Component {
 											className={ classnames( 'form-control', {
 												'is-invalid': errors.category
 											} ) }
-										    onChange={ this.onChange } name="category" id="exampleSelectGender">
+											onChange={ this.onChange } name="category" id="exampleSelectGender">
 											<option value="">Select Category</option>
 											<option value="shopping">Shopping</option>
 											<option value="spa-and-saloon">Spa & Saloon</option>
@@ -259,16 +259,12 @@ class DashboardProfiles extends Component {
 										{ errors.gender && ( <div className="invalid-feedback">{ errors.gender }</div> ) }
 									</div>
 									<div className="form-group">
-										<label>File upload</label><br/>
-										<input type="file" name="img[]" onChange={this.fileSelectedHandler} className=""/>
-									</div>
-									<div className="form-group">
 										<label htmlFor="exampleInputCity1">City</label>
 										<input type="text"
-										    className={ classnames( 'form-control', {
-										        'is-invalid': errors.city
-										    } ) }
-										    onChange={ this.onChange } name="city" defaultValue={city} id="exampleInputCity1" placeholder="Location"/>
+										       className={ classnames( 'form-control', {
+											       'is-invalid': errors.city
+										       } ) }
+										       onChange={ this.onChange } name="city" defaultValue={city} id="exampleInputCity1" placeholder="Location"/>
 										{ errors.city && ( <div className="invalid-feedback">{ errors.city }</div> ) }
 									</div>
 									<div className="form-group">
@@ -296,6 +292,7 @@ class DashboardProfiles extends Component {
 						</div>
 					</div>
 				</div>
+
 			</div>
 		);
 	}
