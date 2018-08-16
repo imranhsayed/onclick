@@ -58,8 +58,7 @@ class PostForm extends Component {
 			state: this.state.state,
 			address: this.state.address,
 		};
-		console.log( newPost );
-		console.log( Object.keys( this.state.errors ).length );
+		// console.log( Object.keys( this.state.errors ).length );
 
 		this.props.addPost(newPost);
 

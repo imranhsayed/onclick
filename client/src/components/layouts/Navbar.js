@@ -31,7 +31,7 @@ class Navbar extends Component {
 		);
 		const userNameLink = (
 			<li className="nav-item user-name-home">
-				<span>Welcome</span>
+				<span>Welcome </span>
 				<span>{ user.name } !!</span>
 			</li>
 		);

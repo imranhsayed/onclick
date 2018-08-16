@@ -86,6 +86,7 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 		userId: req.body.userId,
 		category: req.body.category,
 		subCategory: req.body.subCategory,
+		subCatLevel2: req.body.subCatLevel2,
 		description: req.body.description,
 		budgetMin: req.body.budgetMin,
 		budgetMax: req.body.budgetMax,
@@ -97,6 +98,39 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 	});
 
 	newPost.save().then( post => res.json( post ) ).catch( errors => res.json( errors ) )
+} );
+
+/**
+ * @route POST api/posts/update/:id
+ * @desc Update the existing post job
+ * @access private
+ */
+router.post( '/update/:id', passport.authenticate( 'jwt', { session: false } ), ( req, res ) => {
+
+	const { errors, isValid } = validatePostInput( req.body );
+
+	// Check Validation
+	if ( ! isValid ) {
+		// If any errors
+		return res.status( 400 ).json( errors );
+	}
+
+	const postFields = {};
+	postFields.title = req.body.title;
+	postFields.category = req.body.category;
+	postFields.subCategory = req.body.subCategory;
+	postFields.description = req.body.description;
+	postFields.budgetMin = req.body.budgetMin;
+	postFields.budgetMax = req.body.budgetMax;
+	postFields.phone = req.body.phone;
+	postFields.area = req.body.area;
+	postFields.city = req.body.city;
+	postFields.state = req.body.state;
+	postFields.address = req.body.address;
+
+	Post.findOneAndUpdate( { _id: req.params.id }, { $set: postFields }, { new: true } )
+		.then( ( post ) => res.json( post ) )
+		.catch( ( errors ) => res.json( errors ) );
 } );
 
 

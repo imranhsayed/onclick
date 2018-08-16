@@ -34,7 +34,7 @@ class DashboardSidebar extends Component {
 					<li className="nav-item oc-nav-item nav-profile">
 						<a href="" className="nav-link">
 							<div className="nav-profile-image">
-								<img src="images/faces/face1.jpg" alt="profile"/>
+								<img src="./../images/faces/face1.jpg" alt="profile"/>
 									<span className="login-status online"></span>
 							</div>
 							<div className="nav-profile-text d-flex flex-column">

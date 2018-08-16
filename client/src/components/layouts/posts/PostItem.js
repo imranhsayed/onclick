@@ -20,31 +20,31 @@ class DashboardPostItem extends Component {
 									<Link to="/"><i className="far fa-heart"></i></Link>
 								</div>
 							</h5>
-							<Link to={ `/posts/${post.handle}` }><h3>{ post.title }</h3></Link>
+							<Link to={`/single-post/${post._id}`}><h3>{ post.title }</h3></Link>
 							<div className="row">
 								<div class="col-12">
-									<Link to={ `/posts/${post.id}` }>
+									<Link to={`/single-post/${post._id}`}>
 										<p>
 											Posted <Moment fromNow>{post.date}</Moment>
 										</p>
 									</Link>
 								</div>
 								<div className="col-12 col-md-6">
-									<Link to={ `/posts/${post.id}` }>
+									<Link to={`/single-post/${post._id}`}>
 										<p>
 											<i className="fas fa-map-marker-alt"></i> { post.city }, { post.state }
 										</p>
 									</Link>
 								</div>
 								<div className="col-12 col-md-6">
-									<Link to={ `/posts/${post.id}` }>
+									<Link to={`/single-post/${post._id}`}>
 										<p>
 											<i className="far fa-user"></i> {post.name}
 										</p>
 									</Link>
 								</div>
 								<div className="col-12 col-md-6">
-									<Link to={ `/posts/${post.id}` }>
+									<Link to={`/single-post/${post._id}`}>
 										<p style={{ width: '200px' }}>
 											<i className="far fa-user"></i> Budget: ₹{post.budgetMin} - ₹{ post.budgetMax }
 										</p>

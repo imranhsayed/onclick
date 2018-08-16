@@ -29,6 +29,26 @@ export const addPost = postData => dispatch => {
 		);
 };
 
+// Add Post
+export const updatePost = ( postData, id, history ) => dispatch => {
+	dispatch(clearErrors());
+	axios
+		.post( `/api/posts/update/${id}`, postData )
+		.then(res =>
+			// dispatch({
+			// 	type: ADD_POST,
+			// 	payload: res.data
+			// })
+			history.push( '/post-job-listings' )
+		)
+		.catch(err => console.log( 'error in updating' )
+			// dispatch({
+			// 	type: GET_ERRORS,
+			// 	payload: err.response.data
+			// })
+		);
+};
+
 // Get Posts
 export const getPosts = () => dispatch => {
 	dispatch(setPostLoading());
