@@ -56,6 +56,24 @@ class DashboardSidebar extends Component {
 							<i className="mdi mdi-home-variant menu-icon" style={{ color: 'white' }}></i>
 						</Link>
 					</li>
+					{/* Show Add Category if its admin*/}
+					{ ( 'admin' === user.type ) &&
+					<li className="nav-item oc-nav-item">
+						<Link className="nav-link" to="/add-category">
+							<span className="menu-title">Add Category</span>
+							<i className="mdi mdi-account-card-details menu-icon"></i>
+						</Link>
+					</li>
+					}
+					{/* Show Show Categories if its admin*/}
+					{ ( 'admin' === user.type ) &&
+					<li className="nav-item oc-nav-item">
+						<Link className="nav-link" to="/list-categories">
+							<span className="menu-title">Show Categories</span>
+							<i className="mdi mdi-account-card-details menu-icon"></i>
+						</Link>
+					</li>
+					}
 					<li className="nav-item oc-nav-item">
 						<Link className="nav-link" to="/post-job">
 							<span className="menu-title">Post Job</span>

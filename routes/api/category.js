@@ -8,7 +8,11 @@ const router = express.Router();
 const mongoose = require( 'mongoose' );
 const passport = require( 'passport' );
 
+// Category model.
 const Category = require( '../../models/Category' );
+
+// Validation.
+const validateCategoryInput = require( '../../validation/category' );
 
 /**
  * @route POST api/categories/
@@ -17,13 +21,13 @@ const Category = require( '../../models/Category' );
  */
 router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res ) => {
 
-	// const { errors, isValid } = validatePostInput( req.body );
-	//
-	// // Check Validation
-	// if ( ! isValid ) {
-	// 	// If any errors
-	// 	return res.status( 400 ).json( errors );
-	// }
+	const { errors, isValid } = validateCategoryInput( req.body );
+
+	// Check Validation
+	if ( ! isValid ) {
+		// If any errors
+		return res.status( 400 ).json( errors );
+	}
 
 	const newCategory = new Category({
 		categoryName: req.body.categoryName,

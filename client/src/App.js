@@ -25,7 +25,9 @@ import {clearCurrentProfile} from "./actions/profileActions";
 import DashboardPostsListing from "./components/DashboardPostsListing";
 import PostJobListings from "./components/PostJobListings";
 import DashboardSinglePost from "./components/DashboardSinglePost";
+import DashboardAddCategory from './components/layouts/categories/DashboardAddCategory';
 import PostSingle from "./components/PostSingle";
+import DashboardListCategories from "./components/DashboardListCategories";
 
 /**
  * To ensure the authenticate state stays true even on page reload, we do the following:
@@ -87,6 +89,8 @@ class App extends Component {
 					<Switch><PrivateRoute exact path="/post-job" component={Posts} /></Switch>
 					<Switch><PrivateRoute exact path="/post-job-listings" component={DashboardPostsListing} /></Switch>
 					<Switch><PrivateRoute exact path="/dashboard-post/:id" component={DashboardSinglePost} /></Switch>
+					<Switch><PrivateRoute exact path="/add-category" component={DashboardAddCategory} /></Switch>
+					<Switch><PrivateRoute exact path="/list-categories" component={DashboardListCategories} /></Switch>
 					<Route exact path="/job-listings" component={PostJobListings}/>
 					<Route exact path="/single-post/:id" component={PostSingle}/>
 					<Route exact path="/uploads" component={DashboardUploads}/>
