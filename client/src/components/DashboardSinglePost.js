@@ -46,7 +46,6 @@ class DashboardSinglePost extends Component{
 		}
 		if ( newProps.post.post ) {
 			existingPost = newProps.post.post;
-			console.log( existingPost );
 			this.setState({
 				title: existingPost.title,
 				name: existingPost.name,

@@ -12,7 +12,6 @@ import store from './store';
 import PrivateRoute from './components/common/PrivateRoute';
 
 import Register from "./components/Register";
-import PostJob from "./components/PostJob";
 import Dashboard from "./components/Dashboard";
 import DashboardProfiles from './components/layouts/dashboard/pages/DashboardProfiles';
 import DashboardUserProfiles from "./components/layouts/dashboard/pages/DashboardUserProfiles";

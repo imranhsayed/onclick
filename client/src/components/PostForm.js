@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { addPost } from '../actions/postActions';
+import { getCategories } from '../actions/categoryActions';
 import $ from "jquery";
+import categoryReducer from "../reducers/categoryReducer";
 
 class PostForm extends Component {
 	constructor(props) {
@@ -29,6 +31,10 @@ class PostForm extends Component {
 
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
+	}
+
+	componentDidMount() {
+		this.props.getCategories();
 	}
 
 	componentWillReceiveProps(newProps) {
@@ -107,6 +113,14 @@ class PostForm extends Component {
 
 	render() {
 		const { errors } = this.state;
+		const { category } = this.props;
+		let categories = '', categoriesOptions = '';
+		if ( null !== category.categories && Object.keys( category.categories ).length ) {
+			categories = category.categories;
+			categoriesOptions = categories.map( item => (
+				<option key={item._id} value={item._id}>{ item.categoryName }</option>
+			) );
+		}
 
 		return (
 			<div className="container" style={{ marginLeft: '36px' }}>
@@ -135,14 +149,7 @@ class PostForm extends Component {
 							} ) }
 							onChange={ this.onChange } name="category" value={this.state.category} id="exampleSelectGender">
 							<option value="">Select Category</option>
-							<option value="shopping">Shopping</option>
-							<option value="spa-and-saloon">Spa & Saloon</option>
-							<option value="health-fitness">Health fitness</option>
-							<option value="restraunt">Restraunt</option>
-							<option value="movies">Movies</option>
-							<option value="repairs">Repairs</option>
-							<option value="real-estate">Real Estate</option>
-							<option value="automobile">Automobile</option>
+							{categoriesOptions}
 						</select>
 						{ errors.category && ( <div className="invalid-feedback">{ errors.category }</div> ) }
 					</div>
@@ -150,16 +157,14 @@ class PostForm extends Component {
 						<label htmlFor="exampleSelectGender">Sub Category</label>
 						<select className="form-control" onChange={ this.onChange } value={this.state.subCategory} name="subCategory" id="exampleSelectGender">
 							<option value="">Select Sub-Category</option>
-							<option value="shopping-sub">Shopping Sub</option>
-							<option value="spa-sub">Spa Sub</option>
+							{categoriesOptions}
 						</select>
 					</div>
 					<div className="form-group">
 						<label htmlFor="exampleSelectGender">Sub Category Level2</label>
 						<select className="form-control" onChange={ this.onChange } value={this.state.subCatLevel2} name="subCatLevel2" id="exampleSelectGender">
 							<option value="">Select Child-Category</option>
-							<option value="shopping-sub-level2">Shopping Sub Level2</option>
-							<option value="spa-sub-level2">Spa Sub Level2</option>
+							{categoriesOptions}
 						</select>
 					</div>
 					<div className="form-group">
@@ -236,13 +241,15 @@ class PostForm extends Component {
 
 PostForm.propTypes = {
 	addPost: PropTypes.func.isRequired,
+	getCategories: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
 	auth: state.auth,
-	errors: state.errors
+	errors: state.errors,
+	category: state.category
 });
 
-export default connect(mapStateToProps, { addPost })(PostForm);
+export default connect(mapStateToProps, { addPost, getCategories })(PostForm);

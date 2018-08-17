@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from "classnames";
-import {addCategory} from "../../../actions/categoryActions";
+import { addCategory } from "../../../actions/categoryActions";
+import { getCategories } from '../../../actions/categoryActions';
+import { getCategory } from '../../../actions/categoryActions';
 import $ from "jquery";
 
 
@@ -14,6 +16,7 @@ class DashboardAddCategoryForm extends Component {
 			categoryName: '',
 			parentCatId: '',
 			parentCatName: '',
+			existingCategories: '',
 			errors: {}
 		};
 
@@ -25,6 +28,13 @@ class DashboardAddCategoryForm extends Component {
 		if (newProps.errors) {
 			this.setState({ errors: newProps.errors });
 		}
+		if (newProps.category.category) {
+			this.setState({ parentCatName: newProps.category.category.categoryName });
+		}
+	}
+	
+	componentDidMount() {
+		this.props.getCategories();
 	}
 
 	onSubmit(e) {
@@ -32,10 +42,9 @@ class DashboardAddCategoryForm extends Component {
 
 		const newCategory = {
 			categoryName: this.state.categoryName,
-			parentCatId: this.state.parentCatId,
+			parentCatId: ( this.state.parentCatId ) ? this.state.parentCatId : '0',
 			parentCatName: this.state.parentCatName,
 		};
-		// console.log( Object.keys( this.state.errors ).length );
 
 		this.props.addCategory( newCategory, this.props.history );
 
@@ -66,13 +75,31 @@ class DashboardAddCategoryForm extends Component {
 		}, 3000 );
 	};
 
-	onChange(e) {
-		this.setState({ [e.target.name]: e.target.value });
+	onChange( event ) {
+		// When the parent cat id is selected call the getCategory() to get category for this id.
+		if ( 'parentCatId' === event.target.name ) {
+			let selectedCatId = event.target.value;
+			this.props.getCategory( selectedCatId );
+		}
+		this.setState({ [event.target.name]: event.target.value });
 	}
 
 	render(){
 
 		const { errors } = this.state;
+		let categoryOptions = '', selectedParentCatName;
+
+		// Pull the category out of the props, which contains existing categories.
+		const { categories } = this.props.category;
+		const { parentCatName } = this.state;
+
+		if ( null === categories || ! Object.keys( categories ).length ) {
+			categoryOptions = '';
+		} else {
+			categoryOptions = categories.map( ( item ) => (
+				<option key={ item._id } value={item._id}>{item.categoryName}</option>
+			) );
+		}
 
 		return(
 			<div className="container" style={{ marginLeft: '36px' }}>
@@ -101,23 +128,16 @@ class DashboardAddCategoryForm extends Component {
 							} ) }
 							onChange={ this.onChange } name="parentCatId" value={this.state.parentCatId} id="exampleSelectGender">
 							<option value="">Select Category</option>
-							<option value="shopping">Shopping</option>
-							<option value="spa-and-saloon">Spa & Saloon</option>
-							<option value="health-fitness">Health fitness</option>
-							<option value="restraunt">Restraunt</option>
-							<option value="movies">Movies</option>
-							<option value="repairs">Repairs</option>
-							<option value="real-estate">Real Estate</option>
-							<option value="automobile">Automobile</option>
+							{categoryOptions}
 						</select>
 						{ errors.parentCatId && ( <div className="invalid-feedback">{ errors.parentCatId }</div> ) }
 					</div>
-					<div className="form-group">
-						<label htmlFor="exampleInputCity1">Parent Category Name</label>
-						<input type="text"
-								className="form-control"
-						       onChange={ this.onChange } name="parentCatName" value={this.state.parentCatName} id="exampleInputCity1" placeholder="Parent Cat Name"/>
-					</div>
+					{/*<div className="form-group">*/}
+						{/*<label htmlFor="exampleInputCity1">Parent Category Name</label>*/}
+						{/*<input type="text"*/}
+								{/*className="form-control"*/}
+						       {/*onChange={ this.onChange } name="parentCatName" value={this.state.parentCatName} id="exampleInputCity1" placeholder="Parent Cat Name"/>*/}
+					{/*</div>*/}
 					<button type="submit" className="btn btn-dark">
 						Submit
 					</button>
@@ -129,13 +149,16 @@ class DashboardAddCategoryForm extends Component {
 
 DashboardAddCategoryForm.propTypes = {
 	addCategory: PropTypes.func.isRequired,
+	getCategories: PropTypes.func.isRequired,
+	getCategory: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
 	auth: state.auth,
+	category: state.category,
 	errors: state.errors
 });
 
-export default connect(mapStateToProps, { addCategory })(DashboardAddCategoryForm);
+export default connect(mapStateToProps, { addCategory, getCategories, getCategory })( DashboardAddCategoryForm );

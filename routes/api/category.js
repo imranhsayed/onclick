@@ -38,5 +38,44 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 	newCategory.save().then( category => res.json( category ) ).catch( errors => res.json( errors ) )
 } );
 
+/**
+ * @route GET api/categories/
+ * @desc Get all the catgories
+ * @access public
+ */
+router.get( '/', ( req, res ) => {
+	Category.find()
+		.sort( { date: -1 } )
+		.then( ( category ) => res.json( category ) )
+		.catch( ( error ) => res.json( { noPostsFound: 'No category found' } ) );
+} );
+
+/**
+ * @route GET api/categories/:id
+ * @desc Get a single category by Id
+ * @access public
+ */
+router.get( '/:id', ( req, res ) => {
+	Category.findById( req.params.id )
+		.then( ( category ) => res.json( category ) )
+		.catch( ( error ) => res.json( { noPostFound: 'No category found' } ) );
+} );
+
+/**
+ * @route DELETE api/categories/:id
+ * @desc Delete a category by its id.
+ * @access private
+ */
+router.delete( '/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+		// Profile.findOne({ user: req.user.id }).then( profile => {
+		Category.findById( req.params.id )
+			.then( category => {
+				// Delete
+				category.remove().then(() => res.json({ success: true }));
+			})
+			.catch( err => res.status(404).json({ categorynotfound: 'No category found' }));
+	}
+);
+
 // We export the router so that the server.js file can pick it up
 module.exports = router;

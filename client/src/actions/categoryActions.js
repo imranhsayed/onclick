@@ -18,11 +18,11 @@ export const addCategory = ( categoryData, history ) => dispatch => {
 		.then(res =>
 			history.push( '/list-categories' )
 		)
-		.catch(err =>
-			dispatch({
-				type: GET_ERRORS,
-				payload: err.response.data
-			})
+		.catch(err => console.log( err )
+			// dispatch({
+			// 	type: GET_ERRORS,
+			// 	payload: err.response.data
+			// })
 		);
 };
 
@@ -46,8 +46,8 @@ export const updateCategory = ( postData, id, history ) => dispatch => {
 		);
 };
 
-// Get Categorys
-export const getCategoryies = () => dispatch => {
+// Get Categories
+export const getCategories = () => dispatch => {
 	dispatch(setCategoryLoading());
 	axios
 		.get('/api/categories')
@@ -85,7 +85,7 @@ export const getCategory = id => dispatch => {
 };
 
 // Delete Category
-export const deleteCategory = id => dispatch => {
+export const deleteCategory = ( id, history ) => dispatch => {
 	axios
 		.delete(`/api/categories/${id}`)
 		.then(res =>
@@ -94,11 +94,11 @@ export const deleteCategory = id => dispatch => {
 				payload: id
 			})
 		)
-		.catch(err =>
-			dispatch({
-				type: GET_ERRORS,
-				payload: err.response.data
-			})
+		.catch(err => console.log( 'error' )
+			// dispatch({
+			// 	type: GET_ERRORS,
+			// 	payload: err.response.data
+			// })
 		);
 };
 
