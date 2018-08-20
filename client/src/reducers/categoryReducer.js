@@ -1,7 +1,11 @@
-import {ADD_CATEGORY, DELETE_CATEGORY, GET_CATEGORY, GET_CATEGORIES, CATEGORY_LOADING} from "../actions/types";
+import {ADD_CATEGORY, DELETE_CATEGORY, GET_CATEGORY, GET_CATEGORIES, CATEGORY_LOADING,
+	GET_PARENT_CATS, GET_SUB_CATS, GET_SUB_CATS_LVL2 } from "../actions/types";
 
 const initialState = {
 	categories: [],
+	parentCats: [],
+	subCats: [],
+	subCatsLvl2: [],
 	category: {},
 	loading: false
 };
@@ -17,6 +21,24 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				categories: action.payload,
+				loading: false
+			};
+		case GET_PARENT_CATS:
+			return {
+				...state,
+				parentCats: action.payload,
+				loading: false
+			};
+		case GET_SUB_CATS:
+			return {
+				...state,
+				subCats: action.payload,
+				loading: false
+			};
+		case GET_SUB_CATS_LVL2:
+			return {
+				...state,
+				subCatsLvl2: action.payload,
 				loading: false
 			};
 		case GET_CATEGORY:

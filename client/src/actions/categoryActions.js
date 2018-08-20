@@ -5,6 +5,9 @@ import {
 	GET_ERRORS,
 	CLEAR_CATEGORY_ERRORS,
 	GET_CATEGORIES,
+	GET_PARENT_CATS,
+	GET_SUB_CATS,
+	GET_SUB_CATS_LVL2,
 	GET_CATEGORY,
 	CATEGORY_LOADING,
 	DELETE_CATEGORY
@@ -60,6 +63,63 @@ export const getCategories = () => dispatch => {
 		.catch(err =>
 			dispatch({
 				type: GET_CATEGORIES,
+				payload: null
+			})
+		);
+};
+
+// Get all parent Categories.
+export const getParentCats = () => dispatch => {
+	dispatch(setCategoryLoading());
+	axios
+		.get('/api/categories/parentCats')
+		.then(res =>
+			dispatch({
+				type: GET_PARENT_CATS,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_PARENT_CATS,
+				payload: null
+			})
+		);
+};
+
+// Get all Sub Categories for a given parentCatId.
+export const getSubCats = ( id ) => dispatch => {
+	dispatch(setCategoryLoading());
+	axios
+		.get( `api/categories/subCats/${id}` )
+		.then(res =>
+			dispatch({
+				type: GET_SUB_CATS,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_SUB_CATS,
+				payload: null
+			})
+		);
+};
+
+// Get all Sub Categories Lvl2 for a given parentCatId.
+export const getSubCatsLvl2 = ( id ) => dispatch => {
+	dispatch(setCategoryLoading());
+	axios
+		.get( `api/categories/subCatsLvlTwo/${id}` )
+		.then(res =>
+			dispatch({
+				type: GET_SUB_CATS_LVL2,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_SUB_CATS_LVL2,
 				payload: null
 			})
 		);

@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { addPost } from '../actions/postActions';
-import { getCategories } from '../actions/categoryActions';
+import { getParentCats } from '../actions/categoryActions';
+import { getSubCats } from '../actions/categoryActions';
+import { getSubCatsLvl2 } from '../actions/categoryActions';
 import $ from "jquery";
-import categoryReducer from "../reducers/categoryReducer";
 
 class PostForm extends Component {
 	constructor(props) {
@@ -34,7 +35,7 @@ class PostForm extends Component {
 	}
 
 	componentDidMount() {
-		this.props.getCategories();
+		this.props.getParentCats();
 	}
 
 	componentWillReceiveProps(newProps) {
@@ -107,17 +108,47 @@ class PostForm extends Component {
 		}, 3000 );
 	};
 
-	onChange(e) {
-		this.setState({ [e.target.name]: e.target.value });
+	onChange(event) {
+
+		// If category is selected then call the getSubCats() to get all the subcategories for the selected parent id.
+		if( 'category' === event.target.name ) {
+			let parentCatId = event.target.value;
+			this.props.getSubCats( parentCatId );
+		}
+
+		// If subCategory is selected then call the getSubCatsLvl2() to get all the subcategories lvl2 for the selected parent id.
+		if( 'subCategory' === event.target.name ) {
+			let subCatCatId = event.target.value;
+			this.props.getSubCatsLvl2( subCatCatId );
+		}
+		this.setState({ [event.target.name]: event.target.value });
 	}
 
 	render() {
 		const { errors } = this.state;
 		const { category } = this.props;
-		let categories = '', categoriesOptions = '';
-		if ( null !== category.categories && Object.keys( category.categories ).length ) {
-			categories = category.categories;
-			categoriesOptions = categories.map( item => (
+		let parentCategories = '', parentCatsOptions = '', subCategories = '', subCatsOptions = '', subCategoriesLvl2 = '', subCatsLvl2Options = '';
+
+		// Get Parent categories options
+		if ( null !== category.parentCats && Object.keys( category.parentCats ).length ) {
+			parentCategories = category.parentCats;
+			parentCatsOptions = parentCategories.map( item => (
+				<option key={item._id} value={item._id}>{ item.categoryName }</option>
+			) );
+		}
+
+		// Get sub categories options
+		if ( null !== category.subCats && Object.keys( category.subCats ).length ) {
+			subCategories = category.subCats;
+			subCatsOptions = subCategories.map( item => (
+				<option key={item._id} value={item._id}>{ item.categoryName }</option>
+			) );
+		}
+
+		// Get sub categories lvl2 options
+		if ( null !== category.subCatsLvl2 && Object.keys( category.subCatsLvl2 ).length ) {
+			subCategoriesLvl2 = category.subCatsLvl2;
+			subCatsLvl2Options = subCategoriesLvl2.map( item => (
 				<option key={item._id} value={item._id}>{ item.categoryName }</option>
 			) );
 		}
@@ -149,7 +180,7 @@ class PostForm extends Component {
 							} ) }
 							onChange={ this.onChange } name="category" value={this.state.category} id="exampleSelectGender">
 							<option value="">Select Category</option>
-							{categoriesOptions}
+							{parentCatsOptions}
 						</select>
 						{ errors.category && ( <div className="invalid-feedback">{ errors.category }</div> ) }
 					</div>
@@ -157,14 +188,14 @@ class PostForm extends Component {
 						<label htmlFor="exampleSelectGender">Sub Category</label>
 						<select className="form-control" onChange={ this.onChange } value={this.state.subCategory} name="subCategory" id="exampleSelectGender">
 							<option value="">Select Sub-Category</option>
-							{categoriesOptions}
+							{subCatsOptions}
 						</select>
 					</div>
 					<div className="form-group">
 						<label htmlFor="exampleSelectGender">Sub Category Level2</label>
 						<select className="form-control" onChange={ this.onChange } value={this.state.subCatLevel2} name="subCatLevel2" id="exampleSelectGender">
 							<option value="">Select Child-Category</option>
-							{categoriesOptions}
+							{subCatsLvl2Options}
 						</select>
 					</div>
 					<div className="form-group">
@@ -241,7 +272,9 @@ class PostForm extends Component {
 
 PostForm.propTypes = {
 	addPost: PropTypes.func.isRequired,
-	getCategories: PropTypes.func.isRequired,
+	getParentCats: PropTypes.func.isRequired,
+	getSubCats: PropTypes.func.isRequired,
+	getSubCatsLvl2: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired
 };
@@ -252,4 +285,4 @@ const mapStateToProps = state => ({
 	category: state.category
 });
 
-export default connect(mapStateToProps, { addPost, getCategories })(PostForm);
+export default connect( mapStateToProps, { addPost, getParentCats, getSubCats, getSubCatsLvl2 } )( PostForm );

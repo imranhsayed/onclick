@@ -40,7 +40,7 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 
 /**
  * @route GET api/categories/
- * @desc Get all the catgories
+ * @desc Get all the categories
  * @access public
  */
 router.get( '/', ( req, res ) => {
@@ -49,6 +49,67 @@ router.get( '/', ( req, res ) => {
 		.then( ( category ) => res.json( category ) )
 		.catch( ( error ) => res.json( { noPostsFound: 'No category found' } ) );
 } );
+
+/**
+ * @route GET api/categories/parentCats
+ * @desc Get all the parent categories
+ * @access public
+ */
+router.get( '/parentCats', ( req, res ) => {
+	Category.find( { parentCatId: '0' } )
+		.sort( { categoryName: -1 } )
+		.then( ( category ) => res.json( category ) )
+		.catch( ( error ) => res.json( { noPostsFound: 'No category found' } ) );
+} );
+
+/**
+ * @route GET api/categories/subCats/:id
+ * @desc Get Sub Categories by category id.
+ * @access public
+ */
+router.get( '/subCats/:id', ( req, res ) => {
+	const errors = {};
+	Category.find( { parentCatId: req.params.id } )
+		.then( ( category ) => {
+
+			// If category not found
+			if ( ! category ) {
+				errors.nocategory = 'Sub Category not found';
+				return res.status( 400 ).json( errors.nocategory );
+			}
+
+			// If category found
+			res.status( 200 ).json( category );
+		} )
+		.catch( ( err ) => {
+			res.status( 404 ).json( err );
+		} )
+} );
+
+/**
+ * @route GET api/categories/subCatsLvlTwo/:id
+ * @desc Get Sub Categories Lvl2 by category id.
+ * @access public
+ */
+router.get( '/subCatsLvlTwo/:id', ( req, res ) => {
+	const errors = {};
+	Category.find( { parentCatId: req.params.id } )
+		.then( ( category ) => {
+
+			// If category not found
+			if ( ! category ) {
+				errors.nocategory = 'Sub Category Lvl2 not found';
+				return res.status( 400 ).json( errors.nocategory );
+			}
+
+			// If category found
+			res.status( 200 ).json( category );
+		} )
+		.catch( ( err ) => {
+			res.status( 404 ).json( err );
+		} )
+} );
+
 
 /**
  * @route GET api/categories/:id
