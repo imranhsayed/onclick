@@ -37,6 +37,15 @@ const PostSchema = new Schema({
 		type: String,
 		required: true
 	},
+	categoryId: {
+		type: String
+	},
+	subCategoryId: {
+		type: String,
+	},
+	subCatLevel2Id: {
+		type: String,
+	},
 	budgetMin: {
 		type: String,
 	},

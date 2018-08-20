@@ -37,6 +37,19 @@ router.get( '/', ( req, res ) => {
 } );
 
 /**
+ * @route GET api/posts/category/:id
+ * @desc Get all the posts that belongs to a given category id
+ * @access public
+ */
+router.get( '/category/:id', ( req, res ) => {
+	Post.find( {  } )
+		.sort( { date: -1 } )
+		.populate( 'user', [ 'name', 'email' ] )
+		.then( ( posts ) => res.json( posts ) )
+		.catch( ( error ) => res.json( { noPostsFound: 'No posts found' } ) );
+} );
+
+/**
  * @route GET api/posts/:id
  * @desc Get a single post by Id
  * @access public
@@ -87,6 +100,9 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 		category: req.body.category,
 		subCategory: req.body.subCategory,
 		subCatLevel2: req.body.subCatLevel2,
+		categoryId: req.body.categoryId,
+		subCategoryId: req.body.subCategoryId,
+		subCatLevel2Id: req.body.subCatLevel2Id,
 		description: req.body.description,
 		budgetMin: req.body.budgetMin,
 		budgetMax: req.body.budgetMax,
@@ -119,6 +135,10 @@ router.post( '/update/:id', passport.authenticate( 'jwt', { session: false } ), 
 	postFields.title = req.body.title;
 	postFields.category = req.body.category;
 	postFields.subCategory = req.body.subCategory;
+	postFields.subCatLevel2 = req.body.subCatLevel2;
+	postFields.categoryId = req.body.categoryId;
+	postFields.subCategoryId = req.body.subCategoryId;
+	postFields.subCatLevel2Id = req.body.subCatLevel2Id;
 	postFields.description = req.body.description;
 	postFields.budgetMin = req.body.budgetMin;
 	postFields.budgetMax = req.body.budgetMax;

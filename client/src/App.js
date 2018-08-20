@@ -91,6 +91,7 @@ class App extends Component {
 					<Switch><PrivateRoute exact path="/add-category" component={DashboardAddCategory} /></Switch>
 					<Switch><PrivateRoute exact path="/list-categories" component={DashboardListCategories} /></Switch>
 					<Route exact path="/job-listings" component={PostJobListings}/>
+					<Route exact path="/category-job-listing/:type/:id" component={PostJobListings}/>
 					<Route exact path="/single-post/:id" component={PostSingle}/>
 					<Route exact path="/uploads" component={DashboardUploads}/>
 					<Route exact path="/dash-profiles" component={DashboardUserProfiles}/>

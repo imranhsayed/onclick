@@ -1,100 +1,85 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loginUser } from "./../actions/authActions";
 import { Link } from 'react-router-dom';
 import CategoriesBanner from './layouts/categories/CategoriesBanner';
 import classnames from "classnames";
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";
+import { getParentCats } from './../actions/categoryActions';
+import { getSubCats } from './../actions/categoryActions';
+import { getSubCatsLvl2 } from './../actions/categoryActions';
+import $ from 'jquery';
 
 class Categories extends Component {
 
-	constructor() {
-		super();
-		this.state = {
-			email: '',
-			password: '',
-			errors: {}
-		};
-
-		this.onChange = this.onChange.bind( this );
-		this.onSubmit = this.onSubmit.bind( this );
-	}
-
-	// Redirect the user to dashboard if he is logged in
 	componentDidMount() {
-		// If the user is logged in
-		if ( this.props.auth.isAuthenticated ) {
-			// redirect the user to the dashboard
-			this.props.history.push( '/dashboard' );
-		}
+		this.props.getParentCats();
 	}
 
-	componentWillReceiveProps( nextProps ) {
-		if ( nextProps.auth.isAuthenticated ) {
-			// After he is authenticated and he logs in , redirect him to dashboard
-			this.props.history.push( '/dashboard' );
-		}
-		if ( nextProps.errors ) {
-			this.setState( { errors: nextProps.errors } )
-		}
-	}
-
-	/**
-	 * Whenever user types something in the input element, we will grab that value and set the
-	 * state variables to that value, using this function.
-	 * this.setState() changes the state of a component
-	 * Note that name here is the 'name' attribute and 'value' here is the value attribute of the form.
-	 * meaning event.target.name is equal to the value of the 'name' attribute of that element, and
-	 * event.target.value is equal to the value of the 'value' attribute of that element
-	 *
-	 * @param event
-	 */
-	onChange( event ) {
-		/**
-		 * Change the state of name property.
-		 * event.target.name will give you the name of the input element, and
-		 * event.target.value will give you the value of the input element.
-		 */
-		this.setState( { [ event.target.name ]: event.target.value } );
-	}
-
-	onSubmit( event ) {
-		event.preventDefault();
-		const user = {
-			email: this.state.email,
-			password: this.state.password
-		};
-
-		// axios.post( '/api/users/login', user )
-		// 	.then( ( res ) => console.log( res.data ) )
-		// 	.catch( ( error ) => this.setState( { errors: error.response.data } ) );
-
-		console.log( user );
-
-		// Call the loginUser() action from actions/authActions.js
-		this.props.loginUser( user );
+	getSubCategories( id ) {
+		this.props.getSubCats( id );
+		// document.getElementById( id ).append( content );
+		$( '.oc-categories-card' ).slideUp();
+		$( '#' + id ).slideToggle();
 	}
 
 	render(){
 
-		const { errors } = this.state;
+		const { category } = this.props;
+		console.log( 'cat', category );
+
+		let parentCategories = '', categoryOptions = '';
+
+
+
+		// Get Parent categories options
+		if ( null !== category.parentCats && Object.keys( category.parentCats ).length ) {
+			parentCategories = category.parentCats;
+			categoryOptions = parentCategories.map( item => (
+				<div key={item._id} className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+					<div className="card mb-4">
+						<h3 className="card-header">
+							<Link to={`/category-job-listing/category/${item._id}`}>{ item.categoryName }</Link>
+							<i class="mdi mdi-arrow-down-bold-circle" onClick={ this.getSubCategories.bind( this, item._id ) } style={{ cursor: 'pointer', marginLeft: '14px' }}></i>
+						</h3>
+						<div className="card-body oc-categories-card" id={item._id}>
+							{ null !== category.subCats &&
+								category.subCats.map( subCat => (
+									<Link key={subCat._id} to={`/category-job-listing/subCat/${subCat._id}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>{ subCat.categoryName }</Link>
+								) )
+							}
+						</div>
+					</div>
+				</div>
+			) );
+		} else {
+			categoryOptions = <img src="./../img/spinner.gif" style={{ width: '200px', margin: 'auto', display: 'block' }}/>;
+		}
+
+		// Get sub categories options
+		// if ( null !== category.subCats && Object.keys( category.subCats ).length ) {
+		// 	subCategories = category.subCats;
+		// 	subCatsOptions = subCategories.map( item => (
+		// 		<option key={item._id} value={item._id}>{ item.categoryName }</option>
+		// 	) );
+		// }
+		//
+		// // Get sub categories lvl2 options
+		// if ( null !== category.subCatsLvl2 && Object.keys( category.subCatsLvl2 ).length ) {
+		// 	subCategoriesLvl2 = category.subCatsLvl2;
+		// 	// subCatsLvl2Options = subCategoriesLvl2.map( item => (
+		// 	// 	<option key={item._id} value={item._id}>{ item.categoryName }</option>
+		// 	// ) );
+		// }
+
 		return(
 			<div>
 				<Navbar/>
 				<CategoriesBanner/>
 				<div className="container forms-section">
 					<div className="row forms-section-row" >
-						<div className="col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
-							<div className="card mb-4">
-								<h3 className="card-header"><Link to="/category/health-fitness">Arts & entertainment</Link></h3>
-								<div className="card-body oc-categories-card">
-									<Link className="card-title oc-card-subcategory" to="/subCategory/shopping-sub">Adult entertainment</Link>
-									<Link className="card-title oc-card-subcategory" to="/profile">Single Profile</Link>
-								</div>
-							</div>
-						</div>
+						{ categoryOptions }
 					</div>
 				</div>
 				<Footer/>
@@ -104,14 +89,13 @@ class Categories extends Component {
 }
 
 Categories.propTypes = {
-	loginUser: PropTypes.func.isRequired,
-	auth: PropTypes.object.isRequired,
-	errors: PropTypes.isRequired
+	getParentCats: PropTypes.func.isRequired,
+	getSubCats: PropTypes.func.isRequired,
+	getSubCatsLvl2: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ( state ) => ({
-	auth: state.auth,
-	errors: state.errors
+const mapStateToProps = state => ({
+	category: state.category
 });
 
-export default connect( mapStateToProps, { loginUser } )( Categories );
+export default connect( mapStateToProps, { getParentCats, getSubCats, getSubCatsLvl2 }  )( Categories );

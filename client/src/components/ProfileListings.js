@@ -27,7 +27,7 @@ class ProfileListings extends Component {
 			if ( profiles.length ) {
 				profileCount = profiles.length;
 				profileItems = profiles.map( ( profile ) => (
-					<ProfileItems key={ profile._id } profile={profile }/>
+					<ProfileItems key={ profile._id } profile={ profile }/>
 				) );
 			} else {
 				profileItems = <h4>No Profiles found</h4>;

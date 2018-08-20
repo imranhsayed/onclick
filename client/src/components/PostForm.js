@@ -19,6 +19,9 @@ class PostForm extends Component {
 			category: '',
 			subCategory: '',
 			subCatLevel2: '',
+			categoryId: '',
+			subCategoryId: '',
+			subCatLevel2Id: '',
 			description: '',
 			budgetMin: '',
 			budgetMax: '',
@@ -56,6 +59,9 @@ class PostForm extends Component {
 			category: this.state.category,
 			subCategory: this.state.subCategory,
 			subCatLevel2: this.state.subCatLevel2,
+			categoryId: this.state.categoryId,
+			subCategoryId: this.state.subCategoryId,
+			subCatLevel2Id: this.state.subCatLevel2Id,
 			description: this.state.description,
 			budgetMin: this.state.budgetMin,
 			budgetMax: this.state.budgetMax,
@@ -79,6 +85,9 @@ class PostForm extends Component {
 				category: '',
 				subCategory: '',
 				subCatLevel2: '',
+				categoryId: '',
+				subCategoryId: '',
+				subCatLevel2Id: '',
 				description: '',
 				budgetMin: '',
 				budgetMax: '',
@@ -110,18 +119,40 @@ class PostForm extends Component {
 
 	onChange(event) {
 
+		this.setState({ [event.target.name]: event.target.value });
+
 		// If category is selected then call the getSubCats() to get all the subcategories for the selected parent id.
 		if( 'category' === event.target.name ) {
-			let parentCatId = event.target.value;
-			this.props.getSubCats( parentCatId );
+			let categoryId = event.target.value;
+			let selectedName = $( '.' + categoryId ).attr( 'data-catname' );
+
+			this.setState( {
+				category: selectedName,
+				categoryId: categoryId
+			} );
+
+			this.props.getSubCats( categoryId );
 		}
 
 		// If subCategory is selected then call the getSubCatsLvl2() to get all the subcategories lvl2 for the selected parent id.
 		if( 'subCategory' === event.target.name ) {
-			let subCatCatId = event.target.value;
-			this.props.getSubCatsLvl2( subCatCatId );
+			let subCatId = event.target.value,
+				selectedName = $( '.' + subCatId ).attr( 'data-catname' );
+			this.setState( {
+				subCategory: selectedName,
+				subCategoryId: subCatId
+			} );
+			this.props.getSubCatsLvl2( subCatId );
 		}
-		this.setState({ [event.target.name]: event.target.value });
+		// If subCategory is selected then set the state for the subCatLevel2Id to the id of the subCatLevel2 selected.
+		if( 'subCatLevel2' === event.target.name ) {
+			let subCatLvl2Id = event.target.value,
+				selectedName = $( '.' + subCatLvl2Id ).attr( 'data-catname' );
+			this.setState( {
+				subCatLevel2: selectedName,
+				subCatLevel2Id: subCatLvl2Id
+			} );
+		}
 	}
 
 	render() {
@@ -133,7 +164,7 @@ class PostForm extends Component {
 		if ( null !== category.parentCats && Object.keys( category.parentCats ).length ) {
 			parentCategories = category.parentCats;
 			parentCatsOptions = parentCategories.map( item => (
-				<option key={item._id} value={item._id}>{ item.categoryName }</option>
+				<option key={item._id} className={item._id} value={item._id} data-catname={ item.categoryName }>{ item.categoryName }</option>
 			) );
 		}
 
@@ -141,7 +172,7 @@ class PostForm extends Component {
 		if ( null !== category.subCats && Object.keys( category.subCats ).length ) {
 			subCategories = category.subCats;
 			subCatsOptions = subCategories.map( item => (
-				<option key={item._id} value={item._id}>{ item.categoryName }</option>
+				<option key={item._id} className={item._id} value={item._id} data-catname={ item.categoryName }>{ item.categoryName }</option>
 			) );
 		}
 
@@ -149,7 +180,7 @@ class PostForm extends Component {
 		if ( null !== category.subCatsLvl2 && Object.keys( category.subCatsLvl2 ).length ) {
 			subCategoriesLvl2 = category.subCatsLvl2;
 			subCatsLvl2Options = subCategoriesLvl2.map( item => (
-				<option key={item._id} value={item._id}>{ item.categoryName }</option>
+				<option key={item._id} className={item._id} value={item._id} data-catname={ item.categoryName }>{ item.categoryName }</option>
 			) );
 		}
 
@@ -178,7 +209,7 @@ class PostForm extends Component {
 							className={ classnames( 'form-control', {
 								'is-invalid': errors.category
 							} ) }
-							onChange={ this.onChange } name="category" value={this.state.category} id="exampleSelectGender">
+							onChange={ this.onChange } name="category" value={this.state.categoryId} id="exampleSelectCat">
 							<option value="">Select Category</option>
 							{parentCatsOptions}
 						</select>
@@ -186,14 +217,14 @@ class PostForm extends Component {
 					</div>
 					<div className="form-group">
 						<label htmlFor="exampleSelectGender">Sub Category</label>
-						<select className="form-control" onChange={ this.onChange } value={this.state.subCategory} name="subCategory" id="exampleSelectGender">
+						<select className="form-control" onChange={ this.onChange } value={this.state.subCategoryId} name="subCategory" id="exampleSelectSubCat">
 							<option value="">Select Sub-Category</option>
 							{subCatsOptions}
 						</select>
 					</div>
 					<div className="form-group">
 						<label htmlFor="exampleSelectGender">Sub Category Level2</label>
-						<select className="form-control" onChange={ this.onChange } value={this.state.subCatLevel2} name="subCatLevel2" id="exampleSelectGender">
+						<select className="form-control" onChange={ this.onChange } value={this.state.subCatLevel2Id} name="subCatLevel2" id="exampleSelectSubCatLvl2">
 							<option value="">Select Child-Category</option>
 							{subCatsLvl2Options}
 						</select>

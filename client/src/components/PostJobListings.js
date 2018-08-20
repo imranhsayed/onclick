@@ -12,7 +12,12 @@ import isEmpty from "../validation/is-empty";
 
 class DashboardPostsListing extends Component {
 	componentDidMount() {
-		this.props.getPosts();
+		if ( this.props.match.params.id ) {
+
+			this.props.getPosts();
+		} else{
+			this.props.getPosts();
+		}
 	}
 
 	render() {
