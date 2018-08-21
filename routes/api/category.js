@@ -56,7 +56,7 @@ router.get( '/', ( req, res ) => {
  * @access public
  */
 router.get( '/parentCats', ( req, res ) => {
-	Category.find( { parentCatId: '0' } )
+	Category.find()
 		.sort( { categoryName: -1 } )
 		.then( ( category ) => res.json( category ) )
 		.catch( ( error ) => res.json( { noPostsFound: 'No category found' } ) );

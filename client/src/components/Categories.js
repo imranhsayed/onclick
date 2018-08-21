@@ -9,6 +9,7 @@ import Footer from "./layouts/Footer";
 import { getParentCats } from './../actions/categoryActions';
 import { getSubCats } from './../actions/categoryActions';
 import { getSubCatsLvl2 } from './../actions/categoryActions';
+import _ from 'lodash';
 import $ from 'jquery';
 
 class Categories extends Component {
@@ -24,10 +25,57 @@ class Categories extends Component {
 		$( '#' + id ).slideToggle();
 	}
 
+	nestCategories( categories ) {
+		const nestedCats = [];
+		const addedCats = [];
+		const skipped = [];
+
+		// Get parent cats.
+		_.each( categories.parentCats, ( cat ) => {
+			if ( '0' === cat.parentCatId ) {
+				nestedCats.push( cat );
+				addedCats[ cat._id ] = true;
+			}
+		} );
+
+		// Set child loop
+		_.each( categories.parentCats, ( cat ) => {
+			if ( '0' !== cat.parentCatId ) {
+				_.each ( nestedCats, ( parentCat, index ) => {
+					if ( cat.parentCatId === parentCat._id ) {
+					    nestedCats[ index ].child = nestedCats[ index ].child || [];
+						nestedCats[ index ].child.push( cat );
+						addedCats[ cat._id ] = true;
+					}
+				} );
+			}
+		} );
+
+		// Set grand children.
+		_.each( categories.parentCats, ( cat ) => {
+			if ( ! addedCats[ cat._id ] ) {
+			    _.each( nestedCats, ( parentCat ) => {
+			    	if ( parentCat.child ) {
+					    _.each( parentCat.child, ( childCat ) => {
+							if ( cat.parentCatId === childCat._id ) {
+								childCat.child = childCat.child || [];
+								childCat.child.push( cat );
+							}
+					    } )
+			    	}
+			    } )
+			}
+		} );
+
+		console.log( nestedCats );
+	}
+
 	render(){
 
 		const { category } = this.props;
 		console.log( 'cat', category );
+
+		this.nestCategories( category );
 
 		let parentCategories = '', categoryOptions = '';
 
@@ -43,13 +91,17 @@ class Categories extends Component {
 							<Link to={`/category-job-listing/category/${item._id}`}>{ item.categoryName }</Link>
 							<i class="mdi mdi-arrow-down-bold-circle" onClick={ this.getSubCategories.bind( this, item._id ) } style={{ cursor: 'pointer', marginLeft: '14px' }}></i>
 						</h3>
-						<div className="card-body oc-categories-card" id={item._id}>
+						<ul className="card-body oc-categories-card" id={item._id}>
 							{ null !== category.subCats &&
 								category.subCats.map( subCat => (
-									<Link key={subCat._id} to={`/category-job-listing/subCat/${subCat._id}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>{ subCat.categoryName }</Link>
+									<li key={subCat._id} >
+										<Link to={`/category-job-listing/subCat/${subCat._id}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>
+											{ subCat.categoryName }
+										</Link>
+									</li>
 								) )
 							}
-						</div>
+						</ul>
 					</div>
 				</div>
 			) );
