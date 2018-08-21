@@ -22,7 +22,7 @@ class DashboardPostItem extends Component {
 							</h5>
 							<Link to={`/single-post/${post._id}`}><h3>{ post.title }</h3></Link>
 							<div className="row">
-								<div class="col-12">
+								<div className="col-12">
 									<Link to={`/single-post/${post._id}`}>
 										<p>
 											Posted <Moment fromNow>{post.date}</Moment>

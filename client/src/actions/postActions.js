@@ -87,6 +87,63 @@ export const getPost = id => dispatch => {
 		);
 };
 
+// Get Post by CategoryId
+export const getPostByCategoryId = id => dispatch => {
+	dispatch(setPostLoading());
+	axios
+		.get(`/api/posts/categoryId/${id}`)
+		.then(res =>
+			dispatch({
+				type: GET_POSTS,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_POSTS,
+				payload: null
+			})
+		);
+};
+
+// Get Post by subCategoryId
+export const getPostBySubCategoryId = id => dispatch => {
+	dispatch(setPostLoading());
+	axios
+		.get(`/api/posts/subCategoryId/${id}`)
+		.then(res =>
+			dispatch({
+				type: GET_POSTS,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_POSTS,
+				payload: null
+			})
+		);
+};
+
+// Get Post by subCatLevel2Id
+export const getPostBySubCatLevel2Id = id => dispatch => {
+	dispatch(setPostLoading());
+	axios
+		.get(`/api/posts/subCatLevel2Id/${id}`)
+		.then(res =>
+			dispatch({
+				type: GET_POSTS,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_POSTS,
+				payload: null
+			})
+		);
+};
+
 // Delete Post
 export const deletePost = id => dispatch => {
 	axios

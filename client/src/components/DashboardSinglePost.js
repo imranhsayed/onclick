@@ -6,6 +6,9 @@ import DashboardSidebar from './layouts/dashboard/DashboardSidebar';
 import { getPost } from "./../actions/postActions";
 import { updatePost } from './../actions/postActions';
 import classnames from "classnames";
+import { getParentCats } from "../actions/categoryActions";
+import { getSubCats } from "../actions/categoryActions";
+import { getSubCatsLvl2 } from "../actions/categoryActions";
 import $ from "jquery";
 
 class DashboardSinglePost extends Component{
@@ -20,6 +23,9 @@ class DashboardSinglePost extends Component{
 			category: '',
 			subCategory: '',
 			subCatLevel2: '',
+			categoryId: '',
+			subCategoryId: '',
+			subCatLevel2Id: '',
 			description: '',
 			budgetMin: '',
 			budgetMax: '',
@@ -36,7 +42,7 @@ class DashboardSinglePost extends Component{
 	}
 
 	/**
-	 * When the component receives props, set the new state values of post items to the existing post item values. and also set state for errors, when errors are received. 
+	 * When the component receives props, set the new state values of post items to the existing post item values. and also set state for errors, when errors are received.
 	 * @param {obj} newProps
 	 */
 	componentWillReceiveProps(newProps) {
@@ -54,6 +60,9 @@ class DashboardSinglePost extends Component{
 				category: existingPost.category,
 				subCategory: existingPost.subCategory,
 				subCatLevel2: existingPost.subCatLevel2,
+				categoryId: existingPost.categoryId,
+				subCategoryId: existingPost.subCategoryId,
+				subCatLevel2Id: existingPost.subCatLevel2Id,
 				description: existingPost.description,
 				budgetMin: existingPost.budgetMin,
 				budgetMax: existingPost.budgetMax,
@@ -67,12 +76,12 @@ class DashboardSinglePost extends Component{
 	}
 
 	componentDidMount() {
-		this.props.getPost( this.props.match.params.id )
+		this.props.getPost( this.props.match.params.id );
+		this.props.getParentCats();
 	}
 
 	onSubmit(e) {
 		e.preventDefault();
-		const { user } = this.props.auth;
 		let postId = this.props.match.params.id;
 
 		const updatedPost = {
@@ -80,6 +89,9 @@ class DashboardSinglePost extends Component{
 			category: this.state.category,
 			subCategory: this.state.subCategory,
 			subCatLevel2: this.state.subCatLevel2,
+			categoryId: this.state.categoryId,
+			subCategoryId: this.state.subCategoryId,
+			subCatLevel2Id: this.state.subCatLevel2Id,
 			description: this.state.description,
 			budgetMin: this.state.budgetMin,
 			budgetMax: this.state.budgetMax,
@@ -89,33 +101,37 @@ class DashboardSinglePost extends Component{
 			state: this.state.state,
 			address: this.state.address,
 		};
-		console.log( 'updated post', updatedPost );
+		// console.log( 'updated post', updatedPost );
 		// console.log( Object.keys( this.state.errors ).length );
 
 		this.props.updatePost( updatedPost, postId, this.props.history );
 
 		// If all fields are filled , show success message and remove all errors and make all input blank
-		if ( updatedPost.title && updatedPost.category && updatedPost.description && updatedPost.phone && updatedPost.area && updatedPost.city && updatedPost.state && updatedPost.address ) {
-			this.setState({
-				title: '',
-				name: '',
-				email: '',
-				userId: '',
-				category: '',
-				subCategory: '',
-				subCatLevel2: '',
-				description: '',
-				budgetMin: '',
-				budgetMax: '',
-				phone: '',
-				area: '',
-				city: '',
-				state: '',
-				address: '',
-				errors: {}
-			});
-			this.ocShowAlert( 'Job Successfully Updated', '#3089cf' );
-		}
+		// if ( updatedPost.title && updatedPost.category && updatedPost.description && updatedPost.phone && updatedPost.area && updatedPost.city && updatedPost.state && updatedPost.address ) {
+		// 	this.setState({
+		// 		title: '',
+		// 		name: '',
+		// 		email: '',
+		// 		userId: '',
+		// 		category: '',
+		// 		subCategory: '',
+		// 		subCatLevel2: '',
+		// 		categoryId: '',
+		// 		subCategoryId: '',
+		// 		subCatLevel2Id: '',
+		// 		description: '',
+		// 		budgetMin: '',
+		// 		budgetMax: '',
+		// 		phone: '',
+		// 		area: '',
+		// 		city: '',
+		// 		state: '',
+		// 		address: '',
+		// 		errors: {}
+		// 	});
+		// 	this.ocShowAlert( 'Job Successfully Updated', '#3089cf' );
+		// }
+		this.ocShowAlert( 'Job Successfully Updated', '#3089cf' );
 	}
 
 	// showAlert Function
@@ -133,16 +149,78 @@ class DashboardSinglePost extends Component{
 		}, 3000 );
 	};
 
-	onChange(e) {
-		this.setState({ [e.target.name]: e.target.value });
+	onChange(event) {
+		this.setState({ [event.target.name]: event.target.value });
+
+		// If category is selected then call the getSubCats() to get all the subcategories for the selected parent id.
+		if( 'category' === event.target.name ) {
+			let categoryId = event.target.value;
+			let selectedName = $( '.' + categoryId ).attr( 'data-catname' );
+			console.log( categoryId, selectedName  );
+
+			this.setState( {
+				category: selectedName,
+				categoryId: categoryId
+			} );
+
+			this.props.getSubCats( categoryId );
+		}
+
+		// If subCategory is selected then call the getSubCatsLvl2() to get all the subcategories lvl2 for the selected parent id.
+		if( 'subCategory' === event.target.name ) {
+			let subCatId = event.target.value,
+				selectedName = $( '.' + subCatId ).attr( 'data-catname' );
+			this.setState( {
+				subCategory: selectedName,
+				subCategoryId: subCatId
+			} );
+			this.props.getSubCatsLvl2( subCatId );
+		}
+		// If subCategory is selected then set the state for the subCatLevel2Id to the id of the subCatLevel2 selected.
+		if( 'subCatLevel2' === event.target.name ) {
+			let subCatLvl2Id = event.target.value,
+				selectedName = $( '.' + subCatLvl2Id ).attr( 'data-catname' );
+			this.setState( {
+				subCatLevel2: selectedName,
+				subCatLevel2Id: subCatLvl2Id
+			} );
+		}
 	}
 
 	render(){
 
 		const { post, loading } = this.props.post;
 		const { errors } = this.state;
+		const { category } = this.props;
+		console.log( 'catycat', category );
 		let postContent;
-		
+
+		let parentCategories = '', parentCatsOptions = '', subCategories = '', subCatsOptions = '', subCategoriesLvl2 = '', subCatsLvl2Options = '';
+
+		// Get Parent categories options
+		if ( null !== category.parentCats && Object.keys( category.parentCats ).length ) {
+			parentCategories = category.parentCats;
+			parentCatsOptions = parentCategories.map( item => (
+				<option key={item._id} className={item._id} value={item._id} data-catname={ item.categoryName }>{ item.categoryName }</option>
+			) );
+		}
+
+		// Get sub categories options
+		if ( null !== category.subCats && Object.keys( category.subCats ).length ) {
+			subCategories = category.subCats;
+			subCatsOptions = subCategories.map( item => (
+				<option key={item._id} className={item._id} value={item._id} data-catname={ item.categoryName }>{ item.categoryName }</option>
+			) );
+		}
+
+		// Get sub categories lvl2 options
+		if ( null !== category.subCatsLvl2 && Object.keys( category.subCatsLvl2 ).length ) {
+			subCategoriesLvl2 = category.subCatsLvl2;
+			subCatsLvl2Options = subCategoriesLvl2.map( item => (
+				<option key={item._id} className={item._id} value={item._id} data-catname={ item.categoryName }>{ item.categoryName }</option>
+			) );
+		}
+
 		if ( null === post || loading || ! Object.keys( post ).length ) {
 			postContent = <img src="./../img/spinner.gif" style={{ width: '200px', margin: 'auto', display: 'block' }}/>;
 		} else {
@@ -166,38 +244,29 @@ class DashboardSinglePost extends Component{
 							{ errors.title && ( <div className="invalid-feedback">{ errors.title }</div> ) }
 						</div>
 						<div className="form-group">
-							<label htmlFor="exampleSelectGender">Category</label>
+							<label htmlFor="exampleSelectGender">Selected Category: { post.category }</label>
 							<select
 								className={ classnames( 'form-control', {
 									'is-invalid': errors.category
 								} ) }
-								onChange={ this.onChange } name="category" value={this.state.category} id="exampleSelectGender">
-								<option value="">Select Category</option>
-								<option value="shopping">Shopping</option>
-								<option value="spa-and-saloon">Spa & Saloon</option>
-								<option value="health-fitness">Health fitness</option>
-								<option value="restraunt">Restraunt</option>
-								<option value="movies">Movies</option>
-								<option value="repairs">Repairs</option>
-								<option value="real-estate">Real Estate</option>
-								<option value="automobile">Automobile</option>
+								onChange={ this.onChange } name="category" value={this.state.categoryId} id="exampleSelectGender">
+								<option value="">Change Category</option>
+								{parentCatsOptions}
 							</select>
 							{ errors.category && ( <div className="invalid-feedback">{ errors.category }</div> ) }
 						</div>
 						<div className="form-group">
-							<label htmlFor="exampleSelectGender">Sub Category</label>
-							<select className="form-control" onChange={ this.onChange } value={this.state.subCategory} name="subCategory" id="exampleSelectGender">
-								<option value="">Select Sub-Category</option>
-								<option value="shopping-sub">Shopping Sub</option>
-								<option value="spa-sub">Spa Sub</option>
+							<label htmlFor="exampleSelectGender">Selected Sub Category: { post.subCategory }</label>
+							<select className="form-control" onChange={ this.onChange } value={this.state.subCategoryId} name="subCategory" id="exampleSelectGender">
+								<option value="">Change Sub-Category</option>
+								{subCatsOptions}
 							</select>
 						</div>
 						<div className="form-group">
-							<label htmlFor="exampleSelectGender">Sub Category Level2</label>
-							<select className="form-control" onChange={ this.onChange } value={this.state.subCatLevel2} name="subCatLevel2" id="exampleSelectGender">
-								<option value="">Select Child-Category</option>
-								<option value="shopping-sub-level2">Shopping Sub Level2</option>
-								<option value="spa-sub-level2">Spa Sub Level2</option>
+							<label htmlFor="exampleSelectGender">Selected Sub Category Level2: { post.subCatLevel2 }</label>
+							<select className="form-control" onChange={ this.onChange } value={this.state.subCatLevel2Id} name="subCatLevel2" id="exampleSelectGender">
+								<option value="">Change Child-Category</option>
+								{subCatsLvl2Options}
 							</select>
 						</div>
 						<div className="form-group">
@@ -286,6 +355,9 @@ class DashboardSinglePost extends Component{
 DashboardSinglePost.propTypes = {
 	getPost: PropTypes.func.isRequired,
 	updatePost: PropTypes.func.isRequired,
+	getParentCats: PropTypes.func.isRequired,
+	getSubCats: PropTypes.func.isRequired,
+	getSubCatsLvl2: PropTypes.func.isRequired,
 	post: PropTypes.object.isRequired,
 	auth: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired
@@ -294,7 +366,8 @@ DashboardSinglePost.propTypes = {
 const mapStateToProps = ( state ) => ({
 	post: state.post,
 	auth: state.auth,
-	errors: state.errors
+	errors: state.errors,
+	category: state.category
 });
 
-export default connect( mapStateToProps, { getPost, updatePost } )( DashboardSinglePost );
+export default connect( mapStateToProps, { getPost, updatePost, getParentCats, getSubCats, getSubCatsLvl2 } )( DashboardSinglePost );

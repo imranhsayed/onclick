@@ -37,17 +37,42 @@ router.get( '/', ( req, res ) => {
 } );
 
 /**
- * @route GET api/posts/category/:id
- * @desc Get all the posts that belongs to a given category id
+ * @route GET api/posts/parentCat/:id
+ * @desc Get all the posts that belongs to a given categoryId id
  * @access public
  */
-router.get( '/category/:id', ( req, res ) => {
-	Post.find( {  } )
+router.get( '/categoryId/:id', ( req, res ) => {
+	Post.find( { categoryId: req.params.id } )
 		.sort( { date: -1 } )
-		.populate( 'user', [ 'name', 'email' ] )
 		.then( ( posts ) => res.json( posts ) )
 		.catch( ( error ) => res.json( { noPostsFound: 'No posts found' } ) );
 } );
+
+/**
+ * @route GET api/posts/subCategoryId/:id
+ * @desc Get all the posts that belongs to a given subCategoryId id
+ * @access public
+ */
+router.get( '/subCategoryId/:id', ( req, res ) => {
+	Post.find( { subCategoryId: req.params.id } )
+		.sort( { date: -1 } )
+		.then( ( posts ) => res.json( posts ) )
+		.catch( ( error ) => res.json( { noPostsFound: 'No posts found' } ) );
+} );
+
+/**
+ * @route GET api/posts/subCatLevel2Id/:id
+ * @desc Get all the posts that belongs to a given subCatLevel2Id id
+ * @access public
+ */
+router.get( '/subCatLevel2Id/:id', ( req, res ) => {
+	Post.find( { subCatLevel2Id: req.params.id } )
+		.sort( { date: -1 } )
+		.then( ( posts ) => res.json( posts ) )
+		.catch( ( error ) => res.json( { noPostsFound: 'No posts found' } ) );
+} );
+
+
 
 /**
  * @route GET api/posts/:id

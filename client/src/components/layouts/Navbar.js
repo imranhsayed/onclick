@@ -52,7 +52,7 @@ class Navbar extends Component {
 
 					<div id="onclick-logo col-md-1 text-center">
 						<Link to="/" className="navbar-brand">
-							<img src="../img/header/onclickbiz-logo.png" className="img-fluid home-header-logo" alt="test"/>
+							<img src="./../../img/header/onclickbiz-logo.png" className="img-fluid home-header-logo" alt="test"/>
 						</Link>
 					</div>
 

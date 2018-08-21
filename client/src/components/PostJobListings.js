@@ -8,13 +8,17 @@ import PostJobListingBanner from "./layouts/posts/PostJobListingBanner";
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";
 import { getPosts } from '../actions/postActions';
+import { getPostByCategoryId } from "../actions/postActions";
+import { getPostBySubCategoryId } from "../actions/postActions";
+import { getPostBySubCatLevel2Id } from "../actions/postActions";
 import isEmpty from "../validation/is-empty";
 
 class DashboardPostsListing extends Component {
 	componentDidMount() {
-		if ( this.props.match.params.id ) {
-
-			this.props.getPosts();
+		let paramId = this.props.match.params.id,
+			paramType = this.props.match.params.type;
+		if ( paramId ) {
+			this.props.getPostByCategoryId( paramId );
 		} else{
 			this.props.getPosts();
 		}
@@ -78,6 +82,9 @@ class DashboardPostsListing extends Component {
 
 DashboardPostsListing.propTypes = {
 	getPosts: PropTypes.func.isRequired,
+	getPostByCategoryId: PropTypes.func.isRequired,
+	getPostBySubCategoryId: PropTypes.func.isRequired,
+	getPostBySubCatLevel2Id: PropTypes.func.isRequired,
 	post: PropTypes.object.isRequired,
 	auth: PropTypes.object.isRequired
 };
@@ -87,4 +94,4 @@ const mapStateToProps = state => ({
 	post: state.post
 });
 
-export default connect(mapStateToProps, { getPosts })(DashboardPostsListing);
+export default connect(mapStateToProps, { getPosts, getPostByCategoryId, getPostBySubCategoryId, getPostBySubCatLevel2Id })(DashboardPostsListing);
