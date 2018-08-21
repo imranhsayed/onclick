@@ -3,7 +3,7 @@ import setAuthToken from '../utils/setAuthToken';
 
 // jwt-decode module is used to decode the user data from auth token
 import jwt_decode from 'jwt-decode';
-import { GET_ERRORS, SET_CURRENT_USER } from './types';
+import {GET_ERRORS, GET_POSTS, SET_CURRENT_USER} from './types';
 
 /**
  * Register User: registerUser()
@@ -80,4 +80,22 @@ export const logoutUser = () => dispatch => {
 
 	// Set the current user to an empty object, which will set the isAuthenticated state of redux store to false.
 	dispatch( setCurrentUser( {} ) );
+};
+
+// Update user as a vendor
+// Get Post by CategoryId
+export const makeUserAVendorRequest = ( id, userData  ) => dispatch => {
+	axios
+		.post(`/api/users/makeVendor/${id}`, userData)
+		.then( res => dispatch({
+				type: SET_CURRENT_USER,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			})
+		);
 };

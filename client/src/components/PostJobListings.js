@@ -18,7 +18,15 @@ class DashboardPostsListing extends Component {
 		let paramId = this.props.match.params.id,
 			paramType = this.props.match.params.type;
 		if ( paramId ) {
-			this.props.getPostByCategoryId( paramId );
+			if ( 'category' === paramType ) {
+				this.props.getPostByCategoryId( paramId );
+			}
+			if ( 'subCat' === paramType ) {
+				this.props.getPostBySubCategoryId( paramId );
+			}
+			// if ( 'subCat' === paramType ) {
+			// 	this.props.getPostBySubCatLevel2Id( paramId );
+			// }
 		} else{
 			this.props.getPosts();
 		}

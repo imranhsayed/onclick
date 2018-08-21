@@ -105,7 +105,7 @@ class DashboardSidebar extends Component {
 						</Link>
 					</li>
 					{/* Show Profile if its user*/}
-					{('user' === user.type) &&
+					{('user' === user.type || 'vendor' === user.type ) &&
 					<li className="nav-item oc-nav-item">
 						<Link className="nav-link" to="/create-profile">
 							<span className="menu-title">Profile</span>

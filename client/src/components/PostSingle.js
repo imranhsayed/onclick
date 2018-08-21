@@ -18,6 +18,7 @@ class PostSingle extends Component{
 	render(){
 
 		const { post, loading } = this.props.post;
+		const { user } = this.props.auth;
 		let postContent;
 
 		if ( null === post || loading || ! Object.keys( post ).length ) {
@@ -29,7 +30,7 @@ class PostSingle extends Component{
 						<PostSlider post={ post }/>
 						<PostDetails post={ post }/>
 					</div>
-					<PostDescription post={ post }/>
+					<PostDescription user={user} post={ post }/>
 				</div>
 			)
 		}
@@ -52,9 +53,11 @@ class PostSingle extends Component{
 PostSingle.propTypes = {
 	getPost: PropTypes.func.isRequired,
 	post: PropTypes.object.isRequired,
+	auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = ( state ) => ({
+	auth: state.auth,
 	post: state.post
 });
 

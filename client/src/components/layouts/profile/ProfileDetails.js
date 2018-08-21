@@ -6,7 +6,7 @@ import isEmpty from '../../../validation/is-empty';
 class ProfileDetails extends Component {
 	render() {
 		const { profile } = this.props;
-		console.log( profile );
+		console.log( 'profile', profile );
 
 		return (
 			<div className="col-md-6 pd-sec-one-details-text">

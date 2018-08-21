@@ -1,5 +1,8 @@
 import axios from 'axios';
-import { GET_PROFILE, GET_ERRORS, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, SET_CURRENT_USER, GET_PROFILES } from "./types";
+import {
+	GET_PROFILE, GET_ERRORS, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, SET_CURRENT_USER, GET_PROFILES,
+	GET_POSTS
+} from "./types";
 
 // Get the Current Profile
 export const getCurrentProfile = () => ( dispatch ) => {
@@ -64,6 +67,8 @@ export const createProfile = ( profileData, history ) => ( dispatch ) => {
 		} );
 };
 
+
+
 // Delete a Profile
 export const deleteAccount = () => ( dispatch ) => {
 	if ( window.confirm( 'Are you sure you want to delete your account. This cannot be undone!' ) ) {
@@ -95,3 +100,4 @@ export const getProfiles = () => ( dispatch ) => {
 
 		} );
 };
+

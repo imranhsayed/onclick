@@ -6,6 +6,7 @@ class PostDescription extends Component {
 	render() {
 
 		const { post } = this.props;
+		const { user } = this.props;
 
 		return (
 			<div className="container-fluid pd-section-two-container">
@@ -15,9 +16,14 @@ class PostDescription extends Component {
 							<div className="card-body">
 								<h1 className="card-title">Description</h1>
 								<p className="card-text">{ post.description }</p>
-								<Link to="/">
-									<button type="button" className="btn btn-primary send-otp-btn btn-post-job product-bid-on-project-btn">Bid on This Project</button>
-								</Link>
+								{/* Take this to payment gateway*/}
+								{ 'vendor' === user.type && (
+									<Link to="/" className="btn btn-primary send-otp-btn btn-post-job product-bid-on-project-btn">Bid on This Project</Link>
+								)}
+								{ 'user' === user.type && <p>You need to register as a vendor to bid on this project</p>}
+								{ 'user' === user.type && (
+									<Link to="/dashboard" style={{ width: '275px' }} className="btn btn-primary send-otp-btn btn-post-job product-bid-on-project-btn">Register as a Vendor to Bid</Link>
+								)}
 							</div>
 						</div>
 					</div>
@@ -36,7 +42,8 @@ class PostDescription extends Component {
 }
 
 PostDescription.propTypes = {
-	post: PropTypes.object.isRequired
+	post: PropTypes.object.isRequired,
+	user: PropTypes.object.isRequired
 };
 
 export default PostDescription;

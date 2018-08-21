@@ -183,5 +183,20 @@ router.get( '/current', passport.authenticate( 'jwt', { session: false } ), ( re
 		}
 	} );
 } );
+
+/**
+ * @route POST api/profile/makeVendor/:id
+ * @desc Update the user type as vendor.
+ * @access private
+ */
+router.post( '/makeVendor/:id', passport.authenticate( 'jwt', { session: false } ), ( req, res ) => {
+	const userField = {
+		type: 'vendor'
+	};
+	User.findOneAndUpdate( { _id: req.params.id }, { $set: userField }, { new: true } )
+		.then( ( user ) => res.json( user ) )
+		.catch( ( errors ) => res.json( errors ) );
+} );
+
 // We export the router so that the server.js file can pick it up
 module.exports = router;
