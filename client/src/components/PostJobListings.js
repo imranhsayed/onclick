@@ -24,9 +24,9 @@ class DashboardPostsListing extends Component {
 			if ( 'subCat' === paramType ) {
 				this.props.getPostBySubCategoryId( paramId );
 			}
-			// if ( 'subCat' === paramType ) {
-			// 	this.props.getPostBySubCatLevel2Id( paramId );
-			// }
+			if ( 'grandChild' === paramType ) {
+				this.props.getPostBySubCatLevel2Id( paramId );
+			}
 		} else{
 			this.props.getPosts();
 		}
@@ -35,13 +35,20 @@ class DashboardPostsListing extends Component {
 	render() {
 		const { posts, loading } = this.props.post;
 		const { user } = this.props.auth;
-		let postContent, postCount;
+		let postContent, postCount,
+			paramName = this.props.match.params.name;
+
+		console.log( 'posts', posts );
 
 		if ( posts === null || loading) {
-			postContent = <img src="./../img/spinner.gif" style={{ width: '200px', margin: 'auto', display: 'block' }}/>;
+			postContent = <img src="./../../../img/spinner.gif" style={{ width: '200px', margin: 'auto', display: 'block' }} alt="spinner"/>;
 		} else {
 			postCount = posts.length;
-			postContent = <PostFeed posts={posts} user={user} />;
+			if ( postCount ) {
+				postContent = <PostFeed posts={posts} user={user} />;
+			} else {
+				postContent = <h3 className="text-center">No Jobs found. Please select another filter</h3>;
+			}
 		}
 
 		return (
@@ -58,6 +65,7 @@ class DashboardPostsListing extends Component {
 						</div>
 						<div className="col-12 col-lg-9">
 							<div className="jumbotron p-0">
+								{ paramName && (<p>Showing results for <strong>Category: { paramName }</strong></p>) }
 								{ ! isEmpty( postCount ) ? ( <p>Showing(1 - { postCount } Services of 7585 Services)</p> ) : '' }
 							</div>
 						</div>

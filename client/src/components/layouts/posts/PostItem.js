@@ -12,7 +12,7 @@ class DashboardPostItem extends Component {
 			(
 				<div className="jumbotron listing-services-jumbotron p-0 wow pulse">
 					<div className="row">
-						<img src="./../../img/listing-hotel.jpg" className="col-12 col-sm-6"/>
+						<img src="./../../../img/listing-hotel.jpg" className="col-12 col-sm-6"/>
 						<div className="col-12 col-sm-6 listing-services-text">
 							<h5>
 								<i className="far fa-folder-open"></i> { post.category }

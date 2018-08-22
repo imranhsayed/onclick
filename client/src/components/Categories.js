@@ -3,12 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CategoriesBanner from './layouts/categories/CategoriesBanner';
-import classnames from "classnames";
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";
 import { getCategories } from './../actions/categoryActions';
 import _ from 'lodash';
-import $ from 'jquery';
 
 class Categories extends Component {
 
@@ -68,36 +66,30 @@ class Categories extends Component {
 	}
 
 	render(){
-
 		const { category } = this.props;
-		let nestedCats;
+		let nestedCats, categoryOptions = '';
 		nestedCats = this.nestCategories( category.categories );
-		console.log( 'nestedCats', nestedCats );
 
-		let parentCategories = '', categoryOptions = '';
-
-
-
-		// Get Parent categories options
+		// Get Parent categories options markup.
 		if ( null !== nestedCats && Object.keys( nestedCats ).length ) {
 			categoryOptions = nestedCats.map( parentCategory => (
 				<div key={parentCategory._id} className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
 					<div className="card mb-4">
 						<h3 className="card-header">
-							<Link to={`/category-job-listing/category/${parentCategory._id}`}>{ parentCategory.categoryName }</Link>
+							<Link to={`/category-job-listing/category/${parentCategory.categoryName}/${parentCategory._id}`}>{ parentCategory.categoryName }</Link>
 						</h3>
 						<ul className="card-body oc-categories-card" id={parentCategory._id}>
 							{ null !== parentCategory.child &&
 							parentCategory.child.map( subCat => (
 									<li key={subCat._id} >
-										<Link to={`/category-job-listing/subCat/${subCat._id}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>
+										<Link to={`/category-job-listing/subCat/${subCat.categoryName}/${subCat._id}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>
 											{ subCat.categoryName }
 										</Link>
 										<ul>
 											{ subCat.child &&
 												subCat.child.map( grandChild => (
 													<li key={grandChild._id}>
-														<Link to={`/category-job-listing/subCatLvl2/${grandChild._id}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>
+														<Link to={`/category-job-listing/grandChild/${grandChild.categoryName}/${grandChild._id}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>
 															{ grandChild.categoryName }
 														</Link>
 													</li>
