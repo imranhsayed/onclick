@@ -1,8 +1,6 @@
 import React, { Component } from  'react';
-import $ from "jquery";
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import { connect } from 'react-redux';
 import DashboardNav from './../DashboardNav';
 import DashboardSidebar from './../DashboardSidebar';

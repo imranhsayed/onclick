@@ -12,15 +12,6 @@ class Posts extends Component {
 	}
 
 	render() {
-		const { posts, loading } = this.props.post;
-		let postContent;
-
-		if (posts === null || loading) {
-			postContent = <h1>Loading..</h1>;
-		} else {
-			// postContent = <PostFeed posts={posts} />;
-		}
-
 		return (
 			<div className="container-scroller">
 				<DashboardNav/>

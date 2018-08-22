@@ -49,7 +49,7 @@ export const updateCategory = ( postData, id, history ) => dispatch => {
 		);
 };
 
-// Get Categories
+// Get All Categories
 export const getCategories = () => dispatch => {
 	dispatch(setCategoryLoading());
 	axios

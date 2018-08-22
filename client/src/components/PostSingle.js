@@ -22,7 +22,7 @@ class PostSingle extends Component{
 		let postContent;
 
 		if ( null === post || loading || ! Object.keys( post ).length ) {
-			postContent = <img src="./../img/spinner.gif" style={{ width: '200px', margin: 'auto', display: 'block' }}/>;
+			postContent = <img src="./../img/spinner.gif" style={{ width: '200px', margin: 'auto', display: 'block' }} alt="spinner"/>;
 		} else {
 			postContent = (
 				<div className="container-fluid pd-section-one-container">

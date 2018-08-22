@@ -6,32 +6,29 @@ import CategoriesBanner from './layouts/categories/CategoriesBanner';
 import classnames from "classnames";
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";
-import { getParentCats } from './../actions/categoryActions';
-import { getSubCats } from './../actions/categoryActions';
-import { getSubCatsLvl2 } from './../actions/categoryActions';
+import { getCategories } from './../actions/categoryActions';
 import _ from 'lodash';
 import $ from 'jquery';
 
 class Categories extends Component {
 
 	componentDidMount() {
-		this.props.getParentCats();
+		this.props.getCategories();
 	}
 
-	getSubCategories( id ) {
-		this.props.getSubCats( id );
-		// document.getElementById( id ).append( content );
-		$( '.oc-categories-card' ).slideUp();
-		$( '#' + id ).slideToggle();
-	}
-
+	/**
+	 * Build an object of Categories with sub categories
+	 * nestedCats : will contain the parent categories, inside of which you will have 'child' categories
+	 * inside of which you will have its child categories.
+	 * @param categories
+	 * @return {Array}
+	 */
 	nestCategories( categories ) {
 		const nestedCats = [];
 		const addedCats = [];
-		const skipped = [];
 
 		// Get parent cats.
-		_.each( categories.parentCats, ( cat ) => {
+		_.each( categories, ( cat ) => {
 			if ( '0' === cat.parentCatId ) {
 				nestedCats.push( cat );
 				addedCats[ cat._id ] = true;
@@ -39,7 +36,7 @@ class Categories extends Component {
 		} );
 
 		// Set child loop
-		_.each( categories.parentCats, ( cat ) => {
+		_.each( categories, ( cat ) => {
 			if ( '0' !== cat.parentCatId ) {
 				_.each ( nestedCats, ( parentCat, index ) => {
 					if ( cat.parentCatId === parentCat._id ) {
@@ -52,7 +49,7 @@ class Categories extends Component {
 		} );
 
 		// Set grand children.
-		_.each( categories.parentCats, ( cat ) => {
+		_.each( categories, ( cat ) => {
 			if ( ! addedCats[ cat._id ] ) {
 			    _.each( nestedCats, ( parentCat ) => {
 			    	if ( parentCat.child ) {
@@ -67,37 +64,46 @@ class Categories extends Component {
 			}
 		} );
 
-		console.log( nestedCats );
+		return nestedCats;
 	}
 
 	render(){
 
 		const { category } = this.props;
-		console.log( 'cat', category );
-
-		this.nestCategories( category );
+		let nestedCats;
+		nestedCats = this.nestCategories( category.categories );
+		console.log( 'nestedCats', nestedCats );
 
 		let parentCategories = '', categoryOptions = '';
 
 
 
 		// Get Parent categories options
-		if ( null !== category.parentCats && Object.keys( category.parentCats ).length ) {
-			parentCategories = category.parentCats;
-			categoryOptions = parentCategories.map( item => (
-				<div key={item._id} className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+		if ( null !== nestedCats && Object.keys( nestedCats ).length ) {
+			categoryOptions = nestedCats.map( parentCategory => (
+				<div key={parentCategory._id} className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
 					<div className="card mb-4">
 						<h3 className="card-header">
-							<Link to={`/category-job-listing/category/${item._id}`}>{ item.categoryName }</Link>
-							<i class="mdi mdi-arrow-down-bold-circle" onClick={ this.getSubCategories.bind( this, item._id ) } style={{ cursor: 'pointer', marginLeft: '14px' }}></i>
+							<Link to={`/category-job-listing/category/${parentCategory._id}`}>{ parentCategory.categoryName }</Link>
 						</h3>
-						<ul className="card-body oc-categories-card" id={item._id}>
-							{ null !== category.subCats &&
-								category.subCats.map( subCat => (
+						<ul className="card-body oc-categories-card" id={parentCategory._id}>
+							{ null !== parentCategory.child &&
+							parentCategory.child.map( subCat => (
 									<li key={subCat._id} >
 										<Link to={`/category-job-listing/subCat/${subCat._id}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>
 											{ subCat.categoryName }
 										</Link>
+										<ul>
+											{ subCat.child &&
+												subCat.child.map( grandChild => (
+													<li key={grandChild._id}>
+														<Link to={`/category-job-listing/subCatLvl2/${grandChild._id}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>
+															{ grandChild.categoryName }
+														</Link>
+													</li>
+												) )
+											}
+										</ul>
 									</li>
 								) )
 							}
@@ -108,22 +114,6 @@ class Categories extends Component {
 		} else {
 			categoryOptions = <img src="./../img/spinner.gif" style={{ width: '200px', margin: 'auto', display: 'block' }}/>;
 		}
-
-		// Get sub categories options
-		// if ( null !== category.subCats && Object.keys( category.subCats ).length ) {
-		// 	subCategories = category.subCats;
-		// 	subCatsOptions = subCategories.map( item => (
-		// 		<option key={item._id} value={item._id}>{ item.categoryName }</option>
-		// 	) );
-		// }
-		//
-		// // Get sub categories lvl2 options
-		// if ( null !== category.subCatsLvl2 && Object.keys( category.subCatsLvl2 ).length ) {
-		// 	subCategoriesLvl2 = category.subCatsLvl2;
-		// 	// subCatsLvl2Options = subCategoriesLvl2.map( item => (
-		// 	// 	<option key={item._id} value={item._id}>{ item.categoryName }</option>
-		// 	// ) );
-		// }
 
 		return(
 			<div>
@@ -141,13 +131,11 @@ class Categories extends Component {
 }
 
 Categories.propTypes = {
-	getParentCats: PropTypes.func.isRequired,
-	getSubCats: PropTypes.func.isRequired,
-	getSubCatsLvl2: PropTypes.func.isRequired
+	getCategories: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
 	category: state.category
 });
 
-export default connect( mapStateToProps, { getParentCats, getSubCats, getSubCatsLvl2 }  )( Categories );
+export default connect( mapStateToProps, { getCategories }  )( Categories );
