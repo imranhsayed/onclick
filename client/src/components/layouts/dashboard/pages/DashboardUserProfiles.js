@@ -18,7 +18,6 @@ class DashboardUserProfiles extends Component {
 		 */
 		axios.get( '/api/profile/all', this.props.auth )
 			.then( res => {
-				console.log( 'camein', res.data );
 				// Once we get the response containing the currentUserProfile data, we set the state value of currentUserProfile to the received data.
 				this.setState({
 					profiles: res.data
@@ -32,7 +31,6 @@ class DashboardUserProfiles extends Component {
 		const { user } = this.props.auth;
 		const errors = this.state.errors;
 		name = user.name;
-		console.log( 'profiles', this.state.profiles );
 		return(
 			<div className="container-scroller">
 				<DashboardNav/>

@@ -27,6 +27,7 @@ import DashboardSinglePost from "./components/DashboardSinglePost";
 import DashboardAddCategory from './components/layouts/categories/DashboardAddCategory';
 import PostSingle from "./components/PostSingle";
 import DashboardListCategories from "./components/DashboardListCategories";
+import BuyBid from "./components/bid/BuyBid";
 
 /**
  * To ensure the authenticate state stays true even on page reload, we do the following:
@@ -90,6 +91,9 @@ class App extends Component {
 					<Switch><PrivateRoute exact path="/dashboard-post/:id" component={DashboardSinglePost} /></Switch>
 					<Switch><PrivateRoute exact path="/add-category" component={DashboardAddCategory} /></Switch>
 					<Switch><PrivateRoute exact path="/list-categories" component={DashboardListCategories} /></Switch>
+
+					{/*Front End*/}
+					<Switch><PrivateRoute exact path="/buy-bid" component={BuyBid} /></Switch>
 					<Route exact path="/job-listings" component={PostJobListings}/>
 					<Route exact path="/category-job-listing/:type/:name/:id" component={PostJobListings}/>
 					<Route exact path="/single-post/:id" component={PostSingle}/>

@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import CategoriesBanner from './layouts/categories/CategoriesBanner';
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";
 import { getCategories } from './../actions/categoryActions';
 import _ from 'lodash';
+import Banner from "./layouts/banner/Banner";
 
 class Categories extends Component {
 
@@ -79,7 +79,7 @@ class Categories extends Component {
 							<Link to={`/category-job-listing/category/${parentCategory.categoryName}/${parentCategory._id}`}>{ parentCategory.categoryName }</Link>
 						</h3>
 						<ul className="card-body oc-categories-card" id={parentCategory._id}>
-							{ null !== parentCategory.child &&
+							{ parentCategory.child &&
 							parentCategory.child.map( subCat => (
 									<li key={subCat._id} >
 										<Link to={`/category-job-listing/subCat/${subCat.categoryName}/${subCat._id}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>
@@ -110,7 +110,7 @@ class Categories extends Component {
 		return(
 			<div>
 				<Navbar/>
-				<CategoriesBanner/>
+				<Banner heading={'Categories'}/>
 				<div className="container forms-section">
 					<div className="row forms-section-row" >
 						{ categoryOptions }

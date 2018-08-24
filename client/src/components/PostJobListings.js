@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProfileListingCategories from "./layouts/profile/ProfileListingCategories";
 import PostFeed from './layouts/posts/PostFeed';
-import PostJobListingBanner from "./layouts/posts/PostJobListingBanner";
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";
 import { getPosts } from '../actions/postActions';
@@ -12,6 +11,7 @@ import { getPostByCategoryId } from "../actions/postActions";
 import { getPostBySubCategoryId } from "../actions/postActions";
 import { getPostBySubCatLevel2Id } from "../actions/postActions";
 import isEmpty from "../validation/is-empty";
+import Banner from "./layouts/banner/Banner";
 
 class DashboardPostsListing extends Component {
 	componentDidMount() {
@@ -54,7 +54,7 @@ class DashboardPostsListing extends Component {
 		return (
 			<div>
 				<Navbar/>
-				<PostJobListingBanner/>
+				<Banner heading={ 'Job Listings' }/>
 				<div className="container listing-container my-3">
 					<div className="row mb-3 mt-5 listing-search-services-row">
 						<div className="col-12 col-lg-3">

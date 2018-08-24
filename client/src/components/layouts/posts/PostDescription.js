@@ -18,7 +18,7 @@ class PostDescription extends Component {
 								<p className="card-text">{ post.description }</p>
 								{/* Take this to payment gateway*/}
 								{ 'vendor' === user.type && (
-									<Link to="/" className="btn btn-primary send-otp-btn btn-post-job product-bid-on-project-btn">Bid on This Project</Link>
+									<Link to="/buy-bid" className="btn btn-primary send-otp-btn btn-post-job product-bid-on-project-btn">Bid on This Project</Link>
 								)}
 								{ 'user' === user.type && <p>You need to register as a vendor to bid on this project</p>}
 								{ 'user' === user.type && (

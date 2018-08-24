@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import isEmpty from '../validation/is-empty';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import CategoriesBanner from './layouts/categories/CategoriesBanner';
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";
 import { getProfiles } from './../actions/profileActions'
 import ProfileItems from "./layouts/profile/ProfileItems";
-import ProfileListingBanner from "./layouts/profile/ProfileListingBanner";
 import ProfileListingCategories from "./layouts/profile/ProfileListingCategories";
+import Banner from "./layouts/banner/Banner";
 
 class ProfileListings extends Component {
 
@@ -37,7 +36,7 @@ class ProfileListings extends Component {
 		return(
 			<div>
 				<Navbar/>
-				<ProfileListingBanner/>
+				<Banner heading={ 'Profile Listing' }/>
 				<div className="container listing-container my-3">
 					<div className="row mb-3 mt-5 listing-search-services-row">
 						<div className="col-12 col-lg-3">
