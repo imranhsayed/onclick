@@ -91,7 +91,7 @@ class Navbar extends Component {
 								<a className="nav-link" href="">CONTACTs</a>
 							</li>
 
-							<Link to="/post-job" className="btn btn-primary btn-post-job btn-post-job-header ml-5 mr-2">Post Job</Link>
+							<Link to="/post-job" id="post-job-nav-link" style={{ marginLeft: '-3px !important' }} className="btn btn-primary btn-post-job btn-post-job-header ml-5 mr-2">Post Job</Link>
 
 							{/*Auth Links*/}
 							{ isAuthenticated && userNameLink }

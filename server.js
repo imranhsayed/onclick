@@ -20,6 +20,7 @@ const router = express.Router();
 // Set app equal to the object returned by express();
 const app = express();
 
+
 /**
  * Configure the middleware.
  * bodyParser.json() returns a function that is passed as a param to app.use() as middleware
@@ -35,7 +36,8 @@ app.use( '/api/users', users );
 app.use( '/api/profile', profile );
 app.use( '/api/posts', posts );
 app.use( '/api/categories', category );
-app.use( '/api/bid', bid );
+app.use( '/api/bid/', bid );
+
 
 // Passport middleware
 app.use( passport.initialize() );

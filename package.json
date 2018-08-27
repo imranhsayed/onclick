@@ -18,6 +18,7 @@
     "debug": "~2.6.9",
     "express": "^4.16.3",
     "http-errors": "~1.6.2",
+    "instamojo-nodejs": "0.0.5",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.4",
@@ -26,6 +27,7 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "path": "^0.12.7",
+    "url": "^0.11.0",
     "validator": "^10.4.0"
   },
   "main": "server.js",
