@@ -72,6 +72,9 @@ const PostSchema = new Schema({
 		type: String,
 		required: true
 	},
+	bidIds: {
+		type: [String]
+	},
 	date: {
 		type: Date,
 		default: Date.now()

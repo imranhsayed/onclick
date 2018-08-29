@@ -23,6 +23,18 @@ const UserSchema = new Schema( {
 		type: String,
 		required: true
 	},
+	package: {
+		type: String
+	},
+	bidCountInPack: {
+		type: String
+	},
+	paymentRequestId: {
+		type: String
+	},
+	bidPostIds: {
+		type: [String]
+	},
 	date: {
 		type: Date,
 		default: Date.now

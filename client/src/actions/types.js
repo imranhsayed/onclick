@@ -22,3 +22,10 @@ export const GET_CATEGORY = 'GET_CATEGORY';
 export const ADD_CATEGORY = 'ADD_CATEGORY';
 export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 export const CLEAR_CATEGORY_ERRORS = 'CLEAR_CATEGORY_ERRORS';
+
+export const BID_LOADING = 'BID_LOADING';
+export const GET_BIDS = 'GET_BIDS';
+export const GET_BID = 'GET_BID';
+export const ADD_BID = 'ADD_BID';
+export const DELETE_BID = 'DELETE_BID';
+export const CLEAR_BID_ERRORS = 'CLEAR_BID_ERRORS';

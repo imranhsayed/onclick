@@ -83,10 +83,26 @@ export const logoutUser = () => dispatch => {
 };
 
 // Update user as a vendor
-// Get Post by CategoryId
 export const makeUserAVendorRequest = ( id, userData  ) => dispatch => {
 	axios
 		.post(`/api/users/makeVendor/${id}`, userData)
+		.then( res => dispatch({
+				type: SET_CURRENT_USER,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			})
+		);
+};
+
+// Update user as a vendor
+export const getCurrentUser = ( auth  ) => dispatch => {
+	axios
+		.get('/api/users/current')
 		.then( res => dispatch({
 				type: SET_CURRENT_USER,
 				payload: res.data

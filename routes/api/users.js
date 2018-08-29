@@ -66,6 +66,8 @@ router.post( '/register', ( req, res ) => {
 				name: req.body.name,
 				email: req.body.email,
 				password: req.body.password,
+				bidCountInPack: '0',
+				package: 'none',
 				type: 'user'
 			});
 
@@ -135,7 +137,14 @@ router.post( '/login', ( req, res ) => {
 						 * Create a jwt payload( actual data ) first containing user info to send to using jwt.sign()
 						 * Since we have the user object available from then() promise callback, we can access all of its properties.
 						 */
-						const payload = { id: user.id, name: user.name, email: user.email, type: user.type };
+						const payload = {
+							id: user.id,
+							name: user.name,
+							email: user.email,
+							type: user.type,
+							package: user.package,
+							bidCountInPack: user.bidCountInPack
+						};
 
 						/**
 						 * jwt.sign() takes the data passed in payload and signs it, creates a hash and returns a token value.
@@ -175,13 +184,9 @@ router.get( '/current', passport.authenticate( 'jwt', { session: false } ), ( re
 	 * You have the entire user object available here in req.user
 	 * so you can access all of its properties inside when setting the value of msg as an object.
 	 */
-	res.json( {
-		msg: {
-			id: req.user.id,
-			name: req.user.name,
-			email: req.user.email
-		}
-	} );
+	User.findById( req.user.id )
+		.then( ( user ) => res.json( user ) )
+		.catch( ( errors ) => res.json( errors ) );
 } );
 
 /**

@@ -1,12 +1,37 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import BidForm from './../../bid/BidForm';
 
 class PostDescription extends Component {
 	render() {
 
 		const { post } = this.props;
 		const { user } = this.props;
+		let bidLink = '';
+
+		if ( 'vendor' === user.type ) {
+			// If its a vendor and on a package
+		    if ( 'none' !== user.package ) {
+			    bidLink = (
+			    	<div>
+					    <button type="button" style={{ width: '200px', paddingBottom: '31px', marginBottom: '16px' }} data-toggle="collapse" data-target="#bidProposal" aria-expanded="false" className="btn btn-primary send-otp-btn btn-post-job detail-project-btn">Bid on This Project</button>
+					    <BidForm post={ post }/>
+				    </div>
+			    )
+		    } else {
+			    // If its a vendor not on a package
+		    	bidLink = <Link to="/buy-bid" className="btn btn-primary send-otp-btn btn-post-job product-bid-on-project-btn">Buy Bids to Bid on This Project</Link>
+		    }
+		} else {
+			// If its a user
+			bidLink = (
+				<div>
+					<p>You need to register as a vendor to bid on this project</p>
+					<Link to="/dashboard" style={{ width: '275px' }} className="btn btn-primary send-otp-btn btn-post-job product-bid-on-project-btn">Register as a Vendor to Bid</Link>
+				</div>
+			)
+		}
 
 		return (
 			<div className="container-fluid pd-section-two-container">
@@ -16,14 +41,7 @@ class PostDescription extends Component {
 							<div className="card-body">
 								<h1 className="card-title">Description</h1>
 								<p className="card-text">{ post.description }</p>
-								{/* Take this to payment gateway*/}
-								{ 'vendor' === user.type && (
-									<Link to="/buy-bid" className="btn btn-primary send-otp-btn btn-post-job product-bid-on-project-btn">Bid on This Project</Link>
-								)}
-								{ 'user' === user.type && <p>You need to register as a vendor to bid on this project</p>}
-								{ 'user' === user.type && (
-									<Link to="/dashboard" style={{ width: '275px' }} className="btn btn-primary send-otp-btn btn-post-job product-bid-on-project-btn">Register as a Vendor to Bid</Link>
-								)}
+								{ bidLink }
 							</div>
 						</div>
 					</div>

@@ -101,7 +101,8 @@ class Dashboard extends Component {
 					<div className="container">
 						<p className="lead text-muted">Welcome { user.name }!</p>
 						<p className="">You have not yet set up a profile, please create your profile</p>
-						<Link className="btn btn-lg btn-info" to="/create-profile">Create Profile</Link>
+						<Link className="btn btn-lg btn-info" to="/create-profile">Create Profile</Link><br/><br/>
+						<Link className="btn btn-lg btn-info" to="/job-listings">Job Listings</Link>
 						{ 'user' === user.type && (
 							<div className="jumbotron mt-5">
 								<h1 className="display-3">Become a Vendor</h1>

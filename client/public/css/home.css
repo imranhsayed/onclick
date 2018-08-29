@@ -2114,6 +2114,11 @@ input[type=number]#payment-credit-card-code::-webkit-outer-spin-button {
 	color: #121212;
 	font-size: 19px;
 }
+
+.listing-categories .jumbotron .sub-title-cat {
+	font-size: 18.3px !important;
+}
+
 .listing-categories .jumbotron p {
 	font-size: 16px;
 }
@@ -2237,6 +2242,20 @@ input[type=number]#payment-credit-card-code::-webkit-outer-spin-button {
 	-moz-border-radius: 100%;
 	-ms-border-radius: 100%;
 	border-radius: 100%;
+}
+
+/*DISPLAY JOB POSTED PAGE STYLES*/
+
+.display-job-posted-container .listing-cat-link-btn {
+	width: 150px;
+}
+
+.display-job-posted-colm  h3 {
+	padding-bottom: 0;
+}
+
+.display-job-posted-colm  p {
+	padding-bottom: 2px;
 }
 
 
