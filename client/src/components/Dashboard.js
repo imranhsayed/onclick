@@ -10,13 +10,15 @@ import { logoutUser } from "./../actions/authActions";
 import { getCurrentProfile } from "../actions/profileActions";
 import { deleteAccount } from "../actions/profileActions";
 import { makeUserAVendorRequest } from "../actions/authActions";
+import { getCurrentUser } from "../actions/authActions";
 import $ from "jquery";
 
 class Dashboard extends Component {
 
 	componentDidMount() {
-
+		const { user } = this.props.auth;
 		this.props.getCurrentProfile();
+		this.props.getCurrentUser( user );
 
 		// If the user is not logged in
 		if ( ! this.props.auth.isAuthenticated ) {
@@ -147,6 +149,7 @@ Dashboard.propTypes = {
 	getCurrentProfile: PropTypes.func.isRequired,
 	makeUserAVendorRequest: PropTypes.func.isRequired,
 	deleteAccount: PropTypes.func.isRequired,
+	getCurrentUser: PropTypes.func.isRequired,
 	profile: PropTypes.object.isRequired
 };
 
@@ -155,4 +158,4 @@ const mapStateToProps = ( state ) => ({
 	profile: state.profile
 });
 
-export default connect( mapStateToProps, { logoutUser, getCurrentProfile, deleteAccount, makeUserAVendorRequest }  )( Dashboard );
+export default connect( mapStateToProps, { logoutUser, getCurrentProfile, deleteAccount, makeUserAVendorRequest, getCurrentUser }  )( Dashboard );

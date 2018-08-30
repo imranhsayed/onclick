@@ -92,12 +92,22 @@ class DashboardSidebar extends Component {
 							<i className="mdi mdi-worker menu-icon"></i>
 						</Link>
 					</li>
+					{('user' === user.type || 'vendor' === user.type) &&
 					<li className="nav-item oc-nav-item">
-						<Link className="nav-link" to="/dashboard">
+						<Link className="nav-link" to="/user-bids">
 							<span className="menu-title">Bids</span>
 							<i className="mdi mdi-crosshairs-gps menu-icon"></i>
 						</Link>
 					</li>
+					}
+					{('admin' === user.type ) &&
+					<li className="nav-item oc-nav-item">
+						<Link className="nav-link" to="/user-bids">
+							<span className="menu-title">All Bids</span>
+							<i className="mdi mdi-crosshairs-gps menu-icon"></i>
+						</Link>
+					</li>
+					}
 					<li className="nav-item oc-nav-item">
 						<Link className="nav-link" to="/uploads">
 							<span className="menu-title">Uploads</span>

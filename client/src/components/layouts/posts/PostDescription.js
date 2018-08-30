@@ -11,17 +11,37 @@ class PostDescription extends Component {
 		let bidLink = '';
 
 		if ( 'vendor' === user.type ) {
-			// If its a vendor and on a package
-		    if ( 'none' !== user.package ) {
-			    bidLink = (
-			    	<div>
-					    <button type="button" style={{ width: '200px', paddingBottom: '31px', marginBottom: '16px' }} data-toggle="collapse" data-target="#bidProposal" aria-expanded="false" className="btn btn-primary send-otp-btn btn-post-job detail-project-btn">Bid on This Project</button>
-					    <BidForm post={ post }/>
-				    </div>
-			    )
-		    } else {
+			// If its a vendor and on a package and has not already bid
+			if ( 'none' !== user.package && ( -1 === post.bidUserIds.indexOf( user.id ) ) ) {
+				// If he has not exhausted all bid
+				if ( 0 < user.bidCountInPack ) {
+					bidLink = (
+						<div>
+							<button type="button" style={{ width: '200px', paddingBottom: '31px', marginBottom: '16px' }} data-toggle="collapse" data-target="#bidProposal" aria-expanded="false" className="btn btn-primary send-otp-btn btn-post-job detail-project-btn">Bid on This Project</button>
+							<BidForm post={ post }/>
+						</div>
+					)
+				} else if( 0 >= user.bidCountInPack ){
+					// If all bids are exhausted
+					bidLink = (
+						<div>
+							<p>You have used up all your bids in your pack . Please buy a new pack to continue bidding.</p>
+							<Link to="/buy-bid" style={{ width: '300px' }} className="btn btn-primary send-otp-btn btn-post-job product-bid-on-project-btn">Buy Bids to Bid on This Project</Link>
+						</div>
+					)
+
+				}
+		    } else if ( 'none' === user.package ) {
 			    // If its a vendor not on a package
-		    	bidLink = <Link to="/buy-bid" className="btn btn-primary send-otp-btn btn-post-job product-bid-on-project-btn">Buy Bids to Bid on This Project</Link>
+		    	bidLink = <Link to="/buy-bid" style={{ width: '300px' }} className="btn btn-primary send-otp-btn btn-post-job product-bid-on-project-btn">Buy Bids to Bid on This Project</Link>
+		    } else if( -1 !== post.bidUserIds.indexOf( user.id ) ) {
+		    	// If has already bid on this post
+		    	bidLink = (
+					<div>
+						<h5>You have already bid on this Job</h5>
+						<Link to="/">View Your Bid</Link>
+					</div>
+			    )
 		    }
 		} else {
 			// If its a user

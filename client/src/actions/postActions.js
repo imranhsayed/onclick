@@ -144,6 +144,25 @@ export const getPostBySubCatLevel2Id = id => dispatch => {
 		);
 };
 
+// Add Bid
+export const addBid = ( bidData, history ) => dispatch => {
+	dispatch(clearErrors());
+	axios
+		.post('/api/bid', bidData)
+		.then(res =>
+			dispatch({
+				type: GET_POST,
+				payload: res.data
+			})
+		)
+		.catch(err => console.log( err )
+			// dispatch({
+			// 	type: GET_ERRORS,
+			// 	payload: err.response.data
+			// })
+		);
+};
+
 // Delete Post
 export const deletePost = id => dispatch => {
 	axios

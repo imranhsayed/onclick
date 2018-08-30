@@ -85,7 +85,7 @@ router.get( '/callback/', ( req, res ) => {
  * @access private
  */
 router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res ) => {
-
+	let user;
 	const newBid = new Bid({
 		userId: req.body.userId,
 		userName: req.body.userName,
@@ -94,6 +94,22 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 		bidPrice: req.body.bidPrice,
 		type: req.body.type
 	});
+
+	// Update his bid Count in the User model
+	User.findById( req.body.userId )
+		.then( user => {
+			let bidCountInPack = user.bidCountInPack;
+				updatedBidCountInPack = bidCountInPack - 1;
+
+				const updatedUserFields = {};
+				updatedUserFields.bidCountInPack = updatedBidCountInPack;
+
+				User.findOneAndUpdate( { _id: user._id }, { $set: updatedUserFields }, { new: true } )
+					.then( ( user ) => console.log( user ) );
+		} )
+		.catch( error => res.json( error ) );
+
+	// console.log( 'users', user );
 
 	// Save bid into the database.
 	newBid.save()
@@ -104,22 +120,28 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 			 */
 			Post.find( { _id: req.body.postId } )
 				.then( post => {
-					let bidIds = post[0].bidIds;
 					// Push the new bidId into the bidIds array of the post.
+					let bidIds = post[0].bidIds;
 					bidIds.push( bid._id );
+
+					// Push the userId into the bidUserIds array of the post.
+					let bidUserIds = post[0].bidUserIds;
+					bidUserIds.push( req.body.userId );
+
 					const updatedPostFields = {};
 					updatedPostFields.bidIds = bidIds;
+					updatedPostFields.bidUserIds = bidUserIds;
 
 					// Update the post with new bidsIds
 					Post.findOneAndUpdate( { _id: post[0]._id }, { $set: updatedPostFields }, { new: true } )
-						.then( ( post ) => console.log( post ) )
+						.then( ( post ) => res.json( post ) )
 						.catch( ( errors ) => res.json( errors ) );
 
 				} ).catch( err => res.status(404).json({ postnotfound: 'No post found' }));
 
-			res.json( bid )
+			// res.json( bid )
 		} )
-		.catch( errors => res.json( errors ) )
+		.catch( errors => res.json( errors ) );
 } );
 
 /**
@@ -129,6 +151,17 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
  */
 router.get( '/:postId/:userId', passport.authenticate( 'jwt', { session: false } ), ( req, res ) => {
 	Bid.findOne( { postId: req.params.postId, userId: req.params.userId } )
+		.then( bid => res.json( bid ) )
+		.catch( error => res.json( error ) );
+} );
+
+/**
+ * @route GET api/bid/:userId
+ * @desc Get all bids by user id
+ * @access private
+ */
+router.get( '/:userId', passport.authenticate( 'jwt', { session: false } ), ( req, res ) => {
+	Bid.find( { userId: req.params.userId } )
 		.then( bid => res.json( bid ) )
 		.catch( error => res.json( error ) );
 } );

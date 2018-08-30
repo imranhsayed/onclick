@@ -136,6 +136,8 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 		city: req.body.city,
 		state: req.body.state,
 		address: req.body.address,
+		bidIds: [],
+		bidUserIds: []
 	});
 
 	newPost.save().then( post => res.json( post ) ).catch( errors => res.json( errors ) )

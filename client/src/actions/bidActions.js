@@ -10,22 +10,7 @@ import {
 	DELETE_BID
 } from './types';
 
-// Add Bid
-export const addBid = ( bidData, history ) => dispatch => {
-	dispatch(clearErrors());
-	axios
-		.post('/api/bid', bidData)
-		.then(res =>
-			console.log( res.data )
-			// history.push( '/list-categories' )
-		)
-		.catch(err => console.log( err )
-			// dispatch({
-			// 	type: GET_ERRORS,
-			// 	payload: err.response.data
-			// })
-		);
-};
+
 
 // Update Bid
 // export const updateBid = ( postData, id, history ) => dispatch => {
@@ -67,20 +52,39 @@ export const getBids = () => dispatch => {
 };
 
 
-// Get Bid
-export const getBid = id => dispatch => {
+// Get a Single Bid by its id
+// export const getBid = id => dispatch => {
+// 	dispatch(setBidLoading());
+// 	axios
+// 		.get(`/api/bid/${id}`)
+// 		.then(res =>
+// 			dispatch({
+// 				type: GET_BID,
+// 				payload: res.data
+// 			})
+// 		)
+// 		.catch(err =>
+// 			dispatch({
+// 				type: GET_BID,
+// 				payload: null
+// 			})
+// 		);
+// };
+
+// Get All Bid of a particular user by his user id
+export const getAllBidByUserId = id => dispatch => {
 	dispatch(setBidLoading());
 	axios
 		.get(`/api/bid/${id}`)
 		.then(res =>
 			dispatch({
-				type: GET_BID,
+				type: GET_BIDS,
 				payload: res.data
 			})
 		)
 		.catch(err =>
 			dispatch({
-				type: GET_BID,
+				type: GET_BIDS,
 				payload: null
 			})
 		);

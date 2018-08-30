@@ -1,7 +1,7 @@
 ( function ( $ ) {
 	"use strict";
 	console.clear();
-	var onClickBiz = {
+	let onClickBiz = {
 		init: function () {
 			onClickBiz.popOver();
 		},
