@@ -35,6 +35,9 @@ const UserSchema = new Schema( {
 	bidPostIds: {
 		type: [String]
 	},
+	profileId: {
+		type: String
+	},
 	date: {
 		type: Date,
 		default: Date.now

@@ -11,6 +11,8 @@ import Banner from "./layouts/banner/Banner";
 class Categories extends Component {
 
 	componentDidMount() {
+		const { category } = this.props;
+		console.log( 'categoryOk', category );
 		this.props.getCategories();
 	}
 

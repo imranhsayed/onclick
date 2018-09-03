@@ -55,7 +55,7 @@ class PostForm extends Component {
 			title: this.state.title,
 			name: user.name,
 			email: user.email,
-			userId: user.id,
+			userId: ( user.id ) ? user.id : user._id,
 			category: this.state.category,
 			subCategory: this.state.subCategory,
 			subCatLevel2: this.state.subCatLevel2,
@@ -65,12 +65,15 @@ class PostForm extends Component {
 			description: this.state.description,
 			budgetMin: this.state.budgetMin,
 			budgetMax: this.state.budgetMax,
+			bidIds: [],
+			bidUserIds: [],
 			phone: this.state.phone,
 			area: this.state.area,
 			city: this.state.city,
 			state: this.state.state,
 			address: this.state.address,
 		};
+		console.log( 'newpost', newPost );
 		// console.log( Object.keys( this.state.errors ).length );
 
 		this.props.addPost(newPost);
@@ -100,6 +103,8 @@ class PostForm extends Component {
 			});
 			this.ocShowAlert( 'Job Successfully Posted', '#3089cf' );
 		}
+
+		window.location.href = '/post-job-listings';
 	}
 
 	// showAlert Function

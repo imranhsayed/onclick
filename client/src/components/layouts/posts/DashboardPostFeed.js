@@ -5,6 +5,7 @@ import DashboardPostItem from "./DashboardPostItem";
 class DashboardPostFeed extends Component {
 	render() {
 		const { posts, user } = this.props;
+		console.log( 'postsposting', posts );
 		return (
 			<div className="container">
 				<br/><h3>Posted Jobs</h3><br/>

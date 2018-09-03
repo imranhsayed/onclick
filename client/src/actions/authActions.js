@@ -86,11 +86,7 @@ export const logoutUser = () => dispatch => {
 export const makeUserAVendorRequest = ( id, userData  ) => dispatch => {
 	axios
 		.post(`/api/users/makeVendor/${id}`, userData)
-		.then( res => dispatch({
-				type: SET_CURRENT_USER,
-				payload: res.data
-			})
-		)
+		.then( res => console.log( 'res', res.data ) )
 		.catch(err =>
 			dispatch({
 				type: GET_ERRORS,

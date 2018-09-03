@@ -31,7 +31,6 @@ router.get( '/test', ( req, res ) => res.json( { msg: 'Post works' } ) );
 router.get( '/', ( req, res ) => {
 	Post.find()
 		.sort( { date: -1 } )
-		.populate( 'user', [ 'name', 'email' ] )
 		.then( ( posts ) => res.json( posts ) )
 		.catch( ( error ) => res.json( { noPostsFound: 'No posts found' } ) );
 } );

@@ -52,6 +52,7 @@ export const updateCategory = ( postData, id, history ) => dispatch => {
 // Get All Categories
 export const getCategories = () => dispatch => {
 	dispatch(setCategoryLoading());
+
 	axios
 		.get('/api/categories')
 		.then(res =>

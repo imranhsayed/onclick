@@ -9,10 +9,20 @@ class PostDescription extends Component {
 		const { post } = this.props;
 		const { user } = this.props;
 		let bidLink = '';
-
-		if ( 'vendor' === user.type ) {
+		if ( user._id === post.userId ) {
+			// If the job is posted by the user, dont show the link for bidding.
+			bidLink = <div>
+						<h4>This job is posted by you.</h4>
+					</div>;
+		} else if ( 'none' === user.profileId ) {
+			// If the user has not created profile , he needs to create one first.
+			bidLink = <div>
+						<h4>You need to create the profile first</h4>
+						<Link to="/create-profile" className="btn btn-primary">Create Profile</Link>
+					</div>;
+		} else if ( 'vendor' === user.type ) {
 			// If its a vendor and on a package and has not already bid
-			if ( 'none' !== user.package && ( -1 === post.bidUserIds.indexOf( user.id ) ) ) {
+			if ( 'none' !== user.package && ( -1 === post.bidUserIds.indexOf( user._id ) ) ) {
 				// If he has not exhausted all bid
 				if ( 0 < user.bidCountInPack ) {
 					bidLink = (
@@ -34,12 +44,12 @@ class PostDescription extends Component {
 		    } else if ( 'none' === user.package ) {
 			    // If its a vendor not on a package
 		    	bidLink = <Link to="/buy-bid" style={{ width: '300px' }} className="btn btn-primary send-otp-btn btn-post-job product-bid-on-project-btn">Buy Bids to Bid on This Project</Link>
-		    } else if( -1 !== post.bidUserIds.indexOf( user.id ) ) {
+		    } else if( -1 !== post.bidUserIds.indexOf( user._id ) ) {
 		    	// If has already bid on this post
 		    	bidLink = (
 					<div>
 						<h5>You have already bid on this Job</h5>
-						<Link to="/">View Your Bid</Link>
+						<Link to="/user-bids">View Your Bids</Link>
 					</div>
 			    )
 		    }

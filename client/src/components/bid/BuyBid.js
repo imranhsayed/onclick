@@ -11,9 +11,9 @@ class BuyBid extends Component{
 	onBuyNowClick = () => {
 
 		const { user } = this.props.auth;
-		const userId = user.id;
+		const userId = user._id;
 		console.log( user );
-		console.log( 'userid', user.id );
+		console.log( 'userid', user._id );
 
 		const data = {
 			purpose: 'Bid Payment',
@@ -21,7 +21,7 @@ class BuyBid extends Component{
 			buyer_name: user.name,
 			email: user.email,
 			phone: '9960119040',
-			user_id: user.id,
+			user_id: user._id,
 			redirect_url: `http://localhost:5000/api/bid/callback?user_id=${userId}`,
 			webhook_url: '/webhook/',
 

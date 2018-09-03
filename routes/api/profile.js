@@ -226,7 +226,7 @@ router.get( '/all', ( req, res ) => {
 /**
  * CREATE OR UPDATE CURRENT LOGGED IN USER's PROFILE
  * @route POST api/profile/
- * @desc Get current users profile
+ * @desc Create profile
  * @access private
  */
 router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res ) => {
@@ -260,6 +260,7 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 
 			// If profile exists that means it is a profile update request.
 			if ( profile ) {
+
 				/**
 				 * Update the value
 				 * findOneAndUpdate() takes
@@ -282,7 +283,16 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 
 						// Save profile
 						new Profile( profileFields ).save()
-							.then( ( profile ) => res.json( profile ) )
+							.then( ( profile ) => {
+								// Update the user table with his profile id meaning that his profile is created.
+								const userFields = {};
+								console.log( profile );
+								userFields.profileId = profile._id;
+								User.findOneAndUpdate( { _id: req.user.id }, { $set: userFields }, { new: true } )
+									.then( user => console.log( 'User Updated' ) )
+									.catch( error => console.log( error )  );
+								res.json( profile )
+							} )
 							.catch( ( errors ) => res.json( errors ) );
 					} )
 					.catch( ( errors ) => res.json( errors ) );

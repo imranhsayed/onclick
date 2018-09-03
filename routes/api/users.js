@@ -68,7 +68,8 @@ router.post( '/register', ( req, res ) => {
 				password: req.body.password,
 				bidCountInPack: '0',
 				package: 'none',
-				type: 'user'
+				type: 'user',
+				profileId: 'none'
 			});
 
 			/**
@@ -143,6 +144,7 @@ router.post( '/login', ( req, res ) => {
 							email: user.email,
 							type: user.type,
 							package: user.package,
+							profileId: user.profileId,
 							bidCountInPack: user.bidCountInPack
 						};
 

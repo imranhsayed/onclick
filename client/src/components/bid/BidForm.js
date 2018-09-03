@@ -44,19 +44,19 @@ class BidForm extends Component {
 
 	onSubmit = ( event ) => {
 		event.preventDefault();
-		const { post } = this.props;
 		const { user } = this.props.auth;
 		// console.log( 'postok', post );
 		// console.log( 'auths', user );
 
 		const bidData = {
-			userId: this.state.userId,
+			userId: user._id,
 			userName: this.state.userName,
 			postId: this.state.postId,
 			postName: this.state.postName,
 			bidPrice: this.state.bidPrice * 1.05,
 			type: this.state.type
 		};
+		console.log( bidData );
 		// Add the bid
 		this.props.addBid( bidData );
 		this.ocShowAlert( 'Bid Added Successfully', '#3089cf' );
@@ -80,6 +80,7 @@ class BidForm extends Component {
 
 	render() {
 		const { user } = this.props.auth;
+		const { post } = this.props;
 
 		return(
 			<div id="bidProposal" className="row jumbotron jumbotron-bid-proposal p-0 collapse">
@@ -93,7 +94,8 @@ class BidForm extends Component {
 					<form className="rate-row-form ml-3" onSubmit={ this.onSubmit } style={{paddingBottom: '32px', marginBottom: '16px'}}>
 						<div className="row rate-row">
 							<div className="col-md-12 text-left mt-3">
-								<h3 style={{ marginBottom: '16px'}}>Rate( ₹ )</h3>
+								<h4 style={{ marginBottom: '16px'}}>Budget: ₹{post.budgetMin} - ₹{post.budgetMax}</h4>
+								<h3 style={{ marginBottom: '16px'}}>Your Rate( ₹ )</h3>
 									<div className="form-group">
 										<input type="number" className="oc-bid-price-input form-control" style={{ marginBottom: '16px'}} placeholder="10" onChange={ this.onChange } name="bidPrice" required value={this.state.bidPrice}/>
 										<select className="form-control" onChange={ this.onChange } name="type" required value={ this.state.type }>

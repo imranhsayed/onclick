@@ -5,6 +5,7 @@ import SingleProfileBanner from './layouts/profile/SingleProfileBanner';
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";
 import { getPost } from "../actions/postActions";
+import { getCurrentUser } from "../actions/authActions";
 import PostSlider from './layouts/posts/PostSlider';
 import PostDetails from './layouts/posts/PostDetails';
 import PostDescription from './layouts/posts/PostDescription';
@@ -12,6 +13,8 @@ import PostDescription from './layouts/posts/PostDescription';
 class PostSingle extends Component{
 
 	componentDidMount() {
+		const { user } = this.props.auth;
+		this.props.getCurrentUser( user );
 		this.props.getPost( this.props.match.params.id )
 	}
 
@@ -52,6 +55,7 @@ class PostSingle extends Component{
 
 PostSingle.propTypes = {
 	getPost: PropTypes.func.isRequired,
+	getCurrentUser: PropTypes.func.isRequired,
 	post: PropTypes.object.isRequired,
 	auth: PropTypes.object.isRequired,
 };
@@ -61,4 +65,4 @@ const mapStateToProps = ( state ) => ({
 	post: state.post
 });
 
-export default connect( mapStateToProps, { getPost } )( PostSingle );
+export default connect( mapStateToProps, { getPost, getCurrentUser } )( PostSingle );

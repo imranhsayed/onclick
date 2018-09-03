@@ -94,6 +94,7 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 		bidPrice: req.body.bidPrice,
 		type: req.body.type
 	});
+	console.log( 'newBId', newBid );
 
 	// Update his bid Count in the User model
 	User.findById( req.body.userId )
@@ -146,14 +147,16 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 
 /**
  * @route GET api/bid/:postId/:userId
- * @desc Get a bid by post id and user id
+ * @desc Get all bid by post id in ascending order of price ( ignore user id )
  * @access private
  */
 router.get( '/:postId/:userId', passport.authenticate( 'jwt', { session: false } ), ( req, res ) => {
-	Bid.findOne( { postId: req.params.postId, userId: req.params.userId } )
+	Bid.find( { postId: req.params.postId } )
+		.sort( { bidPrice: -1 } )
 		.then( bid => res.json( bid ) )
 		.catch( error => res.json( error ) );
 } );
+
 
 /**
  * @route GET api/bid/:userId
@@ -162,6 +165,7 @@ router.get( '/:postId/:userId', passport.authenticate( 'jwt', { session: false }
  */
 router.get( '/:userId', passport.authenticate( 'jwt', { session: false } ), ( req, res ) => {
 	Bid.find( { userId: req.params.userId } )
+		.sort( { date: -1 } )
 		.then( bid => res.json( bid ) )
 		.catch( error => res.json( error ) );
 } );

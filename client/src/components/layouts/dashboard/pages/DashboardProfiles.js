@@ -6,6 +6,9 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import DashboardNav from './../DashboardNav';
 import DashboardSidebar from './../DashboardSidebar';
+import {getParentCats} from "../../../../actions/categoryActions";
+import {getSubCats} from "../../../../actions/categoryActions";
+import {getSubCatsLvl2} from "../../../../actions/categoryActions";
 
 class DashboardProfiles extends Component {
 
@@ -29,6 +32,10 @@ class DashboardProfiles extends Component {
 
 	}
 
+	componentDidMount() {
+		this.props.getParentCats();
+	}
+
 	componentWillReceiveProps( nextProps ) {
 		if ( nextProps ) {
 			this.setState( { errors: nextProps.errors } );
@@ -42,6 +49,39 @@ class DashboardProfiles extends Component {
 		 * event.target.value will give you the value of the input element.
 		 */
 		this.setState( { [ event.target.name ]: event.target.value } );
+
+		// If category is selected then call the getSubCats() to get all the subcategories for the selected parent id.
+		if( 'category' === event.target.name ) {
+			let categoryId = event.target.value;
+			let selectedName = $( '.' + categoryId ).attr( 'data-catname' );
+
+			this.setState( {
+				category: selectedName,
+				categoryId: categoryId
+			} );
+
+			this.props.getSubCats( categoryId );
+		}
+
+		// If subCategory is selected then call the getSubCatsLvl2() to get all the subcategories lvl2 for the selected parent id.
+		if( 'subCategory' === event.target.name ) {
+			let subCatId = event.target.value,
+				selectedName = $( '.' + subCatId ).attr( 'data-catname' );
+			this.setState( {
+				subCategory: selectedName,
+				subCategoryId: subCatId
+			} );
+			this.props.getSubCatsLvl2( subCatId );
+		}
+		// If subCategory is selected then set the state for the subCatLevel2Id to the id of the subCatLevel2 selected.
+		if( 'subCatLevel2' === event.target.name ) {
+			let subCatLvl2Id = event.target.value,
+				selectedName = $( '.' + subCatLvl2Id ).attr( 'data-catname' );
+			this.setState( {
+				subCatLevel2: selectedName,
+				subCatLevel2Id: subCatLvl2Id
+			} );
+		}
 	}
 
 	/**
@@ -64,6 +104,7 @@ class DashboardProfiles extends Component {
 		let name = '', email = '', business = '', category = '', subCategory = '', subCatLevel2 = '',
 			description = '', state = '', gender = '', phone = '', city = '', address = '';
 		event.preventDefault();
+		const { user } = this.props.auth;
 		const formData = new FormData();
 		// console.log( this.state.selectedFile );
 		// formData.append( 'image', this.state.selectedFile, this.state.selectedFile.name );
@@ -86,7 +127,7 @@ class DashboardProfiles extends Component {
 
 		// Create an object profile whose property values will be equal to the new one if user has entered or the existing one if he hasn't.
 		const profile = {
-			handle: this.props.auth.user.id,
+			handle: ( user.id ) ? user.id : user._id,
 			business: ( this.state.business ) ? this.state.business : business,
 			phone: ( this.state.phone ) ? this.state.phone : phone,
 			gender: ( this.state.gender ) ? this.state.gender : gender,
@@ -141,12 +182,43 @@ class DashboardProfiles extends Component {
 	};
 
 	render() {
-		let name = '', email = '', business = '', category = '', subCategory = '', subCatLevel2 = '',
+		let name = '', email = '', business = '', subCategory = '', subCatLevel2 = '',
 			description = '', gender = '', city = '', phone = '', state = '', address = '';
 		const { user } = this.props.auth;
 		const errors = this.state.errors;
 		name = user.name;
 		email = user.email;
+		console.log( user );
+
+		let { category } = this.props;
+		console.log( 'category', category );
+
+		let parentCategories = '', parentCatsOptions = '', subCategories = '', subCatsOptions = '', subCategoriesLvl2 = '', subCatsLvl2Options = '';
+
+		// Get Parent categories options
+		if ( null !== category.parentCats && Object.keys( category.parentCats ).length ) {
+			parentCategories = category.parentCats;
+			parentCatsOptions = parentCategories.map( item => (
+				<option key={item._id} className={item._id} value={item._id} data-catname={ item.categoryName }>{ item.categoryName }</option>
+			) );
+		}
+
+		// Get sub categories options
+		if ( null !== category.subCats && Object.keys( category.subCats ).length ) {
+			subCategories = category.subCats;
+			subCatsOptions = subCategories.map( item => (
+				<option key={item._id} className={item._id} value={item._id} data-catname={ item.categoryName }>{ item.categoryName }</option>
+			) );
+		}
+
+		// Get sub categories lvl2 options
+		if ( null !== category.subCatsLvl2 && Object.keys( category.subCatsLvl2 ).length ) {
+			subCategoriesLvl2 = category.subCatsLvl2;
+			subCatsLvl2Options = subCategoriesLvl2.map( item => (
+				<option key={item._id} className={item._id} value={item._id} data-catname={ item.categoryName }>{ item.categoryName }</option>
+			) );
+		}
+
 		if ( ( null !== this.state.currentUserProfile ) ) {
 			business = this.state.currentUserProfile.business;
 			phone = this.state.currentUserProfile.phone;
@@ -159,6 +231,8 @@ class DashboardProfiles extends Component {
 			subCatLevel2 = this.state.currentUserProfile.subCatLevel2;
 			description = this.state.currentUserProfile.description;
 		}
+
+
 		return(
 			<div className="container-scroller">
 				<div id="oc-alert-container"></div>
@@ -198,33 +272,24 @@ class DashboardProfiles extends Component {
 											className={ classnames( 'form-control', {
 												'is-invalid': errors.category
 											} ) }
-											onChange={ this.onChange } name="category" id="exampleSelectGender">
+											onChange={ this.onChange } name="category" value={this.state.categoryId} id="exampleSelectCat">
 											<option value="">Select Category</option>
-											<option value="shopping">Shopping</option>
-											<option value="spa-and-saloon">Spa & Saloon</option>
-											<option value="health-fitness">Health fitness</option>
-											<option value="restraunt">Restraunt</option>
-											<option value="movies">Movies</option>
-											<option value="repairs">Repairs</option>
-											<option value="real-estate">Real Estate</option>
-											<option value="automobile">Automobile</option>
+											{parentCatsOptions}
 										</select>
 										{ errors.category && ( <div className="invalid-feedback">{ errors.category }</div> ) }
 									</div>
 									<div className="form-group">
 										<label htmlFor="exampleSelectGender">Sub Category</label>
-										<select className="form-control" onChange={ this.onChange } name="subCategory" id="exampleSelectGender">
+										<select className="form-control" onChange={ this.onChange } value={this.state.subCategoryId} name="subCategory" id="exampleSelectSubCat">
 											<option value="">Select Sub-Category</option>
-											<option value="shopping-sub">Shopping Sub</option>
-											<option value="spa-sub">Spa Sub</option>
+											{subCatsOptions}
 										</select>
 									</div>
 									<div className="form-group">
 										<label htmlFor="exampleSelectGender">Sub Category Level2</label>
-										<select className="form-control" onChange={ this.onChange } name="subCatLevel2" id="exampleSelectGender">
+										<select className="form-control" onChange={ this.onChange } value={this.state.subCatLevel2Id} name="subCatLevel2" id="exampleSelectSubCatLvl2">
 											<option value="">Select Child-Category</option>
-											<option value="shopping-sub-level2">Shopping Sub Level2</option>
-											<option value="spa-sub-level2">Spa Sub Level2</option>
+											{subCatsLvl2Options}
 										</select>
 									</div>
 									<div className="form-group">
@@ -251,7 +316,7 @@ class DashboardProfiles extends Component {
 											className={ classnames( 'form-control', {
 												'is-invalid': errors.gender
 											} ) }
-											onChange={ this.onChange } name="gender" defaultValue={ gender } id="exampleSelectGender">
+											onChange={ this.onChange } name="gender" defaultValue={ this.state.gender } id="exampleSelectGender">
 											<option value="">Select Gender</option>
 											<option value="male">Male</option>
 											<option value="female">Female</option>
@@ -300,13 +365,17 @@ class DashboardProfiles extends Component {
 
 DashboardProfiles.propTypes = {
 	auth: PropTypes.object.isRequired,
-	profile: PropTypes.object.isRequired
+	profile: PropTypes.object.isRequired,
+	getParentCats: PropTypes.func.isRequired,
+	getSubCats: PropTypes.func.isRequired,
+	getSubCatsLvl2: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ( state ) => ({
 	auth: state.auth,
 	profile: state.profile,
-	errors: state.errors
+	errors: state.errors,
+	category: state.category
 });
 
-export default connect( mapStateToProps  )( DashboardProfiles );
+export default connect( mapStateToProps, {getParentCats, getSubCats, getSubCatsLvl2}  )( DashboardProfiles );

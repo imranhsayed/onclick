@@ -90,6 +90,24 @@ export const getAllBidByUserId = id => dispatch => {
 		);
 };
 
+export const getAllBidByPostId= ( postId, userId ) => dispatch => {
+	dispatch(setBidLoading());
+	axios
+		.get(`/api/bid/${postId}/${userId}`)
+		.then(res =>
+			dispatch({
+				type: GET_BIDS,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_BIDS,
+				payload: null
+			})
+		);
+};
+
 // Delete Bid
 export const deleteBid = ( id, history ) => dispatch => {
 	axios

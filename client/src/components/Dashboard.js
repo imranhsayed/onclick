@@ -33,8 +33,10 @@ class Dashboard extends Component {
 
 	makeUserAVendor( userId ) {
 		const { user } = this.props.auth;
-		this.props.makeUserAVendorRequest( userId, user );
+		let usersId = ( user.id ) ? user.id : user._id;
+		this.props.makeUserAVendorRequest( usersId, user );
 		this.ocShowAlert( 'Congratulations!! you are a vendor now', '#3089cf' );
+		window.location.href = '/dashboard';
 	}
 
 	// showAlert Function
@@ -76,6 +78,14 @@ class Dashboard extends Component {
 							<ProfileActions/>
 							<div className="col-md-4">
 								<div className="card bg-light mb-3" style={{ maxWidth: '20rem' }}>
+									<div className="card-header text-center">View Jobs</div>
+									<div className="card-body text-center">
+										<Link to="/job-listings" className="btn btn-gradient-primary btn-fw">Job Listings</Link>
+									</div>
+								</div>
+							</div>
+							<div className="col-md-4">
+								<div className="card bg-light mb-3" style={{ maxWidth: '20rem' }}>
 									<div className="card-header text-center">Delete Profile</div>
 									<div className="card-body text-center">
 										<button onClick={ this.onDeleteClick.bind( this ) } className="btn btn-gradient-danger btn-fw">Delete Profile</button>
@@ -112,7 +122,7 @@ class Dashboard extends Component {
 								<hr className="my-4"/>
 								<p>It uses utility class es for typography and spacing to space content out within the larger container.</p>
 								<p className="lead">
-									<button className="btn btn-primary btn-lg" onClick={ this.makeUserAVendor.bind( this, user.id ) } role="button">Register as Vendor</button>
+									<button className="btn btn-primary btn-lg" onClick={ this.makeUserAVendor.bind( this, user._id ) } role="button">Register as Vendor</button>
 								</p>
 							</div>
 						)}

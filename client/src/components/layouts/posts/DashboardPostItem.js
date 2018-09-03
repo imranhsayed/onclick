@@ -32,12 +32,13 @@ class DashboardPostItem extends Component {
 	render() {
 		const { post, user } = this.props;
 		let postItem = '',
-			postFound = '';
-		// console.log( user );
+			userId = ( user.id ) ? user.id : user._id;
+		console.log( user );
 
 		// If its not admin display posts conditionally, else display them all.
 		if ( 'admin' !== user.type ) {
-			if ( user.id === post.userId ) {
+			if ( userId === post.userId ) {
+				console.log( 'camcam' );
 				postItem = (
 					<div className="col-md-12" style={{ boxShadow: '0 5px 10px 2px rgba(195,192,192,.5) !important' }}>
 						<div id="oc-alert-container"></div>
@@ -66,6 +67,10 @@ class DashboardPostItem extends Component {
 								<p className="card-text">{ post.description }</p>
 								<button onClick={this.onDeleteClick.bind( this, post._id )} className="btn btn-danger btn-sm">Delete</button>
 								<Link to={`/dashboard-post/${post._id}`} className="btn btn-primary btn-sm float-right">View/Edit</Link>
+								{/* If this post was bid then show the 'View Bid' Link*/}
+								{ ( 0 !== post.bidUserIds.length ) &&
+								<Link to={`/view-post-bids/${post._id}`} className="btn btn-primary btn-sm float-right" style={{ marginRight: '10px' }}>View Bids</Link>
+								}
 							</div>
 							{/*Footer*/}
 							<div className="card-footer text-muted p-4">
