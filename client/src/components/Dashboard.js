@@ -118,11 +118,11 @@ class Dashboard extends Component {
 						{ 'user' === user.type && (
 							<div className="jumbotron mt-5">
 								<h1 className="display-3">Become a Vendor</h1>
-								<p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+								<p className="lead">Why become a vendor?</p>
 								<hr className="my-4"/>
-								<p>It uses utility class es for typography and spacing to space content out within the larger container.</p>
+								<p>Unlike, traditional distributor-vendor relationships, our partnership won’t be a one-sided affair. Becoming a vendor will give you an opportunity to compete with larger businesses and express your work to customers who are in need of it. You can also bid on multiple jobs posted by different customers and get huge number of projects to work with. So Why wait? Get registered now</p>
 								<p className="lead">
-									<button className="btn btn-primary btn-lg" onClick={ this.makeUserAVendor.bind( this, user._id ) } role="button">Register as Vendor</button>
+									<button className="btn btn-primary btn-lg" onClick={ this.makeUserAVendor.bind( this, user.id ) } role="button">Register as Vendor</button>
 								</p>
 							</div>
 						)}

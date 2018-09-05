@@ -6,7 +6,6 @@ import isEmpty from '../../../validation/is-empty';
 class PostDetails extends Component {
 	render() {
 		const { post } = this.props;
-		console.log( post );
 
 		return (
 			<div className="col-md-6 pd-sec-one-details-text">
@@ -15,6 +14,7 @@ class PostDetails extends Component {
 						<div className="row">
 							<div className="col-12">
 								<h5 className="card-title">{ post.title }</h5>
+								<p><strong>Job Id:</strong> { post._id }</p>
 								<div className="row card-text-row">
 									<div className="col-12 mb-1 desc">
 										<p>{ post.description }</p>

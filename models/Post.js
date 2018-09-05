@@ -72,6 +72,24 @@ const PostSchema = new Schema({
 		type: String,
 		required: true
 	},
+	paymentReceived: {
+		type: String,
+	},
+	paymentId: {
+		type: String,
+	},
+	completedBidderUserId: {
+		type: String
+	},
+	completedBidderName: {
+		type: String
+	},
+	jobCompleted: {
+		type: String,
+	},
+	jobFinalAmount: {
+		type: String,
+	},
 	bidIds: {
 		type: [String]
 	},

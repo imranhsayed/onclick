@@ -3,7 +3,7 @@ import setAuthToken from '../utils/setAuthToken';
 
 // jwt-decode module is used to decode the user data from auth token
 import jwt_decode from 'jwt-decode';
-import {GET_ERRORS, GET_POSTS, SET_CURRENT_USER} from './types';
+import {GET_ERRORS, GET_POSTS, SET_CURRENT_USER, GET_VENDOR_COUNT, GET_USER_COUNT } from './types';
 
 /**
  * Register User: registerUser()
@@ -111,3 +111,38 @@ export const getCurrentUser = ( auth  ) => dispatch => {
 			})
 		);
 };
+
+// Get all vendor Count
+export const getVendorCount = () => dispatch => {
+	axios
+		.get('/api/users/getVendorCount')
+		.then( res => dispatch({
+				type: GET_VENDOR_COUNT,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			})
+		);
+};
+
+// Get all user Count
+export const getUserCount = () => dispatch => {
+	axios
+		.get('/api/users/getUserCount')
+		.then( res => dispatch({
+				type: GET_USER_COUNT,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.response.data
+			})
+		);
+};
+

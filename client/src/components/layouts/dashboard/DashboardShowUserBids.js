@@ -29,8 +29,11 @@ class DashboardShowUserBids extends Component {
 						<thead>
 						<tr>
 							<th scope="col">Job Title</th>
+							<th scope="col">Bid Id</th>
+							<th scope="col">Project Budget</th>
 							<th scope="col">Your Bid</th>
 							<th scope="col">Type</th>
+							<th scope="col">Status</th>
 							<th scope="col">When</th>
 						</tr>
 						</thead>
@@ -40,8 +43,11 @@ class DashboardShowUserBids extends Component {
 								return (
 									<tr key={item._id} >
 										<td>{ item.postName }</td>
+										<td>{ item._id }</td>
+										<td>₹{ item.projectBudget }</td>
 										<td>₹{ item.bidPrice.toFixed(2) }</td>
 										<td>{ item.type }</td>
+										<td>{ ('yes' === item.accepted ) ? 'accepted' : 'pending' }</td>
 										<td><Moment fromNow>{item.date}</Moment></td>
 									</tr>
 								);

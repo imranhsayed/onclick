@@ -192,7 +192,7 @@ router.get( '/current', passport.authenticate( 'jwt', { session: false } ), ( re
 } );
 
 /**
- * @route POST api/profile/makeVendor/:id
+ * @route POST api/users/makeVendor/:id
  * @desc Update the user type as vendor.
  * @access private
  */
@@ -203,6 +203,30 @@ router.post( '/makeVendor/:id', passport.authenticate( 'jwt', { session: false }
 	User.findOneAndUpdate( { _id: req.params.id }, { $set: userField }, { new: true } )
 		.then( ( user ) => res.json( user ) )
 		.catch( ( errors ) => res.json( errors ) );
+} );
+
+/**
+ * @route GET api/users/getVendorCount
+ * @desc Get total vendor count on the site
+ * @access private
+ */
+router.get( '/getVendorCount', ( req, res ) => {
+	User.find( { type: 'vendor' } )
+		.count()
+		.then( vendorCount => res.json( vendorCount ) )
+		.catch( error => res.json( error ) );
+} );
+
+/**
+ * @route GET api/users/getUserCount
+ * @desc Get total user count on the site
+ * @access private
+ */
+router.get( '/getUserCount', ( req, res ) => {
+	User.find()
+		.count()
+		.then( vendorCount => res.json( vendorCount ) )
+		.catch( error => res.json( error ) );
 } );
 
 // We export the router so that the server.js file can pick it up

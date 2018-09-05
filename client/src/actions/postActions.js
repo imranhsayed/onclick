@@ -7,7 +7,9 @@ import {
 	GET_POSTS,
 	GET_POST,
 	POST_LOADING,
-	DELETE_POST
+	DELETE_POST,
+	GET_POSTS_COUNT,
+	GET_COMPLETED_POST_COUNT
 } from './types';
 
 // Add Post
@@ -68,7 +70,45 @@ export const getPosts = () => dispatch => {
 		);
 };
 
-// Get Post
+// Get Posts
+export const getPostCount = () => dispatch => {
+	dispatch(setPostLoading());
+	axios
+		.get('/api/posts/postCount')
+		.then(res =>
+			dispatch({
+				type: GET_POSTS_COUNT,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_POSTS_COUNT,
+				payload: null
+			})
+		);
+};
+
+// Get Completed job Counts
+export const getCompletedPostCount = () => dispatch => {
+	dispatch(setPostLoading());
+	axios
+		.get('/api/posts/completedPostCount')
+		.then(res =>
+			dispatch({
+				type: GET_COMPLETED_POST_COUNT,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_COMPLETED_POST_COUNT,
+				payload: null
+			})
+		);
+};
+
+// Get Post by its id
 export const getPost = id => dispatch => {
 	dispatch(setPostLoading());
 	axios

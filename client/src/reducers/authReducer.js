@@ -1,9 +1,11 @@
-import { SET_CURRENT_USER } from '../actions/types';
+import { SET_CURRENT_USER, GET_VENDOR_COUNT, GET_USER_COUNT } from '../actions/types';
 import isEmpty from '../validation/is-empty';
 
 const initialState = {
 	isAuthenticated: false,
-	user: {}
+	user: {},
+	vendorCount: null,
+	userCount: null
 };
 
 export default function ( state = initialState, action ) {
@@ -18,6 +20,16 @@ export default function ( state = initialState, action ) {
 				...state,
 				isAuthenticated: ! isEmpty( action.payload ),
 				user: action.payload
+			};
+		case GET_VENDOR_COUNT:
+			return {
+				...state,
+				vendorCount: action.payload
+			};
+		case GET_USER_COUNT:
+			return {
+				...state,
+				userCount: action.payload
 			};
 		default: return state;
 	}

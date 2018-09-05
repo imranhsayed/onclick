@@ -11,27 +11,6 @@ import {
 } from './types';
 
 
-
-// Update Bid
-// export const updateBid = ( postData, id, history ) => dispatch => {
-// 	dispatch(clearErrors());
-// 	axios
-// 		.post( `/api/categories/update/${id}`, postData )
-// 		.then(res =>
-// 			// dispatch({
-// 			// 	type: ADD_BID,
-// 			// 	payload: res.data
-// 			// })
-// 			history.push( '/post-job-listings' )
-// 		)
-// 		.catch(err => console.log( 'error in updating' )
-// 			// dispatch({
-// 			// 	type: GET_ERRORS,
-// 			// 	payload: err.response.data
-// 			// })
-// 		);
-// };
-
 // Get All Bids
 export const getBids = () => dispatch => {
 	dispatch(setBidLoading());
@@ -90,6 +69,25 @@ export const getAllBidByUserId = id => dispatch => {
 		);
 };
 
+// Get All accepted Bid of a particular user by his user id
+export const getAcceptedBidsByUserId = ( userData ) => dispatch => {
+	dispatch(setBidLoading());
+	axios
+		.post('/api/bid/acceptedBidsByUserId', userData )
+		.then(res =>
+			dispatch({
+				type: GET_BIDS,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_BIDS,
+				payload: null
+			})
+		);
+};
+
 export const getAllBidByPostId= ( postId, userId ) => dispatch => {
 	dispatch(setBidLoading());
 	axios
@@ -103,6 +101,41 @@ export const getAllBidByPostId= ( postId, userId ) => dispatch => {
 		.catch(err =>
 			dispatch({
 				type: GET_BIDS,
+				payload: null
+			})
+		);
+};
+
+export const getAllAcceptedBids= () => dispatch => {
+	dispatch(setBidLoading());
+	axios
+		.get('/api/bid/acceptedbids')
+		.then(res =>
+			dispatch({
+				type: GET_BIDS,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_BIDS,
+				payload: null
+			})
+		);
+};
+
+export const updateBidAsAccepted= ( bid ) => dispatch => {
+	axios
+		.post( '/api/bid/acceptBid', bid )
+		.then(res =>
+			dispatch({
+				type: GET_BID,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_BID,
 				payload: null
 			})
 		);

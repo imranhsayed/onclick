@@ -3,12 +3,16 @@ import {
 	GET_POSTS,
 	GET_POST,
 	DELETE_POST,
-	POST_LOADING
+	POST_LOADING,
+	GET_POSTS_COUNT,
+	GET_COMPLETED_POST_COUNT
 } from '../actions/types';
 
 const initialState = {
 	posts: [],
 	post: {},
+	postCount: null,
+	completedPostCount: null,
 	loading: false
 };
 
@@ -23,6 +27,18 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				posts: action.payload,
+				loading: false
+			};
+		case GET_POSTS_COUNT:
+			return {
+				...state,
+				postCount: action.payload,
+				loading: false
+			};
+		case GET_COMPLETED_POST_COUNT:
+			return {
+				...state,
+				completedPostCount: action.payload,
 				loading: false
 			};
 		case GET_POST:

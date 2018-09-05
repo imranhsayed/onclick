@@ -15,6 +15,10 @@ class BidForm extends Component {
 			postId: '',
 			postName: '',
 			bidPrice: '',
+			postedByUserId: '',
+			postedByUserName: '',
+			postedByUserPhone: '',
+			projectBudget: '',
 			type: ''
 		};
 	}
@@ -29,7 +33,11 @@ class BidForm extends Component {
 			userId: user._id,
 			userName: user.name,
 			postId: post._id,
-			postName: post.title
+			postName: post.title,
+			postedByUserId: post.userId,
+			postedByUserName: post.name,
+			postedByUserPhone: post.phone,
+			projectBudget: post.budgetMin + ' - ' + post.budgetMax
 		});
 	}
 
@@ -45,16 +53,19 @@ class BidForm extends Component {
 	onSubmit = ( event ) => {
 		event.preventDefault();
 		const { user } = this.props.auth;
-		// console.log( 'postok', post );
-		// console.log( 'auths', user );
+		const bidderUserId = ( user.id ) ? user.id : user._id;
 
 		const bidData = {
-			userId: user._id,
+			userId: bidderUserId,
+			postedByUserId: this.state.postedByUserId,
+			postedByUserName: this.state.postedByUserName,
+			postedByUserPhone: this.state.postedByUserPhone,
 			userName: this.state.userName,
 			postId: this.state.postId,
 			postName: this.state.postName,
+			projectBudget: this.state.projectBudget,
 			bidPrice: this.state.bidPrice * 1.05,
-			type: this.state.type
+			type: this.state.type,
 		};
 		console.log( bidData );
 		// Add the bid

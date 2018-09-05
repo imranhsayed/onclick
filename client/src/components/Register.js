@@ -25,15 +25,6 @@ class Register extends Component {
 		this.onSubmit = this.onSubmit.bind( this );
 	}
 
-	// Redirect the user to dashboard if he is logged in
-	// componentDidMount() {
-	// 	// If the user is logged in
-	// 	if ( this.props.auth.isAuthenticated ) {
-	// 		// redirect the user to the dashboard
-	// 		this.props.history.push( '/dashboard' );
-	// 	}
-	// }
-
 	/**
 	 * This will run when this Register component receives props/
 	 * We will set the state to errors property in this.state() define above in constructor() to nextProps.errors, which will contain
@@ -80,7 +71,7 @@ class Register extends Component {
 			password2: this.state.password2,
 			errors: this.state.errors
 		};
-		
+
 		console.log( newUser );
 
 		/**
@@ -160,8 +151,8 @@ class Register extends Component {
 
 										<div className="row checkbox-row">
 											<div className="form-group form-check col-12 forms-checkbox text-center">
-												<input type="checkbox" className="form-check-input" id="checkbox-sign-up"/>
-													<label className="form-check-label" htmlFor="checkbox-sign-up">By registering, you accept our Terms &amp; Conditions</label>
+												<input type="checkbox" style={{ marginTop: '1px' }} className="form-check-input" id="checkbox-sign-up"/>
+													<label className="" htmlFor="checkbox-sign-up">By registering, you accept our Terms &amp; Conditions</label>
 											</div>
 										</div>
 										<div className="col-12 send-otp-colm text-center">

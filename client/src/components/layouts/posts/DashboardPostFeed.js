@@ -5,12 +5,13 @@ import DashboardPostItem from "./DashboardPostItem";
 class DashboardPostFeed extends Component {
 	render() {
 		const { posts, user } = this.props;
-		console.log( 'postsposting', posts );
+		const postId = ( posts.id ) ? posts.id : posts._id;
+
 		return (
 			<div className="container">
 				<br/><h3>Posted Jobs</h3><br/>
 				<div className="row">
-					{ posts.map( ( post ) => <DashboardPostItem key={ post._id } user={ user } post={post}/> ) }
+					{ posts.map( ( post ) => <DashboardPostItem key={ postId } user={ user } post={post}/> ) }
 				</div>
 			</div>
 		)

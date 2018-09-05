@@ -24,6 +24,30 @@ const validatePostInput = require( '../../validation/post' );
 router.get( '/test', ( req, res ) => res.json( { msg: 'Post works' } ) );
 
 /**
+ * @route GET api/posts/postCount
+ * @desc Get the count of total post
+ * @access public
+ */
+router.get( '/postCount', ( req, res ) => {
+	Post.find()
+		.count()
+		.then( ( post ) => res.json( post ) )
+		.catch( ( error ) => res.json( { noPostFound: 'No post found' } ) );
+} );
+
+/**
+ * @route GET api/posts/completedPostCount
+ * @desc Get the count of total post where payment has been received
+ * @access public
+ */
+router.get( '/completedPostCount', ( req, res ) => {
+	Post.find( { paymentReceived: 'paid' } )
+		.count()
+		.then( ( post ) => res.json( post ) )
+		.catch( ( error ) => res.json( { noPostFound: 'No post found' } ) );
+} );
+
+/**
  * @route GET api/posts/
  * @desc Get all the posts
  * @access public
@@ -84,6 +108,7 @@ router.get( '/:id', ( req, res ) => {
 		.catch( ( error ) => res.json( { noPostFound: 'No post found' } ) );
 } );
 
+
 // @route   DELETE api/posts/:id
 // @desc    Delete post
 // @access  Private
@@ -135,6 +160,12 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 		city: req.body.city,
 		state: req.body.state,
 		address: req.body.address,
+		paymentReceived: 'no',
+		paymentId: '',
+		jobCompleted: 'no',
+		jobFinalAmount: '',
+		completedBidderUserId: '',
+		completedBidderName: '',
 		bidIds: [],
 		bidUserIds: []
 	});

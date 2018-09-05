@@ -17,8 +17,14 @@ class DashboardPostsListing extends Component {
 		const { user } = this.props.auth;
 		let postContent;
 
-		if ( posts === null || loading) {
+		if ( loading ) {
 			postContent = <img src="./../img/spinner.gif" style={{ width: '200px', margin: 'auto', display: 'block' }}/>;
+		} else if ( posts === null ) {
+			postContent = (
+				<div>
+					<h2>You have not posted any jobs yet</h2>
+				</div>
+			)
 		} else {
 			postContent = <PostFeed posts={posts} user={user} />;
 		}

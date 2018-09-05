@@ -100,10 +100,34 @@ class DashboardSidebar extends Component {
 						</Link>
 					</li>
 					}
+					{( 'user' === user.type || 'vendor' === user.type ) &&
+					<li className="nav-item oc-nav-item">
+						<Link className="nav-link" to="/vendor-accepted-bids">
+							<span className="menu-title">Accepted Bids/Payments</span>
+							<i className="mdi mdi-crosshairs-gps menu-icon"></i>
+						</Link>
+					</li>
+					}
 					{('admin' === user.type ) &&
 					<li className="nav-item oc-nav-item">
-						<Link className="nav-link" to="/user-bids">
-							<span className="menu-title">All Bids</span>
+						<Link className="nav-link" to="/all-accepted-bids">
+							<span className="menu-title">Accepted Bids</span>
+							<i className="mdi mdi-crosshairs-gps menu-icon"></i>
+						</Link>
+					</li>
+					}
+					{('admin' === user.type ) &&
+					<li className="nav-item oc-nav-item">
+						<Link className="nav-link" to="/bid-package-payments">
+							<span className="menu-title">Bid Package Payments</span>
+							<i className="mdi mdi-crosshairs-gps menu-icon"></i>
+						</Link>
+					</li>
+					}
+					{('admin' === user.type ) &&
+					<li className="nav-item oc-nav-item">
+						<Link className="nav-link" to="/vendor-job-payments">
+							<span className="menu-title">Vendor Job Payments</span>
 							<i className="mdi mdi-crosshairs-gps menu-icon"></i>
 						</Link>
 					</li>

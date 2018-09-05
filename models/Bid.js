@@ -19,6 +19,18 @@ const BidSchema = new Schema({
 	postName: {
 		type: String
 	},
+	postedByUserId: {
+		type: String
+	},
+	postedByUserName: {
+		type: String
+	},
+	postedByUserPhone: {
+		type: String
+	},
+	projectBudget: {
+		type: String
+	},
 	bidPrice: {
 		type: Number,
 		required: true
@@ -26,6 +38,12 @@ const BidSchema = new Schema({
 	type: {
 		type: String,
 		required: true
+	},
+	jobMoneyPaidByVendor: {
+		type: String
+	},
+	accepted: {
+		type: String,
 	},
 	date: {
 		type: Date,

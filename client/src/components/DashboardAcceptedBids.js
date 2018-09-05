@@ -3,35 +3,24 @@ import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import PropTypes from 'prop-types';
-import DashboardNav from './DashboardNav';
-import DashboardSidebar from './DashboardSidebar';
-import { getAllBidByPostId } from "../../../actions/bidActions";
-import { getCurrentUser } from "../../../actions/authActions";
-import { updateBidAsAccepted } from "../../../actions/bidActions";
+import DashboardNav from './layouts/dashboard/DashboardNav';
+import DashboardSidebar from './layouts/dashboard/DashboardSidebar';
+import { getCurrentUser } from "../actions/authActions";
+import { getAllAcceptedBids } from "../actions/bidActions";
 import $ from 'jquery';
 
-class BidsByPost extends Component {
-	constructor( props ) {
-		super( props );
-		this.state = {
-			postId: ''
-		}
-	}
+class DashboardAcceptedBids extends Component {
 
 	componentDidMount() {
 		const { user } = this.props.auth;
-		const postId = this.props.match.params.postId;
-		this.setState = {
-			postId: this.props.match.params.postId
-		};
 		this.props.getCurrentUser( user );
-		this.props.getAllBidByPostId( postId, user._id );
+		this.props.getAllAcceptedBids();
 	}
 
 	onClick = ( event ) => {
 		const bidId = $( event.target ).attr( 'data-bidid' ),
-			  bid = { bidId },
-			  postId = $( event.target ).attr( 'data-postid' );
+			bid = { bidId },
+			postId = $( event.target ).attr( 'data-postid' );
 		this.props.updateBidAsAccepted( bid );
 		this.ocShowAlert( 'Bid Accepted Successfully', '#3089cf' );
 		window.location.href = '/post-job-listings';
@@ -65,14 +54,14 @@ class BidsByPost extends Component {
 						<thead>
 						<tr>
 							<th scope="col">Job Title</th>
-							<th scope="col">Bid Id</th>
 							<th scope="col">Bid Amount</th>
 							<th scope="col">Type</th>
 							<th scope="col">By</th>
 							<th scope="col">When</th>
-							<th scope="col">Job Details</th>
 							<th scope="col">Bidder's Profile</th>
-							<th scope="col">Action</th>
+							<th scope="col">Job Details</th>
+							<th scope="col">Status</th>
+							<th scope="col">Payment Status</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -81,29 +70,14 @@ class BidsByPost extends Component {
 								return (
 									<tr key={item._id} >
 										<td>{ item.postName }</td>
-										<td>{ item._id }</td>
 										<td>₹{ item.bidPrice.toFixed(2) }</td>
 										<td>{ item.type }</td>
 										<td>{ item.userName }</td>
 										<td><Moment fromNow>{item.date}</Moment></td>
-										<td><Link to={`/dashboard-single-post/${ item.postId }`} className="btn-sm btn-primary">View</Link></td>
 										<td><Link to={`/bidders-profile/${ item.userId }`} className="btn-sm btn-primary">View</Link></td>
-										{/*Pending and not admin*/}
-										{ ( 'no' === item.accepted && 'admin' !== user.type ) &&
-											<td><button className="btn-sm btn-primary" style={{ cursor: 'pointer' }} data-bidid={item._id} data-postid={item.postId} onClick={ this.onClick }>Accept</button></td>
-										}
-										{/*Pending and admin*/}
-										{ ( 'no' === item.accepted && 'admin' === user.type ) &&
-										<td><span>Pending</span></td>
-										}
-										{/*Accepted and not admin*/}
-										{ ( 'yes' === item.accepted && 'admin' !== user.type ) &&
-										<td><button className="btn-sm btn-secondary" style={{ cursor: 'pointer', background: 'green' }} disabled >Accepted</button></td>
-										}
-										{/*Accepted and admin*/}
-										{ ( 'yes' === item.accepted && 'admin' === user.type ) &&
+										<td><Link to={`/dashboard-single-post/${ item.postId }`} className="btn-sm btn-primary">View</Link></td>
 										<td><span style={{ color: 'green' }}>Accepted</span></td>
-										}
+										<td><span>{ item.jobMoneyPaidByVendor }</span></td>
 									</tr>
 								);
 							} )
@@ -131,10 +105,9 @@ class BidsByPost extends Component {
 	}
 }
 
-BidsByPost.propTypes = {
-	getAllBidByPostId: PropTypes.func.isRequired,
+DashboardAcceptedBids.propTypes = {
 	getCurrentUser: PropTypes.func.isRequired,
-	updateBidAsAccepted: PropTypes.func.isRequired,
+	getAllAcceptedBids: PropTypes.func.isRequired,
 	bid: PropTypes.object.isRequired
 };
 
@@ -143,4 +116,4 @@ const mapStateToProps = ( state ) => ({
 	bid: state.bid,
 });
 
-export default connect( mapStateToProps, { getAllBidByPostId, updateBidAsAccepted, getCurrentUser } )( BidsByPost );
+export default connect( mapStateToProps, { getCurrentUser, getAllAcceptedBids } )( DashboardAcceptedBids );

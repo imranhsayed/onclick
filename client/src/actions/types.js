@@ -6,9 +6,14 @@ export const PROFILE_NOT_FOUND = 'PROFILE_NOT_FOUND';
 export const CLEAR_CURRENT_PROFILE = 'CLEAR_CURRENT_PROFILE';
 export const GET_PROFILES = 'GET_PROFILES';
 
+export const GET_VENDOR_COUNT = 'GET_VENDOR_COUNT';
+export const GET_USER_COUNT = 'GET_USER_COUNT';
+
 export const POST_LOADING = 'POST_LOADING';
 export const GET_POSTS = 'GET_POSTS';
 export const GET_POST = 'GET_POST';
+export const GET_POSTS_COUNT = 'GET_POSTS_COUNT';
+export const GET_COMPLETED_POST_COUNT = 'GET_COMPLETED_POST_COUNT';
 export const ADD_POST = 'ADD_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
@@ -29,3 +34,10 @@ export const GET_BID = 'GET_BID';
 export const ADD_BID = 'ADD_BID';
 export const DELETE_BID = 'DELETE_BID';
 export const CLEAR_BID_ERRORS = 'CLEAR_BID_ERRORS';
+
+export const PAYMENT_LOADING = 'PAYMENT_LOADING';
+export const GET_PAYMENTS = 'GET_PAYMENTS';
+export const GET_PAYMENT = 'GET_PAYMENT';
+export const ADD_PAYMENT = 'ADD_PAYMENT';
+export const DELETE_PAYMENT = 'DELETE_PAYMENT';
+export const CLEAR_PAYMENT_ERRORS = 'CLEAR_PAYMENT_ERRORS';

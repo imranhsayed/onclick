@@ -64,6 +64,7 @@ class DashboardPostItem extends Component {
 							{/*Body*/}
 							<div className="card-body" style={{ color: '#8D8D8D' }}>
 								<h6 className="card-title"> Job Description</h6>
+								<p className="card-text"><strong>Job Id: </strong>{ post._id }</p>
 								<p className="card-text">{ post.description }</p>
 								<button onClick={this.onDeleteClick.bind( this, post._id )} className="btn btn-danger btn-sm">Delete</button>
 								<Link to={`/dashboard-post/${post._id}`} className="btn btn-primary btn-sm float-right">View/Edit</Link>
@@ -112,9 +113,14 @@ class DashboardPostItem extends Component {
 						</div>
 						<div className="card-body">
 							<h6 className="card-title"> Job Description</h6>
+							<p className="card-text"><strong>Job Id: </strong>{ post._id }</p>
 							<p className="card-text">{ post.description }</p>
 							<button onClick={this.onDeleteClick.bind( this, post._id )} className="btn btn-danger btn-sm">Delete</button>
 							<Link to={`/dashboard-post/${post._id}`} className="btn btn-primary btn-sm float-right">View/Edit</Link>
+							{/* If this post was bid then show the 'View Bid' Link*/}
+							{ ( 0 !== post.bidUserIds.length ) &&
+							<Link to={`/view-post-bids/${post._id}`} className="btn btn-primary btn-sm float-right" style={{ marginRight: '10px' }}>View Bids</Link>
+							}
 						</div>
 					</div>
 				</div>

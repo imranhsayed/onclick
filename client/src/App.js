@@ -31,6 +31,13 @@ import BuyBid from "./components/bid/BuyBid";
 import PaymentComplete from "./components/PaymentComplete";
 import DashboardShowUserBids from "./components/layouts/dashboard/DashboardShowUserBids";
 import BidsByPost from "./components/layouts/dashboard/BidsByPost";
+import BiddersProfile from "./components/layouts/dashboard/BiddersProfile";
+import DashboardAcceptedBids from "./components/DashboardAcceptedBids";
+import DashboardAdminSinglePost from "./components/DashboardAdminSinglePost";
+import DashboardVendorAcceptedBids from "./components/DashboardVendorAcceptedBids";
+import ThankJobPaymentByVendor from "./components/ThankJobPaymentByVendor";
+import BidPackagePayments from "./components/layouts/dashboard/pages/BidPackagePayments";
+import VendorJobPayments from "./components/layouts/dashboard/pages/VendorJobPayments";
 
 /**
  * To ensure the authenticate state stays true even on page reload, we do the following:
@@ -97,6 +104,13 @@ class App extends Component {
 					<Switch><PrivateRoute exact path="/list-categories" component={DashboardListCategories} /></Switch>
 					<Switch><PrivateRoute exact path="/user-bids" component={DashboardShowUserBids} /></Switch>
 					<Switch><PrivateRoute exact path="/view-post-bids/:postId" component={BidsByPost} /></Switch>
+					<Switch><PrivateRoute exact path="/bidders-profile/:bidderUserId" component={BiddersProfile} /></Switch>
+					<Switch><PrivateRoute exact path="/all-accepted-bids" component={DashboardAcceptedBids} /></Switch>
+					<Switch><PrivateRoute exact path="/dashboard-single-post/:postId" component={DashboardAdminSinglePost} /></Switch>
+					<Switch><PrivateRoute exact path="/vendor-accepted-bids" component={DashboardVendorAcceptedBids} /></Switch>
+					<Switch><PrivateRoute exact path="/thankyou-vendor-job-payment" component={ThankJobPaymentByVendor} /></Switch>
+					<Switch><PrivateRoute exact path="/bid-package-payments" component={BidPackagePayments} /></Switch>
+					<Switch><PrivateRoute exact path="/vendor-job-payments" component={VendorJobPayments} /></Switch>
 
 					{/*Front End*/}
 					<Switch><PrivateRoute exact path="/buy-bid" component={BuyBid} /></Switch>

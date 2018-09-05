@@ -5,6 +5,7 @@ import profileReducer from './profileReducer';
 import postReducer from './postReducer';
 import categoryReducer from './categoryReducer';
 import bidReducer from './bidReducer';
+import paymentReducer from './paymentReducer'
 
 export default combineReducers({
 	auth: authReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
 	profile: profileReducer,
 	post: postReducer,
 	category: categoryReducer,
-	bid: bidReducer
+	bid: bidReducer,
+	payment: paymentReducer
 });
