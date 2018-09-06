@@ -112,7 +112,7 @@ class PostForm extends Component {
 
 	}
 
-	// showAlert Function
+	// ShowAlert Function
 	ocShowAlert = ( message, background = '#3089cf' ) => {
 		let alertContainer = document.querySelector( '#oc-alert-container' ),
 			alertEl = document.createElement( 'div' ),

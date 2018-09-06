@@ -63,8 +63,8 @@ router.post('/upload', ( req, res ) => {
 	upload( req, res, ( error ) => {
 
 		if( error ){
-			console.log( 'error', error );
-			res.json( error );
+			console.log( 'errors', error );
+			res.json( { error: error } );
 		} else {
 			// If File not found
 			if( req.file === undefined ){

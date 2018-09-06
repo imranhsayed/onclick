@@ -39,6 +39,7 @@ import ThankJobPaymentByVendor from "./components/ThankJobPaymentByVendor";
 import BidPackagePayments from "./components/layouts/dashboard/pages/BidPackagePayments";
 import VendorJobPayments from "./components/layouts/dashboard/pages/VendorJobPayments";
 import PostFileUploads from "./components/PostFileUploads";
+import PostGalleryUploads from "./components/PostGalleryUploads";
 
 /**
  * To ensure the authenticate state stays true even on page reload, we do the following:
@@ -113,6 +114,7 @@ class App extends Component {
 					<Switch><PrivateRoute exact path="/bid-package-payments" component={BidPackagePayments} /></Switch>
 					<Switch><PrivateRoute exact path="/vendor-job-payments" component={VendorJobPayments} /></Switch>
 					<Switch><PrivateRoute exact path="/post-image-uploads" component={PostFileUploads} /></Switch>
+					<Switch><PrivateRoute exact path="/post-gallery-uploads/:postid" component={PostGalleryUploads} /></Switch>
 
 					{/*Front End*/}
 					<Switch><PrivateRoute exact path="/buy-bid" component={BuyBid} /></Switch>

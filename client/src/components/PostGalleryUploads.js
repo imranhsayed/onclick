@@ -4,7 +4,7 @@ import DashboardSidebar from './layouts/dashboard/DashboardSidebar';
 import axios from 'axios';
 import $ from 'jquery';
 
-class PostFileUploads extends Component {
+class PostGalleryUploads extends Component {
 
 
 	constructor( props ) {
@@ -46,14 +46,16 @@ class PostFileUploads extends Component {
 							if ( 'LIMIT_FILE_SIZE' === response.data.error.code ) {
 								this.ocShowAlert( 'Max size: 2MB', 'red' );
 							} else {
-							// If not the given ile type
+								// If not the given ile type
 								this.ocShowAlert( response.data.error, 'red' );
 							}
 						} else {
-							// success
+							// Success
 							let fileName = response.data;
 							console.log( 'fileName', fileName );
 							this.ocShowAlert( 'File Uploaded', '#3089cf' );
+
+							window.location.href = `/post-gallery-uploads/${this.props.match.params.postid}?post_id=${this.props.match.params.postid}`;
 						}
 					}
 				}).catch( ( error ) => {
@@ -110,4 +112,4 @@ class PostFileUploads extends Component {
 		);
 	}
 }
-export default PostFileUploads;
+export default PostGalleryUploads;
