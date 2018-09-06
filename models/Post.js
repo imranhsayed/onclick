@@ -11,6 +11,12 @@ const PostSchema = new Schema({
 		type: String,
 		required: true
 	},
+	postImage: {
+		type: String
+	},
+	postGalleryImages: {
+		type: [String]
+	},
 	name: {
 		type: String,
 		required: true

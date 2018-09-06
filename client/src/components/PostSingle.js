@@ -23,6 +23,7 @@ class PostSingle extends Component{
 		const { post, loading } = this.props.post;
 		const { user } = this.props.auth;
 		let postContent;
+		console.log( 'tests' );
 
 		if ( null === post || loading || ! Object.keys( post ).length ) {
 			postContent = <img src="./../img/spinner.gif" style={{ width: '200px', margin: 'auto', display: 'block' }} alt="spinner"/>;

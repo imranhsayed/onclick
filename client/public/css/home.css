@@ -2260,3 +2260,25 @@ input[type=number]#payment-credit-card-code::-webkit-outer-spin-button {
 
 
 /*# sourceMappingURL=style.css.map */
+
+
+/*Slider*/
+.image-gallery-right-nav:before {
+	content: '»';
+	color: #abafab;
+	font-size: 32px;
+}
+
+.image-gallery-left-nav:before {
+	content: '«';
+	color: #abafab;
+	font-size: 32px;
+}
+
+button:focus {
+	outline: none !important;
+}
+
+.image-gallery-thumbnail.active {
+	border: 1px solid #337ab7 !important;
+}

@@ -14,14 +14,18 @@ import {
 
 // Add Post
 export const addPost = postData => dispatch => {
-	dispatch(clearErrors());
+	dispatch( clearErrors() );
 	axios
 		.post('/api/posts', postData)
-		.then(res =>
-			dispatch({
-				type: ADD_POST,
-				payload: res.data
-			})
+		.then( res => {
+			console.log( 'rere', res );
+				dispatch({
+					type: ADD_POST,
+					payload: res.data
+				});
+			// Once the new post is created/submitted redirect the user to the image posting page
+			window.location.href = `/post-image-uploads?post_id=${res.data._id}`;
+			}
 		)
 		.catch(err =>
 			dispatch({

@@ -7,6 +7,7 @@ const express = require( 'express' );
 const router = express.Router();
 const mongoose = require( 'mongoose' );
 const passport = require( 'passport' );
+const url = require('url');
 
 const User = require( '../../models/User' );
 const Bid = require( '../../models/Bid' );
@@ -58,15 +59,14 @@ router.post( '/pay', ( req, res ) => {
  * @access public
  */
 router.get( '/callback/', ( req, res ) => {
-	const url = require('url');
 	let url_parts = url.parse( req.url, true),
 		responseData = url_parts.query;
 
-	console.log( responseData );
+	// console.log( responseData );
 
 	if ( responseData.payment_id ) {
 		let userId = responseData.user_id;
-		console.log( 'userid', userId );
+		// console.log( 'userid', userId );
 
 		// Save the info that user has purchased the bid.
 		const bidData = {};

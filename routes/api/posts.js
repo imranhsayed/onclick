@@ -7,12 +7,96 @@ const express = require( 'express' );
 const router = express.Router();
 const mongoose = require( 'mongoose' );
 const passport = require( 'passport' );
+const multer = require('multer');
+const path = require( 'path' );
+const url = require('url');
 
 const Post = require( '../../models/Post' );
-const Profile = require( '../../models/Profile' );
 
 // Validation.
 const validatePostInput = require( '../../validation/post' );
+
+/**
+ * IMAGE STORING STARTS
+ */
+
+// Set The Storage Engine
+const storage = multer.diskStorage({
+	destination: './client/public/uploads/post_image/',
+	filename: function( req, file, cb ){
+		cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+	}
+});
+
+// Init Upload
+const upload = multer({
+	storage: storage,
+	limits:{ fileSize: 2000000 }, // In bytes: 2000000 bytes = 2 MB
+	fileFilter: function( req, file, cb ){
+		checkFileType( file, cb );
+	}
+}).single('myImage');
+
+// Check File Type
+function checkFileType(file, cb){
+	// Allowed ext
+	const filetypes = /jpeg|jpg|png|gif/;
+	// Check ext
+	const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+	// Check mime
+	const mimetype = filetypes.test(file.mimetype);
+
+	if( mimetype && extname ){
+		return cb(null,true);
+	} else {
+		cb('Error: Images Only!');
+	}
+}
+
+/**
+ * @route POST api/posts/upload
+ * @desc Upload post image
+ * @access public
+ */
+router.post('/upload', ( req, res ) => {
+
+	upload( req, res, ( error ) => {
+
+		if( error ){
+			console.log( 'error', error );
+			res.json( error );
+		} else {
+			// If File not found
+			if( req.file === undefined ){
+				console.log( 'Error: No File Selected!' );
+				res.json( 'Error: No File Selected' );
+			} else {
+				// If Success
+				let data = req.file.filename,
+					requestUrl = req.headers.referer,
+					// Parse the url and get the post id from http://localhost:3000/post-image-uploads?post_id=5b90ffe062d9781599c45c4e
+					url_parts = url.parse( requestUrl, true),
+					responseData = url_parts.query,
+					postId = responseData.post_id;
+
+				const postImageField = {};
+					postImageField.postImage = '/uploads/post_image/' + req.file.filename;
+
+				// Save the file name into database
+				Post.findOneAndUpdate( { _id: postId }, { $set: postImageField }, { new: true } )
+					.then( post => console.log( post ) )
+					.catch( error => console.log( error ) );
+
+				res.json( data );
+			}
+		}
+	});
+});
+
+
+/**
+ * IMAGE STORING ENDS
+ */
 
 /**
  * Because this file is used for route '/api/posts', the routes we define here will be sub route of '/api/users'

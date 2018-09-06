@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { addPost } from '../actions/postActions';
 import { getParentCats } from '../actions/categoryActions';
 import { getSubCats } from '../actions/categoryActions';
 import { getSubCatsLvl2 } from '../actions/categoryActions';
+import { getPost } from "../actions/postActions";
 import $ from "jquery";
 
 class PostForm extends Component {
@@ -39,6 +41,7 @@ class PostForm extends Component {
 
 	componentDidMount() {
 		this.props.getParentCats();
+		this.props.getPost();
 	}
 
 	componentWillReceiveProps(newProps) {
@@ -104,7 +107,9 @@ class PostForm extends Component {
 			this.ocShowAlert( 'Job Successfully Posted', '#3089cf' );
 		}
 
-		window.location.href = '/post-job-listings';
+		// window.location.href = '/post-job-listings';
+		// window.location.href = `/post-job-listings/${}`;
+
 	}
 
 	// showAlert Function
@@ -163,6 +168,7 @@ class PostForm extends Component {
 	render() {
 		const { errors } = this.state;
 		const { category } = this.props;
+
 		let parentCategories = '', parentCatsOptions = '', subCategories = '', subCatsOptions = '', subCategoriesLvl2 = '', subCatsLvl2Options = '';
 
 		// Get Parent categories options
@@ -300,6 +306,7 @@ class PostForm extends Component {
 					<button type="submit" className="btn btn-dark">
 						Submit
 					</button>
+					<Link to="/post-image-uploads" className="btn btn-primary">Upload Job Image</Link>
 				</form>
 			</div>
 		);
@@ -311,6 +318,8 @@ PostForm.propTypes = {
 	getParentCats: PropTypes.func.isRequired,
 	getSubCats: PropTypes.func.isRequired,
 	getSubCatsLvl2: PropTypes.func.isRequired,
+	getPost: PropTypes.func.isRequired,
+	post: PropTypes.object.isRequired,
 	auth: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired
 };
@@ -318,7 +327,8 @@ PostForm.propTypes = {
 const mapStateToProps = state => ({
 	auth: state.auth,
 	errors: state.errors,
-	category: state.category
+	category: state.category,
+	post: state.post
 });
 
-export default connect( mapStateToProps, { addPost, getParentCats, getSubCats, getSubCatsLvl2 } )( PostForm );
+export default connect( mapStateToProps, { addPost, getParentCats, getSubCats, getSubCatsLvl2, getPost } )( PostForm );

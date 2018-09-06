@@ -7,12 +7,20 @@ import { Link } from 'react-router-dom';
 class DashboardPostItem extends Component {
 	render() {
 		const { post, user } = this.props;
+		let imgSrc;
+		if ( post.postImage ) {
+			// If User has uploaded image for the job
+			imgSrc = post.postImage;
+		} else {
+			// If no image uploaded for the job
+			imgSrc = '/img/listing-hotel.jpg';
+		}
 
 		return (
 			(
 				<div className="jumbotron listing-services-jumbotron p-0 wow pulse">
 					<div className="row">
-						<img src="./../../../img/listing-hotel.jpg" className="col-12 col-sm-6"/>
+						<img src={ imgSrc } className="col-12 col-sm-6" style={{ maxWidth:'428px', maxHeight: '337px' }}/>
 						<div className="col-12 col-sm-6 listing-services-text">
 							<h5>
 								<i className="far fa-folder-open"></i> { post.category }

@@ -12,6 +12,8 @@
 		"prop-types": "^15.6.2",
 		"react": "^16.4.1",
 		"react-dom": "^16.4.1",
+		"react-image-gallery": "^0.8.11",
+		"react-images-upload": "^1.2.2",
 		"react-moment": "^0.7.9",
 		"react-redux": "^5.0.7",
 		"react-router-dom": "^4.3.1",
