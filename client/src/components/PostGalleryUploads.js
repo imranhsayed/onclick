@@ -18,20 +18,23 @@ class PostGalleryUploads extends Component {
 
 	fileChangedHandler = (event) => {
 		this.setState({
-			selectedFile: event.target.files[0]
+			selectedFile: event.target.files
 		});
+		console.log( event.target.files );
 	};
 
 	uploadHandler = () => {
 		const data = new FormData();
+		const postId = this.props.match.params.postid;
+		let selectedFile = this.state.selectedFile;
 
 		// If file selected
-		if ( this.state.selectedFile ) {
-			const postId = this.props.match.params.postId;
+		if ( selectedFile ) {
+			for ( let i = 0; i < selectedFile.length; i++ ) {
+				data.append( 'galleryImage', selectedFile[ i ], selectedFile[ i ].name );
+			}
 
-			data.append( 'myImage', this.state.selectedFile, this.state.selectedFile.name );
-
-			axios.post( '/api/posts/upload', data, {
+			axios.post( '/api/posts/gallery-upload', data, {
 				headers: {
 					'accept': 'application/json',
 					'Accept-Language': 'en-US,en;q=0.8',
@@ -39,12 +42,15 @@ class PostGalleryUploads extends Component {
 				}
 			})
 				.then( ( response ) => {
+					console.log( 'res', response );
 
 					if ( 200 === response.status ) {
 						// If file size is larger than expected.
 						if( response.data.error ) {
 							if ( 'LIMIT_FILE_SIZE' === response.data.error.code ) {
 								this.ocShowAlert( 'Max size: 2MB', 'red' );
+							} else if ( 'LIMIT_UNEXPECTED_FILE' === response.data.error.code ){
+								this.ocShowAlert( 'Max 4 images allowed', 'red' );
 							} else {
 								// If not the given ile type
 								this.ocShowAlert( response.data.error, 'red' );
@@ -55,7 +61,7 @@ class PostGalleryUploads extends Component {
 							console.log( 'fileName', fileName );
 							this.ocShowAlert( 'File Uploaded', '#3089cf' );
 
-							window.location.href = `/post-gallery-uploads/${this.props.match.params.postid}?post_id=${this.props.match.params.postid}`;
+							window.location.href = `/single-post/${postId}`;
 						}
 					}
 				}).catch( ( error ) => {
@@ -95,11 +101,13 @@ class PostGalleryUploads extends Component {
 							<div id="oc-alert-container"></div>
 							<div className="card border-light mb-3" style={{ boxShadow: '0 5px 10px 2px rgba(195,192,192,.5)' }}>
 								<div className="card-header">
-									<h3 style={{ color: '#555', marginLeft: '12px' }}>Job File Upload</h3>
+									<h3 style={{ color: '#555', marginLeft: '12px' }}>Upload Job's Gallery Images</h3>
+									<p className="text-muted" style={{ marginLeft: '12px' }}>Upload Size: 400px x 400px ( Max 2MB )</p>
 								</div>
 								<div className="card-body">
-									<p className="card-text">Please upload the Image for the posted job</p>
-									<input type="file" onChange={this.fileChangedHandler}/>
+									<p className="card-text">Please upload the Gallery Images for the posted job</p>
+									<p className="card-text">These images will be show on the Job desc</p>
+									<input type="file" multiple onChange={this.fileChangedHandler}/>
 									<div className="mt-5">
 										<button className="btn btn-info" onClick={this.uploadHandler}>Upload!</button>
 									</div>

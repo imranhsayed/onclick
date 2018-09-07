@@ -24,7 +24,7 @@ export const addPost = postData => dispatch => {
 					payload: res.data
 				});
 			// Once the new post is created/submitted redirect the user to the image posting page
-			window.location.href = `/post-image-uploads?post_id=${res.data._id}`;
+			window.location.href = `/post-image-uploads/${res.data._id}?post_id=${res.data._id}`;
 			}
 		)
 		.catch(err =>

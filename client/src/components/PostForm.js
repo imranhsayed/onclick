@@ -306,7 +306,6 @@ class PostForm extends Component {
 					<button type="submit" className="btn btn-dark">
 						Submit
 					</button>
-					<Link to="/post-image-uploads" className="btn btn-primary">Upload Job Image</Link>
 				</form>
 			</div>
 		);

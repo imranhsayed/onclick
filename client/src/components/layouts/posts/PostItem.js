@@ -13,14 +13,14 @@ class DashboardPostItem extends Component {
 			imgSrc = post.postImage;
 		} else {
 			// If no image uploaded for the job
-			imgSrc = '/img/listing-hotel.jpg';
+			imgSrc = '/images/default-image.png';
 		}
 
 		return (
 			(
 				<div className="jumbotron listing-services-jumbotron p-0 wow pulse">
 					<div className="row">
-						<img src={ imgSrc } className="col-12 col-sm-6" style={{ maxWidth:'428px', maxHeight: '337px' }}/>
+						<img src={ imgSrc } className="col-12 col-sm-6" style={{ maxWidth:'420px', maxHeight: '337px' }}/>
 						<div className="col-12 col-sm-6 listing-services-text">
 							<h5>
 								<i className="far fa-folder-open"></i> { post.category }

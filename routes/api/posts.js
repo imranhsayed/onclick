@@ -20,22 +20,24 @@ const validatePostInput = require( '../../validation/post' );
  * IMAGE STORING STARTS
  */
 
-// Set The Storage Engine
+// Set The Storage Engine for single image
 const storage = multer.diskStorage({
 	destination: './client/public/uploads/post_image/',
 	filename: function( req, file, cb ){
-		cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+		cb( null,
+			path.basename( file.originalname, path.extname(file.originalname) ) + '-' + Date.now() + path.extname( file.originalname )
+		);
 	}
 });
 
-// Init Upload
+// Single Upload
 const upload = multer({
 	storage: storage,
 	limits:{ fileSize: 2000000 }, // In bytes: 2000000 bytes = 2 MB
 	fileFilter: function( req, file, cb ){
 		checkFileType( file, cb );
 	}
-}).single('myImage');
+}).single('postImage');
 
 // Check File Type
 function checkFileType(file, cb){
@@ -80,7 +82,7 @@ router.post('/upload', ( req, res ) => {
 					postId = responseData.post_id;
 
 				const postImageField = {};
-					postImageField.postImage = '/uploads/post_image/' + req.file.filename;
+				postImageField.postImage = '/uploads/post_image/' + req.file.filename;
 
 				// Save the file name into database
 				Post.findOneAndUpdate( { _id: postId }, { $set: postImageField }, { new: true } )
@@ -93,9 +95,82 @@ router.post('/upload', ( req, res ) => {
 	});
 });
 
+/**
+ * MULTIPLE FILE UPLOADS FOR JOB GALLERY
+ */
 
 /**
- * IMAGE STORING ENDS
+ * Set The Storage Engine for multiple image
+ * We are using path module method here : path.basename( file.originalname, path.extname(file.originalname) ),
+ * which will give us the filename without its extension
+ * path.extname( file.originalname ) will give us the extension name of the file.
+ */
+const storageMultiple = multer.diskStorage({
+	destination: './client/public/uploads/post_gallery/',
+	filename: function( req, file, cb ){
+		cb( null,
+			path.basename( file.originalname, path.extname(file.originalname) ) + '-' + Date.now() + path.extname( file.originalname )
+		);
+	}
+});
+
+// Multiple File Uploads ( max 4 )
+const uploads = multer({
+	storage: storageMultiple,
+	limits:{ fileSize: 2000000 }, // In bytes: 2000000 bytes = 2 MB
+	fileFilter: function( req, file, cb ){
+		checkFileType( file, cb );
+	}
+}).array( 'galleryImage', 4 );
+
+/**
+ * @route POST api/posts/gallery-upload
+ * @desc Upload post image
+ * @access public
+ */
+router.post('/gallery-upload', ( req, res ) => {
+
+	uploads( req, res, ( error ) => {
+		if( error ){
+			console.log( 'errors', error );
+			res.json( { error: error } );
+		} else {
+			// If File not found
+			if( req.files === undefined ){
+				console.log( 'Error: No File Selected!' );
+				res.json( 'Error: No File Selected' );
+			} else {
+				// If Success
+				let data = req.files,
+					fileName,
+					requestUrl = req.headers.referer,
+					// Parse the url and get the post id from http://localhost:3000/post-image-uploads?post_id=5b90ffe062d9781599c45c4e
+					url_parts = url.parse( requestUrl, true),
+					responseData = url_parts.query,
+					postId = responseData.post_id;
+				console.log( 'postid', postId );
+				console.log( 'imglength', data.length );
+
+				const postGalleryImgField = {};
+				postGalleryImgField.postGalleryImages = [];
+				for ( let i = 0; i < data.length; i++ ) {
+					fileName = '/uploads/post_gallery/' + data[ i ].filename;
+					console.log( 'filenm', fileName );
+					postGalleryImgField.postGalleryImages.push( fileName )
+				}
+				// Save the file name into database
+				Post.findOneAndUpdate( { _id: postId }, { $set: postGalleryImgField }, { new: true } )
+					.then( post => console.log( post ) )
+					.catch( error => console.log( error ) );
+
+				res.json( req.files );
+			}
+		}
+	});
+});
+
+/**
+ * MULTIPLE FILE UPLOADS FOR JOB GALLERY ENDS
  */
 
 /**

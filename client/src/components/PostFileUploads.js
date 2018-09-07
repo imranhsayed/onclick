@@ -6,30 +6,27 @@ import $ from 'jquery';
 
 class PostFileUploads extends Component {
 
-
 	constructor( props ) {
 		super( props );
 		this.state = {
 			selectedFile: null
-		};
-
+		}
 	}
 
-
-	fileChangedHandler = (event) => {
+	fileChangedHandler = ( event ) => {
 		this.setState({
 			selectedFile: event.target.files[0]
 		});
 	};
 
-	uploadHandler = () => {
+	uploadHandler = (  ) => {
 		const data = new FormData();
+		const postId = this.props.match.params.postid;
 
 		// If file selected
 		if ( this.state.selectedFile ) {
-			const postId = this.props.match.params.postId;
 
-			data.append( 'myImage', this.state.selectedFile, this.state.selectedFile.name );
+			data.append( 'postImage', this.state.selectedFile, this.state.selectedFile.name );
 
 			axios.post( '/api/posts/upload', data, {
 				headers: {
@@ -46,14 +43,17 @@ class PostFileUploads extends Component {
 							if ( 'LIMIT_FILE_SIZE' === response.data.error.code ) {
 								this.ocShowAlert( 'Max size: 2MB', 'red' );
 							} else {
-							// If not the given ile type
+								console.log( response.data );
+
+								// If not the given file type
 								this.ocShowAlert( response.data.error, 'red' );
 							}
 						} else {
-							// success
+							// Success
 							let fileName = response.data;
 							console.log( 'fileName', fileName );
 							this.ocShowAlert( 'File Uploaded', '#3089cf' );
+							window.location.href = `/post-gallery-uploads/${ postId }?post_id=${ postId }`;
 						}
 					}
 				}).catch( ( error ) => {
@@ -82,25 +82,26 @@ class PostFileUploads extends Component {
 		}, 3000 );
 	};
 
-	render() {
+
+
+	render(){
 		return(
-			<div>
-				<div className="container-scroller">
-					<DashboardNav/>
-					<div className="container-fluid page-body-wrapper">
-						<DashboardSidebar/>
-						<div className="container p-5">
-							<div id="oc-alert-container"></div>
-							<div className="card border-light mb-3" style={{ boxShadow: '0 5px 10px 2px rgba(195,192,192,.5)' }}>
-								<div className="card-header">
-									<h3 style={{ color: '#555', marginLeft: '12px' }}>Job File Upload</h3>
-								</div>
-								<div className="card-body">
-									<p className="card-text">Please upload the Image for the posted job</p>
-									<input type="file" onChange={this.fileChangedHandler}/>
-									<div className="mt-5">
-										<button className="btn btn-info" onClick={this.uploadHandler}>Upload!</button>
-									</div>
+			<div className="container-scroller">
+				<DashboardNav/>
+				<div className="container-fluid page-body-wrapper">
+					<DashboardSidebar/>
+					<div className="container p-5">
+						<div id="oc-alert-container"></div>
+						<div className="card border-light mb-3" style={{ boxShadow: '0 5px 10px 2px rgba(195,192,192,.5)' }}>
+							<div className="card-header">
+								<h3 style={{ color: '#555', marginLeft: '12px' }}>Job File Upload</h3>
+								<p className="text-muted" style={{ marginLeft: '12px' }}>Upload Size: 420px x 337px ( Max 2MB )</p>
+							</div>
+							<div className="card-body">
+								<p className="card-text">Please upload a single image for the posted job</p>
+								<input type="file" onChange={this.fileChangedHandler}/>
+								<div className="mt-5">
+									<button className="btn btn-info" onClick={this.uploadHandler}>Upload!</button>
 								</div>
 							</div>
 						</div>
@@ -110,4 +111,5 @@ class PostFileUploads extends Component {
 		);
 	}
 }
+
 export default PostFileUploads;

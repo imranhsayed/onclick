@@ -70,6 +70,7 @@ class Dashboard extends Component {
 			    // Profile is present
 				dashboardContent = (
 					<div className="container">
+						<br/><br/>
 						<p className="lead text-muted">Welcome
 							<Link to="{`/profile/$profile.handle`}"> { user.name }! </Link>
 							{ 'vendor' === user.type && <span>(Vendor)</span> }

@@ -113,9 +113,8 @@ class App extends Component {
 					<Switch><PrivateRoute exact path="/thankyou-vendor-job-payment" component={ThankJobPaymentByVendor} /></Switch>
 					<Switch><PrivateRoute exact path="/bid-package-payments" component={BidPackagePayments} /></Switch>
 					<Switch><PrivateRoute exact path="/vendor-job-payments" component={VendorJobPayments} /></Switch>
-					<Switch><PrivateRoute exact path="/post-image-uploads" component={PostFileUploads} /></Switch>
+					<Switch><PrivateRoute exact path="/post-image-uploads/:postid" component={PostFileUploads} /></Switch>
 					<Switch><PrivateRoute exact path="/post-gallery-uploads/:postid" component={PostGalleryUploads} /></Switch>
-
 					{/*Front End*/}
 					<Switch><PrivateRoute exact path="/buy-bid" component={BuyBid} /></Switch>
 					<Route exact path="/job-listings" component={PostJobListings}/>
