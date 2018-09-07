@@ -31,14 +31,20 @@ class DashboardPostItem extends Component {
 
 	render() {
 		const { post, user } = this.props;
-		let postItem = '',
+		let postItem = '', imgSrc,
 			userId = ( user.id ) ? user.id : user._id;
-		console.log( user );
+
+		if ( post.postImage ) {
+			// If User has uploaded image for the job
+			imgSrc = post.postImage;
+		} else {
+			// If no image uploaded for the job
+			imgSrc = '/images/default-image.png';
+		}
 
 		// If its not admin display posts conditionally, else display them all.
 		if ( 'admin' !== user.type ) {
 			if ( userId === post.userId ) {
-				console.log( 'camcam' );
 				postItem = (
 					<div className="col-md-12" style={{ boxShadow: '0 5px 10px 2px rgba(195,192,192,.5) !important' }}>
 						<div id="oc-alert-container"></div>
@@ -63,15 +69,27 @@ class DashboardPostItem extends Component {
 							</div>
 							{/*Body*/}
 							<div className="card-body" style={{ color: '#8D8D8D' }}>
-								<h6 className="card-title"> Job Description</h6>
-								<p className="card-text"><strong>Job Id: </strong>{ post._id }</p>
-								<p className="card-text">{ post.description }</p>
-								<button onClick={this.onDeleteClick.bind( this, post._id )} className="btn btn-danger btn-sm">Delete</button>
-								<Link to={`/dashboard-post/${post._id}`} className="btn btn-primary btn-sm float-right">View/Edit</Link>
-								{/* If this post was bid then show the 'View Bid' Link*/}
-								{ ( 0 !== post.bidUserIds.length ) &&
-								<Link to={`/view-post-bids/${post._id}`} className="btn btn-primary btn-sm float-right" style={{ marginRight: '10px' }}>View Bids</Link>
-								}
+								<div className="row">
+									{/*Post Image*/}
+									<div className="col-md-3">
+										<img src={imgSrc} alt="post-image" style={{ maxWidth: '240px' }}/>
+									</div>
+									{/*Post Content*/}
+									<div className="col-md-9">
+										<h6 className="card-title"> Job Description</h6>
+										<p className="card-text"><strong>Job Id: </strong>{ post._id }</p>
+										<p className="card-text">{ post.description }</p>
+										<button onClick={this.onDeleteClick.bind( this, post._id )} className="btn btn-danger btn-sm">Delete</button>
+										<Link to={`/single-post/${post._id}`} className="btn btn-primary btn-sm float-right mr-3 mb-2">View</Link>
+										<Link to={`/dashboard-post/${post._id}`} className="btn btn-primary btn-sm float-right mr-3 mb-2">Edit</Link>
+										<Link to={`/post-image-uploads/${post._id}?post_id=${post._id}`} className="btn btn-primary btn-sm float-right mr-3 mb-2">Upload Job Image</Link>
+										<Link to={`/post-gallery-uploads/${post._id}?post_id=${post._id}`} className="btn btn-primary btn-sm float-right mr-3 mb-2">Upload Gallery</Link>
+										{/* If this post was bid then show the 'View Bid' Link*/}
+										{ ( 0 !== post.bidUserIds.length ) &&
+										<Link to={`/view-post-bids/${post._id}`} className="btn btn-primary btn-sm float-right" style={{ marginRight: '10px' }}>View Bids</Link>
+										}
+									</div>
+								</div>
 							</div>
 							{/*Footer*/}
 							<div className="card-footer text-muted p-4">

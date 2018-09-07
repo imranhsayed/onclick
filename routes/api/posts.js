@@ -326,7 +326,9 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 		completedBidderUserId: '',
 		completedBidderName: '',
 		bidIds: [],
-		bidUserIds: []
+		bidUserIds: [],
+		postGalleryImages: [],
+		postImage: '',
 	});
 
 	newPost.save().then( post => res.json( post ) ).catch( errors => res.json( errors ) )

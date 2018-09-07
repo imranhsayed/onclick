@@ -41,7 +41,7 @@ class DashboardPostsListing extends Component {
 		console.log( 'posts', posts );
 
 		if ( posts === null || loading) {
-			postContent = <img src="./../../../img/spinner.gif" style={{ width: '200px', margin: 'auto', display: 'block' }} alt="spinner"/>;
+			postContent = <img src="/img/spinner.gif" style={{ width: '200px', margin: 'auto', display: 'block' }} alt="spinner"/>;
 		} else {
 			postCount = posts.length;
 			if ( postCount ) {

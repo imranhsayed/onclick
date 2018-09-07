@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import DashboardNav from './layouts/dashboard/DashboardNav';
 import DashboardSidebar from './layouts/dashboard/DashboardSidebar';
 import axios from 'axios';
@@ -110,6 +111,7 @@ class PostGalleryUploads extends Component {
 									<input type="file" multiple onChange={this.fileChangedHandler}/>
 									<div className="mt-5">
 										<button className="btn btn-info" onClick={this.uploadHandler}>Upload!</button>
+										<Link to="/post-job-listings" className="btn btn-primary"  style={{ marginLeft: '10px' }}>Upload later</Link>
 									</div>
 								</div>
 							</div>
