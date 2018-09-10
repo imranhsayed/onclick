@@ -36,7 +36,7 @@ class ProfileListings extends Component {
 		return(
 			<div>
 				<Navbar/>
-				<Banner heading={ 'Profile Listing' }/>
+				<Banner heading={ 'Business Listing' }/>
 				<div className="container listing-container my-3">
 					<div className="row mb-3 mt-5 listing-search-services-row">
 						<div className="col-12 col-lg-3">

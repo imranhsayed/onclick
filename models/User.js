@@ -23,6 +23,9 @@ const UserSchema = new Schema( {
 		type: String,
 		required: true
 	},
+	profileImage: {
+		type: String,
+	},
 	package: {
 		type: String
 	},

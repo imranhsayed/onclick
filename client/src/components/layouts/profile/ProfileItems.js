@@ -7,12 +7,20 @@ class ProfileItems extends Component {
 	render() {
 
 		const { profile } = this.props;
+		let businessGalleryImages = '';
+
+		// Use default image for business image if its not uploaded.
+		if ( ! profile.businessImage ) {
+			businessGalleryImages = '/images/default-image.png';
+		} else {
+			businessGalleryImages = profile.businessImage;
+		}
 
 		return (
 			<div>
 				<div className="jumbotron listing-services-jumbotron p-0 wow pulse">
 					<div className="row">
-						<img src="../img/listing-hotel.jpg" className="col-12 col-sm-6"/>
+						<img src={ businessGalleryImages } className="col-12 col-sm-6" style={{ maxWidth:'420px', maxHeight: '337px' }}/>
 						<div className="col-12 col-sm-6 listing-services-text">
 							<h5>
 								<i className="far fa-folder-open"></i> { profile.category }

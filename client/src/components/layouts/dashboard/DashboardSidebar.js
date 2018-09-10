@@ -18,7 +18,13 @@ class DashboardSidebar extends Component {
 	render(){
 
 		const { isAuthenticated, user } = this.props.auth;
-		console.log( 'prof', this.props.profileData.profile );
+		let avatarSrc = '';
+		// Avatar Image
+		if ( user.profileImage ) {
+			avatarSrc = user.profileImage;
+		} else {
+			avatarSrc = '/images/default-avatar.png';
+		}
 		const authLink = (
 			<li className="nav-item oc-nav-item">
 				<a className="nav-link" href="" onClick={ this.onLogoutClick.bind( this ) }>
@@ -34,7 +40,7 @@ class DashboardSidebar extends Component {
 					<li className="nav-item oc-nav-item nav-profile">
 						<a href="" className="nav-link">
 							<div className="nav-profile-image">
-								<img src="./../images/faces/face1.jpg" alt="profile"/>
+								<img src={ avatarSrc } alt="profile"/>
 									<span className="login-status online"></span>
 							</div>
 							<div className="nav-profile-text d-flex flex-column">
@@ -142,7 +148,7 @@ class DashboardSidebar extends Component {
 					{('user' === user.type || 'vendor' === user.type ) &&
 					<li className="nav-item oc-nav-item">
 						<Link className="nav-link" to="/create-profile">
-							<span className="menu-title">Profile</span>
+							<span className="menu-title">Profile/Business Listing</span>
 							<i className="mdi mdi-account-card-details menu-icon"></i>
 						</Link>
 					</li>

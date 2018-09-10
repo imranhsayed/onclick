@@ -14,6 +14,14 @@ class DashboardNav extends Component {
 
 	render(){
 		const { isAuthenticated, user } = this.props.auth;
+		let avatarSrc = '';
+		// Avatar Image
+		if ( user.profileImage ) {
+			avatarSrc = user.profileImage;
+		} else {
+			avatarSrc = '/images/default-avatar.png';
+		}
+
 		const authLinks = (
 			<li className="nav-item nav-logout d-none d-lg-block">
 				<a className="nav-link" href="" onClick={this.onLogoutClick.bind( this )}>
@@ -37,7 +45,7 @@ class DashboardNav extends Component {
 						<li className="nav-item nav-profile dropdown">
 							<a className="nav-link dropdown-toggle" id="profileDropdown" href="" data-toggle="dropdown" aria-expanded="false">
 								<div className="nav-profile-img">
-									<img src="./../images/faces/face1.jpg" alt="my-face"/>
+									<img src={avatarSrc} alt="my-face"/>
 										<span className="availability-status online"></span>
 								</div>
 								<div className="nav-profile-text">

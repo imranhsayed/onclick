@@ -96,7 +96,7 @@ export const makeUserAVendorRequest = ( id, userData  ) => dispatch => {
 };
 
 // Update user as a vendor
-export const getCurrentUser = ( auth  ) => dispatch => {
+export const getCurrentUser = ( auth = ''  ) => dispatch => {
 	axios
 		.get('/api/users/current')
 		.then( res => dispatch({

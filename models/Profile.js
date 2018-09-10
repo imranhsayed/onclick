@@ -18,8 +18,8 @@ const ProfileSchema = new Schema({
 	businessImage: {
 		type: String
 	},
-	galleryImage: {
-		type: String
+	businessGalleryImages: {
+		type: [String]
 	},
 	business: {
 		type: String,

@@ -70,17 +70,13 @@ class Navbar extends Component {
 							</li>
 							<li className="nav-item dropdown">
 								<a className="nav-link dropdown-toggle onclick-dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									PAGES
+									Quick Links
 								</a>
 								<div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									<Link className="dropdown-item" to="/register">Sign Up</Link>
-									<Link className="dropdown-item" to="/login">Login</Link>
 									<Link className="dropdown-item" to="/post-job">Post Free Job</Link>
 									<Link className="dropdown-item" to="/job-listings">Job Listings</Link>
 									<Link className="dropdown-item" to="/search-job">Search Job</Link>
-									<Link className="dropdown-item" to="/listings">Product Listings</Link>
-									<Link className="dropdown-item" to="/product">Product</Link>
-									<Link className="dropdown-item" to="/detail-product">Detail Product</Link>
+									<Link className="dropdown-item" to="/listings">Business Listings</Link>
 									<Link className="dropdown-item" to="/categories">Categories</Link>
 								</div>
 							</li>

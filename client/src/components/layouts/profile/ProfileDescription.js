@@ -15,9 +15,6 @@ class ProfileDescription extends Component {
 							<div className="card-body">
 								<h1 className="card-title">Description</h1>
 								<p className="card-text">{ profile.description }</p>
-								<Link to="/">
-									<button type="button" className="btn btn-primary send-otp-btn btn-post-job product-bid-on-project-btn">Bid on This Project</button>
-								</Link>
 							</div>
 						</div>
 					</div>

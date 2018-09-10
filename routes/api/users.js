@@ -69,7 +69,8 @@ router.post( '/register', ( req, res ) => {
 				bidCountInPack: '0',
 				package: 'none',
 				type: 'user',
-				profileId: 'none'
+				profileId: 'none',
+				profileImage: ''
 			});
 
 			/**
@@ -145,7 +146,8 @@ router.post( '/login', ( req, res ) => {
 							type: user.type,
 							package: user.package,
 							profileId: user.profileId,
-							bidCountInPack: user.bidCountInPack
+							bidCountInPack: user.bidCountInPack,
+							profileImage: user.profileImage
 						};
 
 						/**

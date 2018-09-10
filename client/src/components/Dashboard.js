@@ -76,12 +76,14 @@ class Dashboard extends Component {
 							{ 'vendor' === user.type && <span>(Vendor)</span> }
 						</p>
 						<div className="row">
-							<ProfileActions/>
+							<ProfileActions user={user}/>
 							<div className="col-md-4">
 								<div className="card bg-light mb-3" style={{ maxWidth: '20rem' }}>
-									<div className="card-header text-center">View Jobs</div>
+									<div className="card-header text-center">Jobs</div>
 									<div className="card-body text-center">
-										<Link to="/job-listings" className="btn btn-gradient-primary btn-fw">Job Listings</Link>
+										<Link to="/post-job" className="btn btn-gradient-primary btn-fw">Post Job</Link>
+										<Link to="/post-job-listings" className="btn btn-gradient-primary btn-fw mt-3">Posted Jobs</Link>
+										<Link to="/job-listings" className="btn btn-gradient-primary btn-fw mt-3">Job Listings</Link>
 									</div>
 								</div>
 							</div>
@@ -111,7 +113,7 @@ class Dashboard extends Component {
 
 				// Profile is not created
 				dashboardContent = (
-					<div className="container">
+					<div className="container mt-5">
 						<p className="lead text-muted">Welcome { user.name }!</p>
 						<p className="">You have not yet set up a profile, please create your profile</p>
 						<Link className="btn btn-lg btn-info" to="/create-profile">Create Profile</Link><br/><br/>

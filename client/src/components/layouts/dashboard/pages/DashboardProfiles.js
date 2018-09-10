@@ -1,5 +1,6 @@
 import React, { Component } from  'react';
 import $ from "jquery";
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
@@ -182,7 +183,7 @@ class DashboardProfiles extends Component {
 	};
 
 	render() {
-		let name = '', email = '', business = '', subCategory = '', subCatLevel2 = '',
+		let name = '', email = '', business = '', subCategory = '', subCatLevel2 = '', profileAvailable = '',
 			description = '', gender = '', city = '', phone = '', state = '', address = '';
 		const { user } = this.props.auth;
 		const errors = this.state.errors;
@@ -242,9 +243,9 @@ class DashboardProfiles extends Component {
 					<div className="col-9 grid-margin stretch-card">
 						<div className="card">
 							<div className="card-body">
-								<h4 className="card-title">Profile</h4>
+								<h4 className="card-title">Profile/Business Listing</h4>
 								<p className="card-description">
-									Create or Update Profile
+									Create or Update Profile/Business Listing
 								</p>
 								<form className="forms-sample" onSubmit={ this.fileUploadHandler } encType="multipart/form-data">
 									<div className="form-group">
@@ -351,7 +352,6 @@ class DashboardProfiles extends Component {
 										{ errors.address && ( <div className="invalid-feedback">{ errors.address }</div> ) }
 									</div>
 									<button type="submit" className="btn btn-gradient-primary mr-2">Submit</button>
-									<button className="btn btn-light">Cancel</button>
 								</form>
 							</div>
 						</div>
