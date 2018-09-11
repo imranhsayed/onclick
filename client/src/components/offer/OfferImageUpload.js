@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import DashboardNav from './layouts/dashboard/DashboardNav';
-import DashboardSidebar from './layouts/dashboard/DashboardSidebar';
+import DashboardNav from './../layouts/dashboard/DashboardNav';
+import DashboardSidebar from './../layouts/dashboard/DashboardSidebar';
 import axios from 'axios';
 import $ from 'jquery';
 
-class PostFileUploads extends Component {
+class OfferImageUpload extends Component {
 
 	constructor( props ) {
 		super( props );
@@ -22,14 +22,14 @@ class PostFileUploads extends Component {
 
 	uploadHandler = (  ) => {
 		const data = new FormData();
-		const postId = this.props.match.params.postid;
+		const offerId = this.props.match.params.offerid;
 
 		// If file selected
 		if ( this.state.selectedFile ) {
 
-			data.append( 'postImage', this.state.selectedFile, this.state.selectedFile.name );
+			data.append( 'offerImage', this.state.selectedFile, this.state.selectedFile.name );
 
-			axios.post( '/api/posts/upload', data, {
+			axios.post( '/api/offer/offer-img-upload', data, {
 				headers: {
 					'accept': 'application/json',
 					'Accept-Language': 'en-US,en;q=0.8',
@@ -54,7 +54,7 @@ class PostFileUploads extends Component {
 							let fileName = response.data;
 							console.log( 'fileName', fileName );
 							this.ocShowAlert( 'File Uploaded', '#3089cf' );
-							window.location.href = `/post-gallery-uploads/${ postId }?post_id=${ postId }`;
+							// window.location.href = `/post-gallery-uploads/${ offerId }?offer_id=${ offerId }`;
 						}
 					}
 				}).catch( ( error ) => {
@@ -95,15 +95,15 @@ class PostFileUploads extends Component {
 						<div id="oc-alert-container"></div>
 						<div className="card border-light mb-3" style={{ boxShadow: '0 5px 10px 2px rgba(195,192,192,.5)' }}>
 							<div className="card-header">
-								<h3 style={{ color: '#555', marginLeft: '12px' }}>Job Image Upload</h3>
+								<h3 style={{ color: '#555', marginLeft: '12px' }}>Offer Image Upload</h3>
 								<p className="text-muted" style={{ marginLeft: '12px' }}>Upload Size: 420px x 337px ( Max 2MB )</p>
 							</div>
 							<div className="card-body">
-								<p className="card-text">Please upload a single image for the posted job</p>
+								<p className="card-text">Please upload a single image for the offer</p>
 								<input type="file" onChange={this.fileChangedHandler}/>
 								<div className="mt-5">
 									<button className="btn btn-info" onClick={this.uploadHandler}>Upload!</button>
-									<Link to="/post-job-listings" className="btn btn-primary"  style={{ marginLeft: '10px' }}>Upload later</Link>
+									<Link to="/" className="btn btn-primary"  style={{ marginLeft: '10px' }}>Upload later</Link>
 								</div>
 							</div>
 						</div>
@@ -114,4 +114,4 @@ class PostFileUploads extends Component {
 	}
 }
 
-export default PostFileUploads;
+export default OfferImageUpload;

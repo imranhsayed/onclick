@@ -41,3 +41,10 @@ export const GET_PAYMENT = 'GET_PAYMENT';
 export const ADD_PAYMENT = 'ADD_PAYMENT';
 export const DELETE_PAYMENT = 'DELETE_PAYMENT';
 export const CLEAR_PAYMENT_ERRORS = 'CLEAR_PAYMENT_ERRORS';
+
+export const OFFER_LOADING = 'OFFER_LOADING';
+export const GET_OFFERS = 'GET_OFFERS';
+export const GET_OFFER = 'GET_OFFER';
+export const ADD_OFFER = 'ADD_OFFER';
+export const DELETE_OFFER = 'DELETE_OFFER';
+export const CLEAR_OFFER_ERRORS = 'CLEAR_PAYMENT_ERRORS';

@@ -144,6 +144,13 @@ class DashboardSidebar extends Component {
 							<i className="mdi mdi-file-image menu-icon"></i>
 						</Link>
 					</li>
+					{/*Add Offer*/}
+					<li className="nav-item oc-nav-item">
+						<Link className="nav-link" to="/add-offer">
+							<span className="menu-title">Add Offer</span>
+							<i className="mdi mdi-file-image menu-icon"></i>
+						</Link>
+					</li>
 					{/* Show Profile if its user*/}
 					{('user' === user.type || 'vendor' === user.type ) &&
 					<li className="nav-item oc-nav-item">

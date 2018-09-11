@@ -43,6 +43,8 @@ import PostGalleryUploads from "./components/PostGalleryUploads";
 import ProfileImageUpload from "./components/layouts/profile/ProfileImageUpload";
 import ProfileBusinessImageUpload from "./components/layouts/profile/ProfileBusinessImageUpload";
 import ProfileBusinessGalleryUpload from "./components/layouts/profile/ProfileBusinessGalleryUploads";
+import AddOffer from "./components/offer/AddOffer";
+import OfferImageUpload from "./components/offer/OfferImageUpload";
 
 /**
  * To ensure the authenticate state stays true even on page reload, we do the following:
@@ -121,6 +123,8 @@ class App extends Component {
 					<Switch><PrivateRoute exact path="/business-gallery-uploads/:profileid" component={ProfileBusinessGalleryUpload} /></Switch>
 					<Switch><PrivateRoute exact path="/post-image-uploads/:postid" component={PostFileUploads} /></Switch>
 					<Switch><PrivateRoute exact path="/post-gallery-uploads/:postid" component={PostGalleryUploads} /></Switch>
+					<Switch><PrivateRoute exact path="/add-offer" component={AddOffer} /></Switch>
+					<Switch><PrivateRoute exact path="/add-offer-image/:offerid" component={OfferImageUpload} /></Switch>
 					{/*Front End*/}
 					<Switch><PrivateRoute exact path="/buy-bid" component={BuyBid} /></Switch>
 					<Route exact path="/job-listings" component={PostJobListings}/>

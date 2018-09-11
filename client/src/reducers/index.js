@@ -6,6 +6,7 @@ import postReducer from './postReducer';
 import categoryReducer from './categoryReducer';
 import bidReducer from './bidReducer';
 import paymentReducer from './paymentReducer'
+import offerReducer from "./offerReducer";
 
 export default combineReducers({
 	auth: authReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
 	post: postReducer,
 	category: categoryReducer,
 	bid: bidReducer,
-	payment: paymentReducer
+	payment: paymentReducer,
+	offer: offerReducer
 });

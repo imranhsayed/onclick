@@ -11,6 +11,7 @@ const posts = require( './routes/api/posts' );
 const category = require( './routes/api/category' );
 const bid = require( './routes/api/bid' );
 const payment = require( './routes/api/payment' );
+const offer = require( './routes/api/offer' );
 
 /**
  * express.Router() creates modular, mountable route handlers
@@ -39,6 +40,7 @@ app.use( '/api/posts', posts );
 app.use( '/api/categories', category );
 app.use( '/api/bid/', bid );
 app.use( '/api/payments/', payment );
+app.use( '/api/offer/', offer );
 
 
 // Passport middleware
