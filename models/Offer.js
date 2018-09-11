@@ -6,6 +6,12 @@ const OfferSchema = new Schema({
 	userId: {
 		type: String
 	},
+	userName: {
+		type: String
+	},
+	userImage: {
+		type: String
+	},
 	title: {
 		type: String,
 		required: true

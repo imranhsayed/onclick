@@ -112,3 +112,12 @@
 #post-job-nav-link {
 	margin-left: -3px !important;
 }
+
+.offer-listing-front-end-user-img {
+	border-radius: 50%;
+}
+
+.front-end-offer-listing-card {
+	border: 1px solid #dedbdb !important;
+	box-shadow: 0 5px 10px 2px rgba(195,192,192,.5) !important;
+}

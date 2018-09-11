@@ -105,17 +105,67 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 		return res.status( 400 ).json( errors );
 	}
 
-	// Save the data in the database.
-	const offer = new Offer({
-		userId: req.body.userId,
-		title: req.body.title,
-		description: req.body.description,
-		offerImage: ''
-	});
+	// Get the user by its id first, so that we can get his name and image
+	User.findOne( { _id: req.body.userId } )
+		.then( user => {
 
-	offer.save()
-		.then( offer => res.status( 200 ).json( offer )  )
-		.catch( error => res.status( 400 ).json( error ) );
+			// Save the data in the database.
+			const offer = new Offer({
+				userId: req.body.userId,
+				userName: user.name,
+				userImage: user.profileImage,
+				title: req.body.title,
+				description: req.body.description,
+				offerImage: ''
+			});
+
+			offer.save()
+				.then( offer => res.status( 200 ).json( offer )  )
+				.catch( error => res.status( 400 ).json( error ) );
+		} )
+		.catch( error => res.json( error ) );
+
+} );
+
+/**
+ * GET: /api/offer/user/:userid
+ * Get all the offers by userId
+ * public
+ */
+router.get( '/user/:userid', ( req, res ) => {
+	// Get all the offers by user id.
+	Offer.find( { userId: req.params.userid } )
+		.then( offer => res.json( offer ) )
+		.catch( error => res.json( error ) );
+} );
+
+/**
+ * GET: /api/offer/getalloffers
+ * Get all the offers
+ * public
+ */
+router.get( '/getalloffers', ( req, res ) => {
+	// Get all the offers by user id.
+	Offer.find()
+		.sort( { date: -1 } )
+		.then( offers => res.json( offers ) )
+		.catch( error => res.json( error ) );
+} );
+
+/**
+ * DELETE: /api/offer/offer-delete/:offerid
+ * Delete an offer by its offer id
+ * private
+ */
+router.delete( '/offer-delete/:offerid', passport.authenticate( 'jwt', { session: false } ), ( req, res ) => {
+	// Delete the offer using offer id
+	console.log( req.params.offerid );
+	Offer.findOneAndRemove( { _id: req.params.offerid } )
+		.then( offer => res.json( offer ) )
+		.catch( error => {
+			console.log( 'err', error );
+			res.json( error )
+		} );
 } );
 
 // We export the router so that the server.js file can pick it up

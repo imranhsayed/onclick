@@ -10,7 +10,7 @@ import {
 } from './types';
 
 
-// Add Payment
+// Add Offer
 export const addOffer = ( offerData ) => dispatch => {
 	dispatch( clearErrors() );
 	axios
@@ -33,18 +33,37 @@ export const addOffer = ( offerData ) => dispatch => {
 };
 
 
-// Get All Bids
-export const getBids = () => dispatch => {
-	dispatch(setBidLoading());
+// Get All Offers by Userid
+export const getOffersByUserId = ( userId ) => dispatch => {
+	dispatch(setOfferLoading());
 	axios
-		.get('/api/bids')
+		.get( `/api/offer/user/${ userId }` )
 		.then(res =>
 			dispatch({
 				type: GET_OFFERS,
 				payload: res.data
 			})
 		)
-		.catch(err =>
+		.catch( err =>
+			dispatch({
+				type: GET_OFFERS,
+				payload: null
+			})
+		);
+};
+
+// Get All Bids
+export const getAllOffers = () => dispatch => {
+	dispatch( setOfferLoading() );
+	axios
+		.get( '/api/offer/getalloffers' )
+		.then( res =>
+			dispatch({
+				type: GET_OFFERS,
+				payload: res.data
+			})
+		)
+		.catch( err =>
 			dispatch({
 				type: GET_OFFERS,
 				payload: null
@@ -55,7 +74,7 @@ export const getBids = () => dispatch => {
 
 // Get a Single Bid by its id
 // export const getBid = id => dispatch => {
-// 	dispatch(setBidLoading());
+// 	dispatch(setOfferLoading());
 // 	axios
 // 		.get(`/api/bid/${id}`)
 // 		.then(res =>
@@ -72,28 +91,10 @@ export const getBids = () => dispatch => {
 // 		);
 // };
 
-// Get All Bid of a particular user by his user id
-export const getAllBidByUserId = id => dispatch => {
-	dispatch(setBidLoading());
-	axios
-		.get(`/api/bid/${id}`)
-		.then(res =>
-			dispatch({
-				type: GET_OFFERS,
-				payload: res.data
-			})
-		)
-		.catch(err =>
-			dispatch({
-				type: GET_OFFERS,
-				payload: null
-			})
-		);
-};
 
 // Get All accepted Bid of a particular user by his user id
 export const getAcceptedBidsByUserId = ( userData ) => dispatch => {
-	dispatch(setBidLoading());
+	dispatch(setOfferLoading());
 	axios
 		.post('/api/bid/acceptedBidsByUserId', userData )
 		.then(res =>
@@ -111,16 +112,16 @@ export const getAcceptedBidsByUserId = ( userData ) => dispatch => {
 };
 
 export const getAllBidByPostId= ( postId, userId ) => dispatch => {
-	dispatch(setBidLoading());
+	dispatch( setOfferLoading() );
 	axios
-		.get(`/api/bid/${postId}/${userId}`)
-		.then(res =>
+		.get( `/api/bid/${postId}/${userId}` )
+		.then( res =>
 			dispatch({
 				type: GET_OFFERS,
 				payload: res.data
 			})
 		)
-		.catch(err =>
+		.catch( err =>
 			dispatch({
 				type: GET_OFFERS,
 				payload: null
@@ -129,7 +130,7 @@ export const getAllBidByPostId= ( postId, userId ) => dispatch => {
 };
 
 export const getAllAcceptedBids= () => dispatch => {
-	dispatch(setBidLoading());
+	dispatch( setOfferLoading() );
 	axios
 		.get('/api/bid/acceptedbids')
 		.then(res =>
@@ -164,16 +165,13 @@ export const updateBidAsAccepted= ( bid ) => dispatch => {
 };
 
 // Delete Bid
-export const deleteBid = ( id, history ) => dispatch => {
+export const deleteOffer = ( offerId ) => dispatch => {
 	axios
-		.delete(`/api/bid/${id}`)
-		.then(res =>
-			dispatch({
-				type: DELETE_OFFER,
-				payload: id
-			})
+		.delete( `/api/offer/offer-delete/${offerId}`)
+		.then ( res =>
+			window.location.href = '/dashboard-user-offer-listing'
 		)
-		.catch(err => console.log( 'error' )
+		.catch( err => console.log( err )
 			// dispatch({
 			// 	type: GET_ERRORS,
 			// 	payload: err.response.data
@@ -182,7 +180,7 @@ export const deleteBid = ( id, history ) => dispatch => {
 };
 
 // Set loading state
-export const setBidLoading = () => {
+export const setOfferLoading = () => {
 	return {
 		type: OFFER_LOADING
 	};

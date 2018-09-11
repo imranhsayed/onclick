@@ -54,7 +54,9 @@ class OfferImageUpload extends Component {
 							let fileName = response.data;
 							console.log( 'fileName', fileName );
 							this.ocShowAlert( 'File Uploaded', '#3089cf' );
-							// window.location.href = `/post-gallery-uploads/${ offerId }?offer_id=${ offerId }`;
+
+							// Once the image is uploaded send the user to offer listing page.
+							window.location.href = '/dashboard-user-offer-listing';
 						}
 					}
 				}).catch( ( error ) => {
