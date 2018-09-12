@@ -374,6 +374,43 @@ router.get( '/subCategory/:subCategory', ( req, res ) => {
 
 
 /**
+ * @route GET api/profile/categoryId/:id
+ * @desc Get all the profiles that belongs to a given categoryId id
+ * @access public
+ */
+router.get( '/categoryId/:id', ( req, res ) => {
+	Profile.find( { categoryId: req.params.id } )
+		.sort( { date: -1 } )
+		.then( ( profiles ) => res.json( profiles ) )
+		.catch( ( error ) => res.json( { noProfilesFound: 'No profiles found' } ) );
+} );
+
+/**
+ * @route GET api/profile/subCategoryId/:id
+ * @desc Get all the profiles that belongs to a given subCategoryId id
+ * @access public
+ */
+router.get( '/subCategoryId/:id', ( req, res ) => {
+	Profile.find( { subCategoryId: req.params.id } )
+		.sort( { date: -1 } )
+		.then( ( profiles ) => res.json( profiles ) )
+		.catch( ( error ) => res.json( { noProfilesFound: 'No profiles found' } ) );
+} );
+
+/**
+ * @route GET api/profile/subCatLevel2Id/:id
+ * @desc Get all the profiles that belongs to a given subCatLevel2Id id
+ * @access public
+ */
+router.get( '/subCatLevel2Id/:id', ( req, res ) => {
+	Profile.find( { subCatLevel2Id: req.params.id } )
+		.sort( { date: -1 } )
+		.then( ( profiles ) => res.json( profiles ) )
+		.catch( ( error ) => res.json( { noProfilesFound: 'No posts found' } ) );
+} );
+
+
+/**
  * @route GET api/profile/user/:user_id
  * @desc Profile by user id
  * @access public
@@ -431,6 +468,7 @@ router.get( '/all', ( req, res ) => {
  */
 router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res ) => {
 
+	console.log( 'mymyreq', req.body );
 	const { errors, isValid } = validateProfileInput( req.body );
 
 	// Check Validation
@@ -451,9 +489,14 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 
 				// Get fields
 				profileFields.business = ( req.body.business ) ? req.body.business : profile.business;
-				profileFields.category = ( req.body.category ) ? req.body.category : profile.category;
-				profileFields.subCategory = ( req.body.subCategory ) ? req.body.subCategory : profile.subCategory;
-				profileFields.subCatLevel2 = ( req.body.subCatLevel2 ) ? req.body.subCatLevel2 : profile.subCatLevel2;
+				if ( req.body.categoryId ) {
+					profileFields.category = ( req.body.category ) ? req.body.category : profile.category;
+					profileFields.categoryId = ( req.body.categoryId ) ? req.body.categoryId : profile.categoryId;
+					profileFields.subCategory = ( req.body.subCategory ) ? req.body.subCategory : '';
+					profileFields.subCategoryId = ( req.body.subCategoryId ) ? req.body.subCategoryId : '';
+					profileFields.subCatLevel2 = ( req.body.subCatLevel2 ) ? req.body.subCatLevel2 : '';
+					profileFields.subCatLevel2Id = ( req.body.subCatLevel2Id ) ? req.body.subCatLevel2Id : '';
+				}
 				profileFields.description = ( req.body.description ) ? req.body.description : profile.description;
 				profileFields.phone = ( req.body.phone ) ? req.body.phone : profile.phone;
 				profileFields.gender = ( req.body.gender ) ? req.body.gender : profile.gender;
@@ -477,8 +520,11 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 				profileFields.businessGalleryImages = [];
 				profileFields.business = ( req.body.business ) ? req.body.business : '';
 				profileFields.category = ( req.body.category ) ? req.body.category : '';
+				profileFields.categoryId = ( req.body.categoryId ) ? req.body.categoryId : '';
 				profileFields.subCategory = ( req.body.subCategory ) ? req.body.subCategory : '';
+				profileFields.subCategoryId = ( req.body.subCategoryId ) ? req.body.subCategoryId : '';
 				profileFields.subCatLevel2 = ( req.body.subCatLevel2 ) ? req.body.subCatLevel2 : '';
+				profileFields.subCatLevel2Id = ( req.body.subCatLevel2Id ) ? req.body.subCatLevel2Id : '';
 				profileFields.description = ( req.body.description ) ? req.body.description : '';
 				profileFields.phone = ( req.body.phone ) ? req.body.phone : '';
 				profileFields.gender = ( req.body.gender ) ? req.body.gender : '';

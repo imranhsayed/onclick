@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import isEmpty from '../../../validation/is-empty';
+import Moment from 'react-moment';
 
 class ProfileItems extends Component {
 	render() {
@@ -29,7 +29,18 @@ class ProfileItems extends Component {
 								</div>
 							</h5>
 							<Link to={ `/profile/${profile.handle}` }><h3>{ profile.business }</h3></Link>
+							<div className="text-muted">
+								{ profile.subCategory && profile.subCategory }
+								{ profile.subCatLevel2 && ', ' + profile.subCatLevel2 }
+							</div>
 							<div className="row">
+								<div className="col-12">
+									<Link to={`/single-post/${profile._id}`}>
+										<p style={{ fontSize: '13px' }}>
+											Posted <Moment fromNow>{profile.date}</Moment>
+										</p>
+									</Link>
+								</div>
 								<div className="col-12 col-md-6">
 									<Link to={ `/profile/${profile.handle}` }>
 										<p>

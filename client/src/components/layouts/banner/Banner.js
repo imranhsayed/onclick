@@ -5,7 +5,6 @@ class Banner extends Component {
 	render() {
 
 		const { heading } = this.props;
-		console.log( 'heading', heading );
 		return(
 			<div>
 				<header className="home-banner forms-banner" role="banner">

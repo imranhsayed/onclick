@@ -5,15 +5,39 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";
-import { getProfiles } from './../actions/profileActions'
+import { getProfiles } from './../actions/profileActions';
 import ProfileItems from "./layouts/profile/ProfileItems";
 import ProfileListingCategories from "./layouts/profile/ProfileListingCategories";
+import { getProfilesByCategoryId } from "../actions/profileActions";
+import { getProfilesBySubCategoryId } from "../actions/profileActions";
+import { getProfilesBySubCatLevel2Id } from "../actions/profileActions";
 import Banner from "./layouts/banner/Banner";
+import queryString from "query-string";
 
 class ProfileListings extends Component {
 
 	componentDidMount() {
-		this.props.getProfiles();
+		// this.props.getProfiles();
+		const queryStringValues = queryString.parse( this.props.location.search );
+		console.log( 'querystring', queryStringValues );
+		let paramId = this.props.match.params.catid;
+		console.log( 'paramid', paramId );
+		if ( paramId ) {
+			if ( queryStringValues.category ) {
+				console.log( 'cme cat' );
+				this.props.getProfilesByCategoryId( paramId );
+			}
+			if ( queryStringValues.subCat ) {
+				console.log( 'cme subcat' );
+				this.props.getProfilesBySubCategoryId( paramId );
+			}
+			if ( queryStringValues.grandChild ) {
+				console.log( 'cme grndchild' );
+				this.props.getProfilesBySubCatLevel2Id( paramId );
+			}
+		} else{
+			this.props.getProfiles();
+		}
 	}
 
 	render(){
@@ -80,6 +104,9 @@ class ProfileListings extends Component {
 ProfileListings.propTypes = {
 	auth: PropTypes.object.isRequired,
 	getProfiles: PropTypes.func.isRequired,
+	getProfilesByCategoryId: PropTypes.func.isRequired,
+	getProfilesBySubCategoryId: PropTypes.func.isRequired,
+	getProfilesBySubCatLevel2Id: PropTypes.func.isRequired,
 	profile: PropTypes.object.isRequired
 };
 
@@ -88,4 +115,4 @@ const mapStateToProps = ( state ) => ({
 	profile: state.profile,
 });
 
-export default connect( mapStateToProps, { getProfiles } )( ProfileListings );
+export default connect( mapStateToProps, { getProfiles, getProfilesByCategoryId, getProfilesBySubCategoryId, getProfilesBySubCatLevel2Id } )( ProfileListings );

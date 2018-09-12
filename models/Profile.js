@@ -35,6 +35,15 @@ const ProfileSchema = new Schema({
 	subCatLevel2: {
 		type: String
 	},
+	categoryId: {
+		type: String
+	},
+	subCategoryId: {
+		type: String,
+	},
+	subCatLevel2Id: {
+		type: String,
+	},
 	description: {
 		type: String,
 		required: true

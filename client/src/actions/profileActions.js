@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {
-	GET_PROFILE, GET_ERRORS, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, SET_CURRENT_USER, GET_PROFILES,
-	GET_POSTS
+	GET_PROFILE, GET_ERRORS, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, SET_CURRENT_USER, GET_PROFILES
 } from "./types";
 
 // Get the Current Profile
@@ -67,6 +66,62 @@ export const createProfile = ( profileData, history ) => ( dispatch ) => {
 		} );
 };
 
+// Get Profile by CategoryId
+export const getProfilesByCategoryId = id => dispatch => {
+	dispatch(setProfileLoading());
+	axios
+		.get(`/api/profile/categoryId/${id}`)
+		.then(res =>
+			dispatch({
+				type: GET_PROFILES,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_PROFILES,
+				payload: null
+			})
+		);
+};
+
+// Get Profile by subCategoryId
+export const getProfilesBySubCategoryId = id => dispatch => {
+	dispatch(setProfileLoading());
+	axios
+		.get(`/api/profile/subCategoryId/${id}`)
+		.then(res =>
+			dispatch({
+				type: GET_PROFILES,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_PROFILES,
+				payload: null
+			})
+		);
+};
+
+// Get Profile by subCatLevel2Id
+export const getProfilesBySubCatLevel2Id = id => dispatch => {
+	dispatch(setProfileLoading());
+	axios
+		.get(`/api/profile/subCatLevel2Id/${id}`)
+		.then(res =>
+			dispatch({
+				type: GET_PROFILES,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_PROFILES,
+				payload: null
+			})
+		);
+};
 
 
 // Delete a Profile

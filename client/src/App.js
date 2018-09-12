@@ -131,7 +131,8 @@ class App extends Component {
 					{/*Front End*/}
 					<Switch><PrivateRoute exact path="/buy-bid" component={BuyBid} /></Switch>
 					<Route exact path="/job-listings" component={PostJobListings}/>
-					<Route exact path="/category-job-listing/:type/:name/:id" component={PostJobListings}/>
+					<Route exact path="/category-job-listing/:catid" component={PostJobListings}/>
+					<Route exact path="/category-business-listing/:catid" component={ProfileListings}/>
 					<Route exact path="/single-post/:id" component={PostSingle}/>
 					<Route exact path="/uploads" component={DashboardUploads}/>
 					<Route exact path="/dash-profiles" component={DashboardUserProfiles}/>

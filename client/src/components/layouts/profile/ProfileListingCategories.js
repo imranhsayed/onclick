@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from "react-redux";
 import {getCategories} from "../../../actions/categoryActions";
+import { getProfilesByCategoryId } from "../../../actions/profileActions";
+import { getProfilesBySubCategoryId } from "../../../actions/profileActions";
+import { getProfilesBySubCatLevel2Id } from "../../../actions/profileActions";
 import PropTypes from "prop-types";
 import _ from 'lodash';
+import queryString from "query-string";
 
 class ProfileListingCategories extends Component {
 
@@ -62,6 +66,23 @@ class ProfileListingCategories extends Component {
 		return nestedCats;
 	}
 
+
+	onClickGetProfile = ( event ) => {
+		const queryStringValues = queryString.parse( this.props.location.search );
+		let paramId = this.props.match.params.catid;
+		console.log( 'query', queryStringValues );
+		//
+		// if ( queryStringValues.category ) {
+		// 	this.props.getProfilesByCategoryId( paramId );
+		// }
+		// if ( queryStringValues.subCat ) {
+		// 	this.props.getProfilesBySubCategoryId( paramId );
+		// }
+		// if ( queryStringValues.grandChild ) {
+		// 	this.props.getProfilesBySubCatLevel2Id( paramId );
+		// }
+	};
+
 	render() {
 
 		const { category } = this.props;
@@ -75,7 +96,7 @@ class ProfileListingCategories extends Component {
 			    nestedCats.map( parentCategory => (
 				    <div key={parentCategory._id} className="row p-0" style={{width: '510px'}}>
 					    <div className="col-12 p-0">
-						    <Link to={`/category-job-listing/category/${parentCategory.categoryName}/${parentCategory._id}`} style={{ color: '#00a7e0'}}>{ parentCategory.categoryName }</Link>
+						    <Link to={`/category-business-listing/${parentCategory._id}?category=${parentCategory.categoryName}`} onClick={this.onClickGetProfile } style={{ color: '#00a7e0'}}>{ parentCategory.categoryName }</Link>
 						    <button className="btn filter-list-btn listing-cat-link-btn text-left" type="button" data-toggle="collapse" data-target={`#${parentCategory._id}`} style={{ marginLeft: '5px', marginTop: '5px', color: '#555' }} aria-expanded="false" aria-controls="colors-filter">
 							     +</button>
 						    <div className="collapse" id={parentCategory._id}>
@@ -84,7 +105,7 @@ class ProfileListingCategories extends Component {
 								    	parentCategory.child.map( subCat => (
 											<ul key={subCat._id} style={{ margin: '0 0 0 10px' }}>
 												<li style={{ lineHeight: '0.8' }}>
-													<Link to={`/category-job-listing/subCat/${subCat.categoryName}/${subCat._id}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>
+													<Link to={`/category-business-listing/${subCat._id}?subCat=${subCat.categoryName}`} onClick={this.onClickGetProfile } style={{ display: 'block', padding: '5px 0', color: '#555' }}>
 														{ subCat.categoryName }
 													</Link>
 												</li>
@@ -99,7 +120,7 @@ class ProfileListingCategories extends Component {
 
 														subCat.child.map( grandChild => (
 															<li key={grandChild._id} style={{ lineHeight: '0.8' }}>
-																<Link to={`/category-job-listing/grandChild/${subCat.categoryName}/${grandChild._id}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>
+																<Link to={`/category-business-listing/${grandChild._id}?grandChild=${subCat.categoryName}`} onClick={this.onClickGetProfile } style={{ display: 'block', padding: '5px 0', color: '#555' }}>
 																	{ grandChild.categoryName }
 																</Link>
 															</li>
@@ -123,7 +144,7 @@ class ProfileListingCategories extends Component {
 					<div className="jumbotron">
 						{/* Left side */}
 						<div className="col-12">
-							<h3 className="cat-main-title"><Link to="/job-listings">All Categories</Link></h3>
+							<h3 className="cat-main-title"><Link to="/listings">All Categories</Link></h3>
 							<div className="filter-form">
 								{ categoryOptions }
 							</div>
@@ -136,10 +157,16 @@ class ProfileListingCategories extends Component {
 
 ProfileListingCategories.propTypes = {
 	getCategories: PropTypes.func.isRequired,
+	getPosts: PropTypes.func.isRequired,
+	getProfilesByCategoryId: PropTypes.func.isRequired,
+	getProfilesBySubCategoryId: PropTypes.func.isRequired,
+	getProfilesBySubCatLevel2Id: PropTypes.func.isRequired,
+	profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-	category: state.category
+	category: state.category,
+	profile: state.profile
 });
 
-export default connect( mapStateToProps, { getCategories }  )( ProfileListingCategories );
+export default connect( mapStateToProps, { getCategories, getProfilesByCategoryId, getProfilesBySubCategoryId, getProfilesBySubCatLevel2Id }  )( ProfileListingCategories );

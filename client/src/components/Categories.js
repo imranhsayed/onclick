@@ -78,20 +78,20 @@ class Categories extends Component {
 				<div key={parentCategory._id} className="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
 					<div className="card mb-4">
 						<h3 className="card-header">
-							<Link to={`/category-job-listing/category/${parentCategory.categoryName}/${parentCategory._id}`}>{ parentCategory.categoryName }</Link>
+							<Link to={`/category-job-listing/${parentCategory._id}?category=${parentCategory.categoryName}`}>{ parentCategory.categoryName }</Link>
 						</h3>
 						<ul className="card-body oc-categories-card" id={parentCategory._id}>
 							{ parentCategory.child &&
 							parentCategory.child.map( subCat => (
 									<li key={subCat._id} >
-										<Link to={`/category-job-listing/subCat/${subCat.categoryName}/${subCat._id}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>
+										<Link to={`/category-job-listing/${subCat._id}?subCat=${subCat.categoryName}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>
 											{ subCat.categoryName }
 										</Link>
 										<ul>
 											{ subCat.child &&
 												subCat.child.map( grandChild => (
 													<li key={grandChild._id}>
-														<Link to={`/category-job-listing/grandChild/${grandChild.categoryName}/${grandChild._id}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>
+														<Link to={`/category-job-listing/${grandChild._id}?grandChild=${subCat.categoryName}`} style={{ display: 'block', padding: '5px 0', color: '#555' }}>
 															{ grandChild.categoryName }
 														</Link>
 													</li>

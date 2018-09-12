@@ -101,8 +101,9 @@ class DashboardProfiles extends Component {
 		} )
 	};
 	// https://www.youtube.com/watch?v=XeiOnkEI7XI
-	fileUploadHandler = ( event ) => {
-		let name = '', email = '', business = '', category = '', subCategory = '', subCatLevel2 = '',
+	onSubmit = ( event ) => {
+		let name = '', email = '', business = '', category = '', categoryId = '', subCategory = '', subCategoryId = '',
+			subCatLevel2Id = '', subCatLevel2 = '',
 			description = '', state = '', gender = '', phone = '', city = '', address = '';
 		event.preventDefault();
 		const { user } = this.props.auth;
@@ -122,8 +123,11 @@ class DashboardProfiles extends Component {
 			address = this.state.currentUserProfile.address;
 			state = this.state.currentUserProfile.state;
 			category = this.state.currentUserProfile.category;
+			categoryId = this.state.currentUserProfile.categoryId;
 			subCategory = this.state.currentUserProfile.subCategory;
+			subCategoryId = this.state.currentUserProfile.subCategoryId;
 			subCatLevel2 = this.state.currentUserProfile.subCatLevel2;
+			subCatLevel2Id = this.state.currentUserProfile.subCatLevel2Id;
 		}
 
 		// Create an object profile whose property values will be equal to the new one if user has entered or the existing one if he hasn't.
@@ -136,8 +140,11 @@ class DashboardProfiles extends Component {
 			state: ( this.state.state ) ? this.state.state : state,
 			address: ( this.state.address ) ? this.state.address : address,
 			category: ( this.state.category ) ? this.state.category : category,
+			categoryId: ( this.state.categoryId ) ? this.state.categoryId : categoryId,
 			subCategory: ( this.state.subCategory ) ? this.state.subCategory : subCategory,
+			subCategoryId: ( this.state.subCategoryId ) ? this.state.subCategoryId : subCategoryId,
 			subCatLevel2: ( this.state.subCatLevel2 ) ? this.state.subCatLevel2 : subCatLevel2,
+			subCatLevel2Id: ( this.state.subCatLevel2Id ) ? this.state.subCatLevel2Id : subCatLevel2Id,
 			description: ( this.state.description ) ? this.state.description : description,
 		};
 		console.log( profile );
@@ -189,10 +196,11 @@ class DashboardProfiles extends Component {
 		const errors = this.state.errors;
 		name = user.name;
 		email = user.email;
-		console.log( user );
 
 		let { category } = this.props;
-		console.log( 'category', category );
+		if ( this.state.currentUserProfile ) {
+			console.log( 'state', this.state.currentUserProfile.categoryId );
+		}
 
 		let parentCategories = '', parentCatsOptions = '', subCategories = '', subCatsOptions = '', subCategoriesLvl2 = '', subCatsLvl2Options = '';
 
@@ -243,11 +251,8 @@ class DashboardProfiles extends Component {
 					<div className="col-9 grid-margin stretch-card">
 						<div className="card">
 							<div className="card-body">
-								<h4 className="card-title">Profile/Business Listing</h4>
-								<p className="card-description">
-									Create or Update Profile/Business Listing
-								</p>
-								<form className="forms-sample" onSubmit={ this.fileUploadHandler } encType="multipart/form-data">
+								<h4 className="card-title">Create or Update Profile/Business Listing</h4><br/>
+								<form className="forms-sample" onSubmit={ this.onSubmit } encType="multipart/form-data">
 									<div className="form-group">
 										<label htmlFor="exampleInputName1">Name</label>
 										<input type="text" className="form-control" id="exampleInputName1" placeholder="Name" defaultValue={ name } readOnly/>
@@ -268,28 +273,30 @@ class DashboardProfiles extends Component {
 									</div>
 
 									<div className="form-group">
-										<label htmlFor="exampleSelectGender">Category</label>
+										<label htmlFor="exampleSelectGender">Category<span className="text-muted">{ this.state.currentUserProfile && ( ': ( ' + this.state.currentUserProfile.category + ' )' ) }</span></label>
 										<select
 											className={ classnames( 'form-control', {
 												'is-invalid': errors.category
 											} ) }
 											onChange={ this.onChange } name="category" value={this.state.categoryId} id="exampleSelectCat">
-											<option value="">Select Category</option>
+											<option value="">Select Category </option>
 											{parentCatsOptions}
 										</select>
 										{ errors.category && ( <div className="invalid-feedback">{ errors.category }</div> ) }
 									</div>
 									<div className="form-group">
-										<label htmlFor="exampleSelectGender">Sub Category</label>
+										<label htmlFor="exampleSelectGender">Sub Category<span className="text-muted">{ this.state.currentUserProfile && ( ': ( ' + this.state.currentUserProfile.subCategory + ' )' ) }</span></label>
 										<select className="form-control" onChange={ this.onChange } value={this.state.subCategoryId} name="subCategory" id="exampleSelectSubCat">
 											<option value="">Select Sub-Category</option>
+											<option value="">None</option>
 											{subCatsOptions}
 										</select>
 									</div>
 									<div className="form-group">
-										<label htmlFor="exampleSelectGender">Sub Category Level2</label>
+										<label htmlFor="exampleSelectGender">Sub Category Level2<span className="text-muted">{ this.state.currentUserProfile && ( ': ( ' + this.state.currentUserProfile.subCatLevel2 + ' )' ) }</span></label>
 										<select className="form-control" onChange={ this.onChange } value={this.state.subCatLevel2Id} name="subCatLevel2" id="exampleSelectSubCatLvl2">
 											<option value="">Select Child-Category</option>
+											<option value="">None</option>
 											{subCatsLvl2Options}
 										</select>
 									</div>
@@ -319,8 +326,8 @@ class DashboardProfiles extends Component {
 											} ) }
 											onChange={ this.onChange } name="gender" defaultValue={ this.state.gender } id="exampleSelectGender">
 											<option value="">Select Gender</option>
-											<option value="male">Male</option>
-											<option value="female">Female</option>
+											<option value="male" selected={ this.state.currentUserProfile && ( ( 'male' === this.state.currentUserProfile.gender ) ? 'selected' : '' ) }>Male</option>
+											<option value="female" selected={ this.state.currentUserProfile && ( ( 'female' === this.state.currentUserProfile.gender ) ? 'selected' : '' ) }>Female</option>
 										</select>
 										{ errors.gender && ( <div className="invalid-feedback">{ errors.gender }</div> ) }
 									</div>

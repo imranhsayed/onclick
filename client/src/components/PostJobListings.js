@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import ProfileListingCategories from "./layouts/profile/ProfileListingCategories";
+import PostListingCategories from "./layouts/posts/PostListingCategories";
 import PostFeed from './layouts/posts/PostFeed';
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";
@@ -15,16 +16,18 @@ import Banner from "./layouts/banner/Banner";
 
 class DashboardPostsListing extends Component {
 	componentDidMount() {
-		let paramId = this.props.match.params.id,
-			paramType = this.props.match.params.type;
+		const queryStringValues = queryString.parse( this.props.location.search );
+		console.log( 'querystring', queryStringValues );
+		let paramId = this.props.match.params.catid;
+		console.log( 'paramid', paramId );
 		if ( paramId ) {
-			if ( 'category' === paramType ) {
+			if ( queryStringValues.category ) {
 				this.props.getPostByCategoryId( paramId );
 			}
-			if ( 'subCat' === paramType ) {
+			if ( queryStringValues.subCat ) {
 				this.props.getPostBySubCategoryId( paramId );
 			}
-			if ( 'grandChild' === paramType ) {
+			if ( queryStringValues.grandChild ) {
 				this.props.getPostBySubCatLevel2Id( paramId );
 			}
 		} else{
@@ -35,6 +38,7 @@ class DashboardPostsListing extends Component {
 	render() {
 		const { posts, loading } = this.props.post;
 		const { user } = this.props.auth;
+		const queryStringValues = queryString.parse( this.props.location.search );
 		let postContent, postCount,
 			paramName = this.props.match.params.name;
 
@@ -65,13 +69,15 @@ class DashboardPostsListing extends Component {
 						</div>
 						<div className="col-12 col-lg-9">
 							<div className="jumbotron p-0">
-								{ paramName && (<p>Showing results for <strong>Category: { paramName }</strong></p>) }
+								{ queryStringValues.category && (<p>Showing results for <strong>Category: { queryStringValues.category }</strong></p>) }
+								{ queryStringValues.subCat && (<p>Showing results for <strong>SubCategory: { queryStringValues.subCat }</strong></p>) }
+								{ queryStringValues.grandChild && (<p>Showing results for <strong>Child Category: { queryStringValues.grandChild }</strong></p>) }
 								{ ! isEmpty( postCount ) ? ( <p>Showing(1 - { postCount } Services of 7585 Services)</p> ) : '' }
 							</div>
 						</div>
 					</div>
 					<div className="row">
-						<ProfileListingCategories/>
+						<PostListingCategories/>
 
 						{/*listing*/}
 						<div className="col-12 col-md-8 col-lg-9 listing-services">

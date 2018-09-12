@@ -29,10 +29,14 @@ class DashboardPostItem extends Component {
 								</div>
 							</h5>
 							<Link to={`/single-post/${post._id}`}><h3>{ post.title }</h3></Link>
+							<div className="text-muted">
+								{ post.subCategory && post.subCategory }
+								{ post.subCatLevel2 && ', ' + post.subCatLevel2 }
+							</div>
 							<div className="row">
 								<div className="col-12">
 									<Link to={`/single-post/${post._id}`}>
-										<p>
+										<p style={{ fontSize: '13px' }}>
 											Posted <Moment fromNow>{post.date}</Moment>
 										</p>
 									</Link>
