@@ -108,6 +108,7 @@ class DashboardPostItem extends Component {
 				postItem = '';
 			}
 		} else {
+			// If its admin
 			postItem = (
 				<div className="col-md-12">
 					<div id="oc-alert-container"></div>
@@ -134,6 +135,8 @@ class DashboardPostItem extends Component {
 							<p className="card-text"><strong>Job Id: </strong>{ post._id }</p>
 							<p className="card-text">{ post.description }</p>
 							<button onClick={this.onDeleteClick.bind( this, post._id )} className="btn btn-danger btn-sm">Delete</button>
+							<Link to={`/post-image-uploads/${post._id}?post_id=${post._id}`} className="btn btn-primary btn-sm float-right mr-3 mb-2">Upload Job Image</Link>
+							<Link to={`/post-gallery-uploads/${post._id}?post_id=${post._id}`} className="btn btn-primary btn-sm float-right ml-3 mr-3 mb-2">Upload Gallery</Link>
 							<Link to={`/dashboard-post/${post._id}`} className="btn btn-primary btn-sm float-right">View/Edit</Link>
 							{/* If this post was bid then show the 'View Bid' Link*/}
 							{ ( 0 !== post.bidUserIds.length ) &&

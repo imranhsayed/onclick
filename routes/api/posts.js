@@ -219,6 +219,18 @@ router.get( '/', ( req, res ) => {
 } );
 
 /**
+ * @route GET api/posts/featured
+ * @desc Get all the posts posted by admin where userType is admin.
+ * @access public
+ */
+router.get( '/featured', ( req, res ) => {
+	Post.find( { userType: 'admin' } )
+		.sort( { date: -1 } )
+		.then( ( posts ) => res.json( posts ) )
+		.catch( ( error ) => res.json( { noPostsFound: 'No posts found' } ) );
+} );
+
+/**
  * @route GET api/posts/parentCat/:id
  * @desc Get all the posts that belongs to a given categoryId id
  * @access public
@@ -305,6 +317,8 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 		name: req.body.name,
 		email: req.body.email,
 		userId: req.body.userId,
+		userType: req.body.userType,
+		featured: 'no',
 		category: req.body.category,
 		subCategory: req.body.subCategory,
 		subCatLevel2: req.body.subCatLevel2,

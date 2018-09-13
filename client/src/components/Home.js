@@ -16,10 +16,9 @@ export default () => {
 			<HomeBanner/>
 			<HomeIcons/>
 			<HomeTrendingServices/>
-			<HomeFeaturedServices/>
-			<HomeServicesData/>
+			{/*<HomeServicesData/>*/}
 			<HomeBestServices/>
-			<HomeSubscribe/>
+			{/*<HomeSubscribe/>*/}
 			<Footer/>
 		</div>
 	);

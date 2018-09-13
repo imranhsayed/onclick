@@ -11,6 +11,12 @@ const PostSchema = new Schema({
 		type: String,
 		required: true
 	},
+	userType: {
+		type: String
+	},
+	featured: {
+		type: String
+	},
 	postImage: {
 		type: String
 	},

@@ -75,17 +75,14 @@ class Navbar extends Component {
 								<div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 									<Link className="dropdown-item" to="/post-job">Post Free Job</Link>
 									<Link className="dropdown-item" to="/job-listings">Job Listings</Link>
-									<Link className="dropdown-item" to="/search-job">Search Job</Link>
+									{/*<Link className="dropdown-item" to="/search-job">Search Job</Link>*/}
 									<Link className="dropdown-item" to="/listings">Business Listings</Link>
 									<Link className="dropdown-item" to="/categories">Categories</Link>
 									<Link className="dropdown-item" to="/offer-listings">Offers</Link>
 								</div>
 							</li>
 							<li className="nav-item">
-								<a className="nav-link" href="">BLOG</a>
-							</li>
-							<li className="nav-item">
-								<a className="nav-link" href="">CONTACTs</a>
+								<Link className="nav-link" to="/contact-us">CONTACT US</Link>
 							</li>
 
 							<Link to="/post-job" id="post-job-nav-link" style={{ marginLeft: '-3px !important' }} className="btn btn-primary btn-post-job btn-post-job-header ml-5 mr-2">Post Job</Link>

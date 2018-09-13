@@ -288,7 +288,6 @@ class DashboardProfiles extends Component {
 										<label htmlFor="exampleSelectGender">Sub Category<span className="text-muted">{ this.state.currentUserProfile && ( ': ( ' + this.state.currentUserProfile.subCategory + ' )' ) }</span></label>
 										<select className="form-control" onChange={ this.onChange } value={this.state.subCategoryId} name="subCategory" id="exampleSelectSubCat">
 											<option value="">Select Sub-Category</option>
-											<option value="">None</option>
 											{subCatsOptions}
 										</select>
 									</div>
@@ -296,7 +295,6 @@ class DashboardProfiles extends Component {
 										<label htmlFor="exampleSelectGender">Sub Category Level2<span className="text-muted">{ this.state.currentUserProfile && ( ': ( ' + this.state.currentUserProfile.subCatLevel2 + ' )' ) }</span></label>
 										<select className="form-control" onChange={ this.onChange } value={this.state.subCatLevel2Id} name="subCatLevel2" id="exampleSelectSubCatLvl2">
 											<option value="">Select Child-Category</option>
-											<option value="">None</option>
 											{subCatsLvl2Options}
 										</select>
 									</div>

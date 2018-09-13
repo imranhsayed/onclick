@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Footer extends Component {
 	render(){
@@ -9,10 +10,10 @@ class Footer extends Component {
 						<div className="col-md-4 onclickbiz-colm">
 							<h1>Onclickbiz</h1>
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do.</p>
-							<a href=""><i className="fab fa-facebook"></i></a>
-							<a href=""><i className="fab fa-instagram"></i></a>
-							<a href=""><i className="fab fa-twitter"></i></a>
-							<a href=""><i className="fab fa-google"></i></a>
+							<Link to="/"><i className="fab fa-facebook"></i></Link>
+							<Link to="/"><i className="fab fa-instagram"></i></Link>
+							<Link to="/"><i className="fab fa-twitter"></i></Link>
+							<Link to="/"><i className="fab fa-google"></i></Link>
 						</div>
 						<div className="col-md-2 latest-ad-colm">
 							<h1>Latest Ad</h1>
@@ -22,16 +23,16 @@ class Footer extends Component {
 							<h1>Help and Support</h1>
 							<div className="row links-row">
 								<div className="col-lg-6">
-									<a href=""><p>Live Chat</p></a>
+									<Link to="/"><p>Live Chat</p></Link>
 								</div>
 								<div className="col-lg-6">
-									<a href=""><p>Support</p></a>
+									<Link to="/"><p>Support</p></Link>
 								</div>
 								<div className="col-lg-6">
-									<a href=""><p>Privacy Policy</p></a>
+									<Link to="/"><p>Privacy Policy</p></Link>
 								</div>
 								<div className="col-lg-6">
-									<a href=""><p>Contact Us</p></a>
+									<Link to="/contact-us"><p>Contact Us</p></Link>
 								</div>
 							</div>
 						</div>
@@ -40,8 +41,7 @@ class Footer extends Component {
 
 							<div className="row subscribe-colm-row">
 								<div className="col-12">
-									<h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-										tempor incididunt ut labore et dolore magna aliqua.</h2>
+									<h2>Best channel to list your business, post jobs, find jobs and business</h2>
 								</div>
 								<div className="col-12 search-btn-colm email-sub-section-five">
 									<form className="form-inline my-2 my-lg-0">
@@ -67,12 +67,12 @@ class Footer extends Component {
 							All copyrights reserved &copy; 2018 - <a href="">myrl.tech</a>
 						</div>
 						<div className="col-md-6 icons">
-							<a href="">
-								<i className="fab fa-cc-paypal"></i>
-							</a>
-							<a href="">
+							{/*<Link to="/">*/}
+								{/*<i className="fab fa-cc-paypal"></i>*/}
+							{/*</Link>*/}
+							<Link to="/">
 								<i className="fab fa-cc-visa"></i>
-							</a>
+							</Link>
 						</div>
 					</div>
 				</footer>

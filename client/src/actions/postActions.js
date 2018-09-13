@@ -74,6 +74,26 @@ export const getPosts = () => dispatch => {
 		);
 };
 
+// Get All Job Posted by Admin
+export const getPostsByAdmin = () => dispatch => {
+	dispatch(setPostLoading());
+	axios
+		.get('/api/posts/featured')
+		.then(res =>
+			dispatch({
+				type: GET_POSTS,
+				payload: res.data
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_POSTS,
+				payload: null
+			})
+		);
+};
+
+
 // Get Posts
 export const getPostCount = () => dispatch => {
 	dispatch(setPostLoading());

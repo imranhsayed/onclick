@@ -47,6 +47,8 @@ import AddOffer from "./components/offer/AddOffer";
 import OfferImageUpload from "./components/offer/OfferImageUpload";
 import DashboardOfferListings from "./components/offer/DashboardOfferListings";
 import OfferListings from "./components/offer/OfferListings";
+import ContactUs from './components/layouts/contact-us/ContactUs';
+
 
 /**
  * To ensure the authenticate state stays true even on page reload, we do the following:
@@ -137,6 +139,7 @@ class App extends Component {
 					<Route exact path="/uploads" component={DashboardUploads}/>
 					<Route exact path="/dash-profiles" component={DashboardUserProfiles}/>
 					<Route exact path="/offer-listings" component={OfferListings}/>
+					<Route exact path="/contact-us" component={ContactUs}/>
 				</div>
 			</Router>
 	    </Provider>

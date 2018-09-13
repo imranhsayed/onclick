@@ -7,12 +7,18 @@ const ProfileSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'users'
 	},
+	userType: {
+		type: String
+	},
 	handle: {
 		type: String,
 		required: true,
 		max: 40
 	},
 	profileImage: {
+		type: String
+	},
+	featured: {
 		type: String
 	},
 	businessImage: {

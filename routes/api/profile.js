@@ -478,6 +478,7 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 
 	const profileFields = {};
 	profileFields.user = req.user.id;
+	profileFields.userType = req.user.type;
 	profileFields.handle = ( req.body.handle ) ? req.body.handle : '';
 
 	// Find the profile for the user with the user id ( req.user.id )
@@ -517,6 +518,7 @@ router.post( '/', passport.authenticate( 'jwt', { session: false } ), ( req, res
 				// If profile doesn't exist that means create profile.
 				profileFields.profileImage = '';
 				profileFields.businessImage = '';
+				profileFields.featured = 'no';
 				profileFields.businessGalleryImages = [];
 				profileFields.business = ( req.body.business ) ? req.body.business : '';
 				profileFields.category = ( req.body.category ) ? req.body.category : '';
